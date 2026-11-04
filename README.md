@@ -8,13 +8,13 @@ Token dan komponen React dari Figma **Seragam Dasar** (fondasi) dan **Dokumentas
 | `tokens/seragam.tokens.json` | Primitif (74), semantik (45), tipografi Desktop dan Mobile (36), elevasi 00–08, radius |
 | `tokens/seragam.css` | Variabel CSS `--sd-*`, tema Tailwind v4 (`bg-sd-blue-70`, `shadow-sd-06`, …), kelas tipografi `.sd-t-desktop-body` |
 | `docs/components/*.md` | Spesifikasi 48 halaman komponen (181 komponen): ukuran, padding, radius, warna token, teks |
-| `src/` | Komponen React: Tabs, Button, Badge, Banner, Chip (sisanya ada di `docs/`) |
+| `src/` | Komponen React: Tabs, Button, Badge, Banner, Chip, Checkbox, Radio, Switch, TextField, TextArea, Modal, Toast (sisanya ada di `docs/`) |
 | `skill/SKILL.md` | Claude Skill agar proyek lain otomatis mengikuti Seragam |
 | `tools/` | Skrip ekstraksi: `extract.py`, `render_docs.py`, `build_tokens.py` |
 
 ## Memakai di proyek lain
 1. Salin `tokens/seragam.css` dan impor di CSS utama (setelah `@import "tailwindcss"`).
-2. Salin `src/` ke proyek, atau pakai kelas token langsung: `bg-sd-blue-70 text-sd-gray-90 rounded-sd-sm`.
+2. Salin `src/` ke proyek (butuh `react` dan `lucide-react`), atau pakai kelas token langsung: `bg-sd-blue-70 text-sd-gray-90 rounded-sd-sm`.
 3. Salin `skill/` ke `.claude/skills/seragam/` (atau `~/.claude/skills/seragam/`).
 
 ## Catatan
