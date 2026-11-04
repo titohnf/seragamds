@@ -13,7 +13,25 @@ Token dan komponen React dari Figma **Seragam Dasar** (fondasi) dan **Dokumentas
 | `skill/SKILL.md` | Claude Skill agar proyek lain otomatis mengikuti Seragam |
 | `tools/` | Skrip ekstraksi: `extract.py`, `render_docs.py`, `build_tokens.py` |
 
-## Memakai di proyek lain
+## Pasang lewat git (disarankan)
+```bash
+npm i github:titohnf/seragam-design-system   # atau: pnpm add / yarn add
+```
+Di CSS utama proyek:
+```css
+@import "tailwindcss";
+@import "seragam-design-system/css";
+@source "../node_modules/seragam-design-system/src";
+```
+Pakai: `import { Button, Modal, TextField } from 'seragam-design-system'`.
+
+## Pasang Skill Claude (sekali per mesin)
+```bash
+git clone https://github.com/titohnf/seragam-design-system && cd seragam-design-system
+npm run install:skill     # merakit skill/ lalu menautkannya ke ~/.claude/skills/seragam
+```
+
+## Memakai di proyek lain (salin manual)
 1. Salin `tokens/seragam.css` dan impor di CSS utama (setelah `@import "tailwindcss"`).
 2. Salin `src/` ke proyek (butuh `react` dan `lucide-react`), atau pakai kelas token langsung: `bg-sd-blue-70 text-sd-gray-90 rounded-sd-sm`.
 3. Salin `skill/` ke `.claude/skills/seragam/` (atau `~/.claude/skills/seragam/`).

@@ -1,8 +1,22 @@
 {
   "name": "seragam-design-system",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "description": "Token, komponen React, dokumentasi spesifikasi, dan Claude Skill untuk Design System Seragam (Kemendikdasmen)",
   "private": true,
   "type": "module",
   "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./css": "./tokens/seragam.css",
+    "./tokens": "./tokens/seragam.tokens.json",
+    "./docs/*": "./docs/*"
+  },
+  "files": ["src", "tokens", "docs", "skill", "examples", "tools"],
+  "scripts": {
+    "build:tokens": "python3 tools/build_tokens.py $FIGMA_STYLES_JSON",
+    "build:skill": "sh tools/build_skill.sh",
+    "install:skill": "sh tools/build_skill.sh && mkdir -p ~/.claude/skills && ln -sfn \"$PWD/skill\" ~/.claude/skills/seragam"
+  },
   "peerDependencies": { "react": ">=18", "lucide-react": ">=0.400", "tailwindcss": ">=4" }
 }
