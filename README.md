@@ -15,7 +15,7 @@ Token dan komponen React dari Figma **Seragam Dasar** (fondasi) dan **Dokumentas
 
 ## Pasang lewat git (disarankan)
 ```bash
-npm i github:titohnf/seragam-design-system   # atau: pnpm add / yarn add
+npm i github:titohnf/seragamds   # atau: pnpm add / yarn add
 ```
 Di CSS utama proyek:
 ```css
@@ -27,7 +27,7 @@ Pakai: `import { Button, Modal, TextField } from 'seragam-design-system'`.
 
 ## Pasang Skill Claude (sekali per mesin)
 ```bash
-git clone https://github.com/titohnf/seragam-design-system && cd seragam-design-system
+git clone https://github.com/titohnf/seragamds && cd seragamds
 npm run install:skill     # merakit skill/ lalu menautkannya ke ~/.claude/skills/seragam
 ```
 
