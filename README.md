@@ -8,7 +8,8 @@ Token dan komponen React dari Figma **Seragam Dasar** (fondasi) dan **Dokumentas
 | `tokens/seragam.tokens.json` | Primitif (74), semantik (45), tipografi Desktop dan Mobile (36), elevasi 00–08, radius |
 | `tokens/seragam.css` | Variabel CSS `--sd-*`, tema Tailwind v4 (`bg-sd-blue-70`, `shadow-sd-06`, …), kelas tipografi `.sd-t-desktop-body` |
 | `docs/components/*.md` | Spesifikasi 48 halaman komponen (181 komponen): ukuran, padding, radius, warna token, teks |
-| `src/` | Komponen React: Tabs, Button, Badge, Banner, Chip, Checkbox, Radio, Switch, TextField, TextArea, Modal, Toast, Select, Tooltip, Breadcrumb, Pagination, Stepper, Accordion, Avatar, Card, Link, ProgressBar, EmptyState, List, Separator, SearchBar (sisanya ada di `docs/`) |
+| `src/` | Komponen React: Tabs, Button, Badge, Banner, Chip, Checkbox, Radio, Switch, TextField, TextArea, Modal, Toast, Select, Tooltip, Breadcrumb, Pagination, Stepper, Accordion, Avatar, Card, Link, ProgressBar, EmptyState, List, Separator, SearchBar, Popover, Slider, Expander, Rating, HeaderBar, NavigationBar, BottomSheet (sisanya ada di `docs/`) |
+| `examples/Gallery.tsx` | Galeri semua komponen untuk cek visual (pasang di rute mana pun) |
 | `skill/SKILL.md` | Claude Skill agar proyek lain otomatis mengikuti Seragam |
 | `tools/` | Skrip ekstraksi: `extract.py`, `render_docs.py`, `build_tokens.py` |
 

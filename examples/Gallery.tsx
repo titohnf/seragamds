@@ -1,0 +1,33 @@
+import { useState } from 'react';
+import * as S from '../src';
+
+const Sec = ({ t, children }: { t: string; children: React.ReactNode }) => (
+  <section className="flex flex-col gap-[12px] border-b border-sd-modal-footer-border pb-[24px]">
+    <h2 className="text-sd-gray-90" style={{ fontSize: 19, lineHeight: '24px', fontWeight: 600 }}>{t}</h2>
+    <div className="flex flex-wrap items-start gap-[16px]">{children}</div>
+  </section>
+);
+
+/** Galeri semua komponen Seragam untuk pengecekan visual. Pasang di rute apa pun. */
+export default function Gallery() {
+  const [n, setN] = useState(2); const [sl, setSl] = useState(40); const [m, setM] = useState(false); const [sh, setSh] = useState(false);
+  const [ex, setEx] = useState(false); const [pg, setPg] = useState(3); const [tab, setTab] = useState(0);
+  return (
+    <div className="mx-auto flex max-w-[1000px] flex-col gap-[24px] bg-sd-gray-0 p-[24px] font-sans">
+      <h1 className="text-sd-gray-90" style={{ fontSize: 22, lineHeight: '28px', fontWeight: 600 }}>Galeri Seragam</h1>
+      <Sec t="Button"><S.Button>Primary</S.Button><S.Button variant="outline">Outline</S.Button><S.Button variant="danger">Danger</S.Button><S.Button variant="danger-outline">Danger outline</S.Button><S.Button disabled>Disabled</S.Button><S.Button size="sm">Small</S.Button></Sec>
+      <Sec t="Badge dan Chip"><S.Badge tone="green">Disetujui</S.Badge><S.Badge tone="amber">Menunggu</S.Badge><S.Badge tone="red">Ditolak</S.Badge><S.Badge tone="blue">Diproses</S.Badge><S.Badge>Draf</S.Badge></Sec>
+      <Sec t="Banner"><div className="flex w-full flex-col gap-[8px]"><S.Banner tone="info">Informasi</S.Banner><S.Banner tone="success">Berhasil</S.Banner><S.Banner tone="warning">Peringatan</S.Banner><S.Banner tone="critical">Kesalahan</S.Banner></div></Sec>
+      <Sec t="Tabs"><S.Tabs items={['Satu', 'Dua', 'Tiga']} active={tab} onChange={setTab} /></Sec>
+      <Sec t="Pilihan"><S.Checkbox label="Checkbox" defaultChecked /><S.Checkbox label="Indeterminate" indeterminate /><S.Checkbox label="Nonaktif" disabled /><S.Radio name="r" label="Radio" defaultChecked /><S.Radio name="r" label="Radio 2" /><S.Switch label="Switch" defaultChecked /><S.Switch label="Mati" /></Sec>
+      <Sec t="Isian"><div className="w-[328px]"><S.TextField label="Nama" placeholder="Input placeholder" /></div><div className="w-[328px]"><S.TextField label="Error" error="Wajib diisi" defaultValue="x" /></div><div className="w-[328px]"><S.Select label="Pilih" placeholder="Choose an option"><option>A</option></S.Select></div><div className="w-[328px]"><S.TextArea label="Catatan" /></div><div className="w-[328px]"><S.SearchBar placeholder="Cari" /></div><S.Stepper value={n} onChange={setN} /></Sec>
+      <Sec t="Slider dan Progress"><div className="w-[328px]"><S.Slider value={sl} onChange={setSl} showRange /></div><div className="w-[328px]"><S.ProgressBar value={60} label="60%" /></div><S.Rating value={3.5} /></Sec>
+      <Sec t="Navigasi"><S.Breadcrumb items={[{ label: 'Beranda', href: '#' }, { label: 'Kepegawaian', href: '#' }, { label: 'Detail' }]} /><S.Pagination page={pg} pageCount={10} onPageChange={setPg} /><S.NavigationBar items={[{ key: 'a', label: 'Beranda' }, { key: 'b', label: 'Layanan' }, { key: 'c', label: 'Bantuan' }]} active="b" /><S.Link href="#">Tautan</S.Link><S.Expander expanded={ex} onToggle={() => setEx(!ex)} /></Sec>
+      <Sec t="Overlay"><S.Button onClick={() => setM(true)}>Buka Modal</S.Button><S.Button variant="outline" onClick={() => setSh(true)}>Buka Bottom Sheet</S.Button><S.Tooltip text="Teks tooltip"><S.Button variant="outline">Hover saya</S.Button></S.Tooltip><S.Popover trigger={({ toggle }) => <S.Button variant="outline" onClick={toggle}>Menu</S.Button>} items={[{ label: 'Menu 1', onSelect: () => {} }, { label: 'Menu 2', onSelect: () => {} }]} /><S.Toast action="Urungkan">Perubahan disimpan.</S.Toast></Sec>
+      <Sec t="Konten"><div className="w-[328px]"><S.Card title="Judul kartu" action={<S.Button>Aksi</S.Button>}>Deskripsi singkat kartu.</S.Card></div><S.Accordion title="Accordion" defaultOpen>Isi accordion</S.Accordion><div className="flex items-center gap-[8px]"><S.Avatar name="Budi" size={48} /><S.Avatar name="Sari" shape="square" /></div><div className="w-[328px]"><S.List><S.ListItem label="Item satu" description="Deskripsi" artwork={<S.Avatar name="A" />} /><S.ListItem label="Item dua" end={<S.Badge>Baru</S.Badge>} /></S.List></div><S.EmptyState title="Belum ada data" description="Data akan muncul di sini." /></Sec>
+      <S.HeaderBar title="Judul halaman" actions={<S.Button size="sm">Simpan</S.Button>} />
+      <S.Modal open={m} onClose={() => setM(false)} title="Judul modal" footer={<><S.Button variant="outline" onClick={() => setM(false)}>Batal</S.Button><S.Button onClick={() => setM(false)}>Simpan</S.Button></>}>Isi modal.</S.Modal>
+      <S.BottomSheet open={sh} onClose={() => setSh(false)} title="Pilih"><S.BottomSheetItem selected>Satu</S.BottomSheetItem><S.BottomSheetItem>Dua</S.BottomSheetItem></S.BottomSheet>
+    </div>
+  );
+}
