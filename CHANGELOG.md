@@ -3,8 +3,12 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.7.0
+npm i github:titohnf/seragamds#v0.8.0
 ```
+
+## 0.8.0 · 2026-11-05
+- Perbaikan: label `TextField`/`TextArea` kini 15/22 regular sesuai Figma (sebelumnya 14/20 semibold; `Select` sudah benar).
+- Baru (ekstensi di luar Figma): `TextField`/`TextArea` mendukung `readOnly` dengan tampilan seperti Disabled. Lihat `docs/extensions.md`.
 
 ## 0.7.0 · 2026-11-05
 - Baru: komponen `Table` (`Table`, `TableHead`, `TableBody`, `TableRow`, `TableHeaderCell`, `TableCell`): ukuran `lg/md/sm`, `striped`, `bordered`, `headerTone`, `caption`. Sesuai spesifikasi Figma (header 48/40/32, sel 15/22).

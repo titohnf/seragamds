@@ -2,6 +2,11 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-05 · Pilot: menu Kepegawaian di `kemendikdasmen` (v0.8.0)
+- **Keputusan:** proyek `kemendikdasmen` dimigrasi ke Seragam hanya untuk menu Kepegawaian (kepegawaian, surat-keputusan, pemetaan-jabatan, master-data), di cabang `seragam-kepegawaian`.
+- **Temuan di design system:** label `TextField` salah (14/20 semibold; Figma 15/22 regular). Diperbaiki. `readOnly` dibutuhkan formulir tetapi tidak ada di Figma; ditambahkan sebagai ekstensi bertampilan Disabled.
+- **Aturan migrasi:** ganti buatan sendiri dengan komponen Seragam; hex literal menjadi token; ukuran font hanya dari skala; kontrol native tanpa padanan Seragam dibiarkan tetapi bertoken.
+
 ## 2026-11-05 · Komponen Table ditambahkan (v0.7.0)
 - **Keputusan:** membuat `Table` (+ `TableHead`, `TableBody`, `TableRow`, `TableHeaderCell`, `TableCell`) dari spesifikasi Figma `Table`, dan token `table-stripe` (`#FAFAFA`).
 - **Mengapa:** dari semua komponen yang ada di panduan tetapi belum ada kodenya, hanya Table yang nyata dibutuhkan: `kemendikdasmen` memakai `<table>` mentah di 12 berkas. Carousel dan Footer tidak dipakai sama sekali; Spinner hanya di 1 berkas, jadi ditunda.

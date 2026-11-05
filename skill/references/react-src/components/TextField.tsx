@@ -1,7 +1,7 @@
 import { forwardRef, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes } from 'react';
 
 const BASE = 'w-full rounded-[4px] border bg-white text-sd-gray-90 placeholder:text-sd-gray-50 outline-none transition-shadow';
-const STATE = 'border-sd-gray-50 focus:border-sd-blue-50 focus:shadow-[0_0_0_2px_var(--sd-interactive-focused)] disabled:bg-sd-badge-neutral disabled:border-sd-modal-footer-border disabled:text-sd-gray-50';
+const STATE = 'border-sd-gray-50 focus:border-sd-blue-50 focus:shadow-[0_0_0_2px_var(--sd-interactive-focused)] disabled:bg-sd-badge-neutral disabled:border-sd-modal-footer-border disabled:text-sd-gray-50 read-only:bg-sd-badge-neutral read-only:border-sd-modal-footer-border read-only:text-sd-gray-50 read-only:focus:border-sd-modal-footer-border read-only:focus:shadow-none';
 const ERROR = 'border-sd-critical-border bg-sd-surface-critical-subdued focus:border-sd-critical-border focus:shadow-[0_0_0_2px_var(--sd-critical-border)]';
 /** Kelas dasar kolom isian Seragam (border, fokus, nonaktif) untuk elemen input/select/textarea mentah. */
 export const fieldClass = `${BASE} ${STATE}`;
@@ -12,7 +12,7 @@ type Common = { label?: string; helper?: ReactNode; error?: ReactNode };
 function Wrap({ label, helper, error, children }: Common & { children: ReactNode }) {
   return (
     <div className="flex flex-col gap-[4px]">
-      {label && <span className="text-sd-gray-90" style={{ fontSize: 14, lineHeight: '20px', fontWeight: 600 }}>{label}</span>}
+      {label && <span className="text-sd-gray-90" style={{ fontSize: 15, lineHeight: '22px' }}>{label}</span>}
       {children}
       {(error || helper) && <span className={error ? 'text-sd-red-60' : 'text-sd-gray-60'} style={{ fontSize: 12, lineHeight: '16px' }}>{error || helper}</span>}
     </div>
