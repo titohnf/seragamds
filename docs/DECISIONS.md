@@ -2,6 +2,12 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-05 · Situs dokumentasi dibangun dari repo ini
+- **Keputusan:** `site/` (Vite + React) membaca `docs/**/*.md` langsung dan menampilkannya bersama demo hidup komponen dari `src/`. Rute memakai hash (`#/c/button`) agar bisa dihosting statis di mana saja, tanpa konfigurasi server.
+- **Mengapa:** menggantikan `dokumentasiseragam` dan Storybook engineer; dokumen tidak punya salinan kedua yang bisa menyimpang.
+- **Dampak:** demo komponen ditulis di `site/demos.tsx`. Komponen baru perlu satu entri di sana (opsional; tanpa demo halaman tetap tampil dengan tab Panduan).
+- Deploy: `.github/workflows/deploy-site.yml` (manual; aktifkan GitHub Pages dulu).
+
 ## 2026-11-05 · Repo ini adalah satu-satunya sumber kebenaran
 - **Keputusan:** `seragam-design-system` menjadi dokumen tunggal untuk token, komponen, spesifikasi, panduan penggunaan, panduan penulisan, dan Skill. Tidak bergantung pada pustaka `@wartek-id/*` (registry GitLab, tidak ada akses) dan tidak memakai `dokumentasiseragam` sebagai sumber.
 - **Mengapa:** mandiri dari registry yang tidak bisa diakses; satu tempat untuk semua proyek Kemendikdasmen; mudah di-fork menjadi design system sendiri.

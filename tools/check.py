@@ -80,7 +80,7 @@ def scan(path, text):
         if n not in known: err(f'{path}: var({n}) tidak ada di token')
     for m in re_type.finditer(text):
         if m.group(2) not in tokens['typography'].get(m.group(1), {}): err(f'{path}: kelas sd-t-{m.group(1)}-{m.group(2)} tidak ada di token')
-for base, exts in (('src', ('.ts', '.tsx')), ('examples', ('.ts', '.tsx')), ('docs', ('.md',))):
+for base, exts in (('src', ('.ts', '.tsx')), ('examples', ('.ts', '.tsx')), ('site', ('.ts', '.tsx', '.css')), ('docs', ('.md',))):
     for r, _, fs in os.walk(P(base)):
         for f in fs:
             if f.endswith(exts):

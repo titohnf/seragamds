@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@import "../tokens/seragam.css";
+@source "../src";
+@source "../examples";
+@source "./";
+
+html { font-family: Inter, system-ui, sans-serif; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+/* Gaya isi dokumen Markdown. Memakai token Seragam; skala tipografi Mobile. */
+.prose { color: var(--sd-text-default); font-size: 15px; line-height: 22px; }
+.prose > * + * { margin-top: 12px; }
+.prose h1 { font-size: 28px; line-height: 36px; font-weight: 600; margin-bottom: 8px; }
+.prose h2 { font-size: 22px; line-height: 28px; font-weight: 600; margin-top: 32px; }
+.prose h3 { font-size: 18px; line-height: 24px; font-weight: 600; margin-top: 24px; }
+.prose h4 { font-size: 16px; line-height: 22px; font-weight: 600; margin-top: 16px; }
+.prose a { color: var(--sd-action-default); text-decoration: underline; }
+.prose a:hover { color: var(--sd-action-hovered); }
+.prose a:focus-visible { outline: 2px solid var(--sd-interactive-focused); outline-offset: 2px; border-radius: 4px; }
+.prose ul, .prose ol { padding-left: 24px; }
+.prose ul { list-style: disc; } .prose ol { list-style: decimal; }
+.prose li + li { margin-top: 4px; }
+.prose code { background: var(--sd-gray-5); border-radius: 4px; padding: 1px 5px; font-size: 13px; }
+.prose pre { background: var(--sd-gray-5); border-radius: 8px; padding: 12px 16px; overflow-x: auto; }
+.prose pre code { background: none; padding: 0; }
+.prose blockquote { border-left: 4px solid var(--sd-blue-70); background: var(--sd-blue-5); border-radius: 0 4px 4px 0; padding: 8px 16px; color: var(--sd-text-default); }
+.prose hr { border: 0; border-top: 1px solid var(--sd-gray-10); margin: 24px 0; }
+.prose .table-wrap { overflow-x: auto; }
+.prose table { border-collapse: collapse; font-size: 14px; line-height: 20px; min-width: 100%; }
+.prose th { text-align: left; font-weight: 600; background: var(--sd-gray-0); }
+.prose th, .prose td { border: 1px solid var(--sd-gray-10); padding: 8px 12px; vertical-align: top; }

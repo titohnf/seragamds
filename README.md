@@ -13,6 +13,7 @@ Token dan komponen React dari Figma **Seragam Dasar** (fondasi) dan **Dokumentas
 | `docs/DECISIONS.md` | Catatan keputusan desain/arsitektur |
 | `docs/components/*.md` | Spesifikasi 48 halaman komponen (181 komponen): ukuran, padding, radius, warna token, teks |
 | `src/` | Komponen React: Tabs, Button, Badge, Banner, Chip, Checkbox, Radio, Switch, TextField, TextArea, Modal, Toast, Select, Tooltip, Breadcrumb, Pagination, Stepper, Accordion, Avatar, Card, Link, ProgressBar, EmptyState, List, Separator, SearchBar, Popover, Slider, Expander, Rating, HeaderBar, NavigationBar, BottomSheet (sisanya ada di `docs/`) |
+| `site/` | **Situs dokumentasi** (Vite): fondasi, panduan, demo hidup 32 komponen, spesifikasi Figma, Galeri. Jalankan `npm run dev` |
 | `examples/Gallery.tsx` | Galeri semua komponen untuk cek visual (pasang di rute mana pun) |
 | `skill/SKILL.md` | Claude Skill agar proyek lain otomatis mengikuti Seragam |
 | `tools/` | `extract.py`, `render_docs.py`, `build_tokens.py` (ekstraksi dari Figma); `build_foundations.py` (fondasi dari token); `build_skill.sh` (rakit skill); `check.py` (pemeriksaan konsistensi) |
