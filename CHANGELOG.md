@@ -3,8 +3,13 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.8.1
+npm i github:titohnf/seragamds#v0.9.0
 ```
+
+## 0.9.0 · 2026-11-05
+- Baru (ekstensi di luar Figma): `Panel` (kartu berbagian dengan header berjudul, ikon, aksi; varian `elevated`/`outlined`) dan `DescriptionList` (pasangan label di atas nilai, 1–3 kolom mengikuti lebar wadah, memakai `dl/dt/dd`). Menyatukan 5 salinan `Panel`/`Card` dan pola label–nilai yang berbeda-beda di `kemendikdasmen`.
+- `tools/check.py` mengenali status halaman panduan "ekstensi" (wajib punya bagian Spesifikasi dan tautan ke `extensions.md`).
+- Skill: aturan 12 (kartu berbagian dan data berpasangan).
 
 ## 0.8.1 · 2026-11-05
 - Perbaikan aksesibilitas: `TextField`, `TextArea`, dan `Select` yang diberi `label` kini berakar `<label>`, sehingga label terhubung ke isiannya (klik label memfokuskan isian; pembaca layar membacakan label). Sebelumnya label berupa `<span>` yang tidak terhubung. Tanpa `label`, akar tetap `<div>`; API tidak berubah.

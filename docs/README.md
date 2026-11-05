@@ -12,7 +12,7 @@ Satu sumber kebenaran untuk Design System Seragam di proyek Kemendikdasmen. Urut
 ## Bila ada konflik
 Token: berkas `tokens/` menang. Teknis (props, perilaku): kode di `src/` menang. Penggunaan dan penulisan: `docs/guidelines/`. Spesifikasi visual: `docs/components/`. Konflik yang ditemukan harus diperbaiki di sumbernya dan dicatat di [DECISIONS](DECISIONS.md).
 
-## Status komponen (34 komponen dengan kode)
+## Status komponen (36 komponen dengan kode)
 | Komponen | Kode | Panduan |
 |---|---|---|
 | [Accordion](guidelines/komponen/accordion.md) | `Accordion` | dari panduan Seragam |
@@ -23,6 +23,7 @@ Token: berkas `tokens/` menang. Teknis (props, perilaku): kode di `src/` menang.
 | [Breadcrumb](guidelines/komponen/breadcrumb.md) | `Breadcrumb` | dari panduan Seragam |
 | [Button](guidelines/komponen/button.md) | `Button` | dari panduan Seragam |
 | [Card](guidelines/komponen/card.md) | `Card` | draf |
+| [Description List](guidelines/komponen/description-list.md) | `DescriptionList` | ekstensi |
 | [Checkbox](guidelines/komponen/checkbox.md) | `Checkbox` | dari panduan Seragam |
 | [Chip](guidelines/komponen/chip.md) | `ChipGroup` | dari panduan Seragam |
 | [Empty State](guidelines/komponen/empty-state.md) | `EmptyState` | dari panduan Seragam |
@@ -33,6 +34,7 @@ Token: berkas `tokens/` menang. Teknis (props, perilaku): kode di `src/` menang.
 | [Modal](guidelines/komponen/modal.md) | `Modal` | dari panduan Seragam |
 | [Navigation Bar](guidelines/komponen/navigation-bar.md) | `NavigationBar` | dari panduan Seragam |
 | [Pagination](guidelines/komponen/pagination.md) | `Pagination` | dari panduan Seragam |
+| [Panel](guidelines/komponen/panel.md) | `Panel` | ekstensi |
 | [Popover](guidelines/komponen/popover.md) | `Popover` | dari panduan Seragam |
 | [Progress Bar](guidelines/komponen/progress-bar.md) | `ProgressBar` | draf |
 | [Radio](guidelines/komponen/radio.md) | `Radio` | dari panduan Seragam |

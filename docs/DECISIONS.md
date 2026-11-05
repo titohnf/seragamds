@@ -2,6 +2,12 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-05 · Standar Panel dan DescriptionList (v0.9.0)
+- **Keputusan:** menetapkan dua komponen ekstensi karena polanya ditemukan berulang: `Panel` (5 salinan berbeda di `kemendikdasmen`: judul `gray-60` vs `gray-90`, garis vs bayangan, padding 12/14/16) dan `DescriptionList` (label di atas nilai, diulang di data profil, detail usulan, dan formulir hanya-baca).
+- **Standar yang dipilih:** judul `gray-60` 15/22 semibold (mayoritas pemakaian); bayangan Elevation 01 sebagai default dan border sebagai `outlined`; semua jarak kelipatan 4 (sebelumnya 2 dan 14).
+- **Tidak ada di Figma:** perlu diusulkan ke tim desain Seragam. Sampai ada keputusan, spesifikasinya ada di halaman panduan masing-masing dan di `extensions.md`.
+- **Aturan umum:** pola yang ditemukan berulang di dua tempat atau lebih menjadi komponen ekstensi di repo ini, bukan disalin per proyek.
+
 ## 2026-11-05 · Pilot: menu Kepegawaian di `kemendikdasmen` (v0.8.0)
 - **Keputusan:** proyek `kemendikdasmen` dimigrasi ke Seragam hanya untuk menu Kepegawaian (kepegawaian, surat-keputusan, pemetaan-jabatan, master-data), di cabang `seragam-kepegawaian`.
 - **Temuan di design system:** label `TextField` salah (14/20 semibold; Figma 15/22 regular). Diperbaiki. `readOnly` dibutuhkan formulir tetapi tidak ada di Figma; ditambahkan sebagai ekstensi bertampilan Disabled.

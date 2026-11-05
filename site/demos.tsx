@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import * as S from '../src';
+import { User, Building2 } from 'lucide-react';
 
 const Row = ({ children, label }: { children: ReactNode; label?: string }) => (
   <div className="flex flex-col gap-[8px]">
@@ -29,6 +30,13 @@ function TableDemo({ size, striped, bordered = true, headerTone }: { size?: S.Ta
     </S.Table>
   );
 }
+
+const PROFIL = [
+  { label: 'NIP', value: '198001012005011001' }, { label: 'NIK', value: '3171010101800001' },
+  { label: 'Nomor KK', value: '3171010101090001' }, { label: 'Jenis Kelamin', value: 'Laki-laki' },
+  { label: 'Tempat Lahir', value: 'Jakarta' }, { label: 'Tanggal Lahir', value: '1 Januari 1980' },
+  { label: 'Alamat', value: 'Jl. Merdeka No. 1, Kelurahan Gambir, Jakarta Pusat', full: true },
+];
 
 export const demos: Record<string, () => ReactNode> = {
   button: () => <div className="flex flex-col gap-[16px]">{(['ultimate', 'primary', 'secondary', 'quiet', 'destructive', 'destructive-secondary'] as const).map((v) => <Row key={v} label={v}><S.Button variant={v}>Simpan</S.Button><S.Button variant={v} size="md">Medium</S.Button><S.Button variant={v} size="sm">Small</S.Button><S.Button variant={v} loading>Memuat</S.Button><S.Button variant={v} disabled>Nonaktif</S.Button></Row>)}</div>,
@@ -61,6 +69,8 @@ export const demos: Record<string, () => ReactNode> = {
   'progress-bar': () => <div className="flex w-full max-w-[328px] flex-col gap-[16px]"><S.ProgressBar value={25} /><S.ProgressBar value={60} label="60%" /><S.ProgressBar value={100} label="Selesai" labelPosition="left" /></div>,
   separator: () => <Box w={328}><p style={{ fontSize: 15 }}>Atas</p><S.Separator /><p style={{ fontSize: 15 }}>Tengah</p><S.Separator subdued /><p style={{ fontSize: 15 }}>Bawah</p></Box>,
   table: () => <div className="flex w-full flex-col gap-[24px]"><Row label="Dasar (lg)"><div className="w-full"><TableDemo /></div></Row><Row label="Belang, header subtle, md"><div className="w-full"><TableDemo size="md" striped headerTone="subtle" /></div></Row><Row label="Tanpa garis, sm"><div className="w-full"><TableDemo size="sm" bordered={false} /></div></Row></div>,
+  panel: () => <div className="flex w-full max-w-[520px] flex-col gap-[16px]"><S.Panel title="Data Diri" icon={<User />}><S.DescriptionList items={PROFIL.slice(0, 4)} /></S.Panel><S.Panel variant="outlined" subtleHeader title="Unit Organisasi" icon={<Building2 />} action={<S.Button variant="quiet" size="sm">Lihat semua</S.Button>}>Balai Penjaminan Mutu Pendidikan Provinsi D.K.I. Jakarta</S.Panel></div>,
+  'description-list': () => <div className="flex w-full max-w-[640px] flex-col gap-[16px]"><S.Panel title="Data Diri" icon={<User />}><S.DescriptionList items={PROFIL} /></S.Panel><S.Panel title="Satu kolom, nilai tidak berubah" variant="outlined"><S.DescriptionList columns={1} items={[{ label: 'Nama', value: 'Hesti Usada', emphasis: 'normal' }, { label: 'Catatan', value: '-', muted: true, emphasis: 'normal' }]} /></S.Panel></div>,
   slider: () => <SliderDemo />,
   rating: () => <RatingDemo />,
   'header-bar': () => <Box w={420}><S.HeaderBar title="Judul halaman" actions={<S.Button size="sm">Simpan</S.Button>} /><div className="h-[16px]" /><S.HeaderBar title="Tanpa bayangan" borderless compact /></Box>,

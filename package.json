@@ -1,6 +1,6 @@
 {
   "name": "seragam-design-system",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "Token, komponen React, dokumentasi spesifikasi, dan Claude Skill untuk Design System Seragam (Kemendikdasmen)",
   "private": true,
   "type": "module",

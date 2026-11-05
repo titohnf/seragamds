@@ -11,3 +11,9 @@ Outline merah untuk aksi destruktif bernada rendah (Tolak, Hapus).
 
 ## TextField dan TextArea: `readOnly`
 Figma hanya punya state Disabled. Isian `readOnly` (data yang ditampilkan tetapi tidak boleh diubah, tetap bisa difokuskan dan disalin) memakai tampilan yang sama dengan Disabled: latar `badge-neutral`, border `modal-footer-border`, teks `gray-50`, tanpa cincin fokus biru.
+
+## Panel
+Kartu berbagian dengan header berjudul (ikon opsional, aksi opsional) dan garis pemisah. Ditemukan 5 salinan berbeda di `kemendikdasmen` (beda warna judul, garis atau bayangan, padding 12/14/16). Standar: radius 8; `elevated` = Elevation 01, `outlined` = border `modal-footer-border`; judul 15/22 semibold `gray-60`; padding header 12×16 dan isi 16. Spesifikasi lengkap di [panel.md](guidelines/komponen/panel.md).
+
+## Description List
+Pasangan label di atas nilai dalam 1–3 kolom (berdasarkan lebar wadah). Label 13/20 `gray-60`, nilai 15/22 semibold `gray-90`, jarak 4/16. Ditemukan berulang di halaman data profil, detail usulan, dan formulir hanya-baca. Spesifikasi lengkap di [description-list.md](guidelines/komponen/description-list.md).

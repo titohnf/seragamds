@@ -110,9 +110,13 @@ for f in sorted(os.listdir(guide_dir)):
     for n in [x.strip() for x in m.group(1).split(',')]:
         documented.add(n)
         if n not in exported: err(f'guidelines/komponen/{f}: komponen `{n}` tidak diekspor src/index.ts')
-    if 'Status: draf' not in t and 'Status: dari panduan Seragam' not in t: err(f'guidelines/komponen/{f}: baris "Status:" tidak ada')
+    if not any(x in t for x in ('Status: draf', 'Status: dari panduan Seragam', 'Status: ekstensi')): err(f'guidelines/komponen/{f}: baris "Status:" tidak ada')
     sm = re.search(r'\]\((\.\./\.\./components/[\w-]+\.md)\)', t)
-    if not sm: err(f'guidelines/komponen/{f}: tautan spesifikasi tidak ada')
+    if 'Status: ekstensi' in t:
+        # Ekstensi tidak punya spesifikasi Figma: spesifikasinya ada di halaman ini dan harus tertaut ke extensions.md.
+        if '## Spesifikasi' not in t: err(f'guidelines/komponen/{f}: ekstensi wajib punya bagian "## Spesifikasi"')
+        if '../../extensions.md' not in t: err(f'guidelines/komponen/{f}: ekstensi wajib menautkan extensions.md')
+    elif not sm: err(f'guidelines/komponen/{f}: tautan spesifikasi tidak ada')
     elif not os.path.exists(os.path.normpath(os.path.join(guide_dir, sm.group(1)))): err(f'guidelines/komponen/{f}: berkas spesifikasi {sm.group(1)} tidak ada')
 pemetaan = read('docs', 'guidelines', 'pemetaan-nama.md'); readme = read('docs', 'README.md')
 for n in sorted(exported):

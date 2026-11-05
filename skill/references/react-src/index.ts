@@ -32,3 +32,5 @@ export * from './components/HeaderBar';
 export * from './components/NavigationBar';
 export * from './components/BottomSheet';
 export * from './components/Table';
+export * from './components/Panel';
+export * from './components/DescriptionList';
