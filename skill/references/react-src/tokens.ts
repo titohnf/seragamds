@@ -33,19 +33,21 @@ export const color = {
 } as const;
 
 /**
- * Tipografi Desktop (Figma Seragam Dasar, halaman Typography, Inter):
+ * Tipografi (Figma Seragam Dasar, halaman Typography, Inter). ATURAN: pakai skala MOBILE di semua perangkat, karena komponen DS hanya dibuat versi mobile.
+ * Skala Desktop (tidak dipakai): 
  * heading-large 22/28 semibold, heading-medium 19/24 semibold, heading-small 17/22 medium,
  * subHeading 14/16 semibold (huruf kapital, letter-spacing 0.5px), action 16/24 semibold,
  * body 16/24 regular, body-small 14/20 regular, helper 12/16 regular, helper-bold 12/16 semibold.
  */
 export const type = {
+  // Skala Mobile (Seragam Dasar): dipakai di desktop juga karena komponen DS hanya tersedia versi mobile.
   headingLarge: { fontSize: '22px', lineHeight: '28px', fontWeight: 600 },
-  headingMedium: { fontSize: '19px', lineHeight: '24px', fontWeight: 600 },
-  headingSmall: { fontSize: '17px', lineHeight: '22px', fontWeight: 500 },
-  subHeading: { fontSize: '14px', lineHeight: '16px', fontWeight: 600, letterSpacing: '0.5px' },
-  action: { fontSize: '16px', lineHeight: '24px', fontWeight: 600 },
-  body: { fontSize: '16px', lineHeight: '24px', fontWeight: 400 },
-  bodySmall: { fontSize: '14px', lineHeight: '20px', fontWeight: 400 },
+  headingMedium: { fontSize: '18px', lineHeight: '24px', fontWeight: 600 },
+  headingSmall: { fontSize: '16px', lineHeight: '22px', fontWeight: 600 },
+  subHeading: { fontSize: '13px', lineHeight: '16px', fontWeight: 600, letterSpacing: '0.5px' },
+  action: { fontSize: '15px', lineHeight: '22px', fontWeight: 600 },
+  body: { fontSize: '15px', lineHeight: '22px', fontWeight: 400 },
+  bodySmall: { fontSize: '13px', lineHeight: '20px', fontWeight: 400 },
   helper: { fontSize: '12px', lineHeight: '16px', fontWeight: 400 },
   helperBold: { fontSize: '12px', lineHeight: '16px', fontWeight: 600 },
 } as const;

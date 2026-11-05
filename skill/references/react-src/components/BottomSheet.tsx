@@ -13,7 +13,7 @@ export function BottomSheet({ open, onClose, title, children, action }: { open: 
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/70" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div role="dialog" aria-modal="true" className="flex max-h-[90%] w-full max-w-[640px] flex-col rounded-t-[16px] bg-white">
         <div className="mx-auto mt-[8px] h-[4px] w-[40px] rounded-full bg-sd-gray-20" />
-        {title && <h2 className="px-[16px] pb-[8px] pt-[12px] text-sd-gray-90" style={{ fontSize: 17, lineHeight: '22px', fontWeight: 600 }}>{title}</h2>}
+        {title && <h2 className="px-[16px] pb-[8px] pt-[12px] text-sd-gray-90" style={{ fontSize: 16, lineHeight: '22px', fontWeight: 600 }}>{title}</h2>}
         <div className="overflow-y-auto px-[8px] py-[8px]">{children}</div>
         {action && <div className="border-t border-sd-modal-footer-border p-[16px]">{action}</div>}
       </div>

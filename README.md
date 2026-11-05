@@ -37,6 +37,7 @@ npm run install:skill     # merakit skill/ lalu menautkannya ke ~/.claude/skills
 3. Salin `skill/` ke `.claude/skills/seragam/` (atau `~/.claude/skills/seragam/`).
 
 ## Catatan
+- **Skala tipografi:** pakai skala Mobile di semua perangkat (body 15/22, body-small 13/20, heading-medium 18/24). Komponen di Figma hanya dibuat versi mobile, jadi desktop mengikutinya agar konsisten.
 - Fondasi adalah sumber kebenaran. Dokumentasi komponen di Figma masih memakai hex lama (mis. `#0B5FEF`); di `docs/` hex lama diberi anotasi `legacy … = blue-70`.
 - Mode gelap (Mode 2) belum dimasukkan. Halaman Spacing di Figma kosong.
 - Memperbarui token: unduh ulang dari Figma lalu jalankan `tools/*.py` (butuh token Figma di `~/.figma_token`).

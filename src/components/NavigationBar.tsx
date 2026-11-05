@@ -12,7 +12,7 @@ export function NavigationBar({ items, active, className = '' }: { items: NavIte
         return (
           <Tag key={it.key} href={it.href} onClick={it.onClick} aria-current={on ? 'page' : undefined}
             className="relative flex h-[64px] items-center">
-            <span className={`rounded-[4px] px-[12px] py-[8px] outline-none hover:bg-sd-gray-5 active:bg-sd-gray-5 ${on ? 'text-sd-blue-70' : 'text-sd-gray-90'}`} style={{ fontSize: 16, lineHeight: '24px', fontWeight: 600 }}>{it.label}</span>
+            <span className={`rounded-[4px] px-[12px] py-[8px] outline-none hover:bg-sd-gray-5 active:bg-sd-gray-5 ${on ? 'text-sd-blue-70' : 'text-sd-gray-90'}`} style={{ fontSize: 15, lineHeight: '22px', fontWeight: 600 }}>{it.label}</span>
             {on && <span className="absolute bottom-0 left-1/2 h-[4px] w-[44px] -translate-x-1/2 rounded-t-[4px] bg-sd-blue-70" />}
           </Tag>
         );
