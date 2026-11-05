@@ -16,4 +16,5 @@ Untuk proyek baru: salin `references/seragam.css` ke proyek dan impor setelah `@
 4. **Komponen**: sebelum membuat komponen, baca `references/components-spec/<nama>.md` dan ikuti ukuran, padding, gap, dan token warnanya. Pakai komponen di `src/` bila ada (Tabs, Button, Badge, Banner, Chip, Checkbox, Radio, Switch, TextField, TextArea, Modal, Toast, Select, Tooltip, Breadcrumb, Pagination, Stepper, Accordion, Avatar, Card, Link, ProgressBar, EmptyState, List, Separator, SearchBar, Popover, Slider, Expander, Rating, HeaderBar, NavigationBar, BottomSheet).
 5. Hex lama di Figma (`#0B5FEF`, `#65686C`, `#2F3031`) = token baru (`blue-70`, `gray-60`, `gray-90`); selalu pakai token baru.
 6. Pastikan kontras teks minimal WCAG AA (teks sekunder pakai `gray-60`, bukan lebih pucat).
-7. Tabel: header 13/16 semibold kapital, sel 15/22. Kolom Aksi: ≤2 tombol tampil langsung, >2 masuk menu ⋮.
+7. Button: pakai `variant` ultimate (aksi utama, biru), primary (hitam), secondary (outline), quiet (teks), destructive (merah solid), atau `destructive-secondary` (outline merah, ekstensi untuk Tolak/Hapus). Jangan menulis kelas tombol sendiri.
+8. Tabel: header 13/16 semibold kapital, sel 15/22. Kolom Aksi: ≤2 tombol tampil langsung, >2 masuk menu ⋮.
