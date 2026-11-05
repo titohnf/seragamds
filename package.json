@@ -26,7 +26,11 @@
     "install:skill": "sh tools/build_skill.sh && mkdir -p ~/.claude/skills && ln -sfn \"$PWD/skill\" ~/.claude/skills/seragam",
     "dev": "vite",
     "build:gallery": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:foundations": "python3 tools/build_foundations.py",
+    "check": "python3 tools/check.py",
+    "typecheck": "tsc -p .",
+    "verify": "npm run check && npm run typecheck && vite build"
   },
   "peerDependencies": {
     "lucide-react": ">=0.400",

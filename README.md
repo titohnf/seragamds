@@ -15,7 +15,7 @@ Token dan komponen React dari Figma **Seragam Dasar** (fondasi) dan **Dokumentas
 | `src/` | Komponen React: Tabs, Button, Badge, Banner, Chip, Checkbox, Radio, Switch, TextField, TextArea, Modal, Toast, Select, Tooltip, Breadcrumb, Pagination, Stepper, Accordion, Avatar, Card, Link, ProgressBar, EmptyState, List, Separator, SearchBar, Popover, Slider, Expander, Rating, HeaderBar, NavigationBar, BottomSheet (sisanya ada di `docs/`) |
 | `examples/Gallery.tsx` | Galeri semua komponen untuk cek visual (pasang di rute mana pun) |
 | `skill/SKILL.md` | Claude Skill agar proyek lain otomatis mengikuti Seragam |
-| `tools/` | Skrip ekstraksi: `extract.py`, `render_docs.py`, `build_tokens.py` |
+| `tools/` | `extract.py`, `render_docs.py`, `build_tokens.py` (ekstraksi dari Figma); `build_foundations.py` (fondasi dari token); `build_skill.sh` (rakit skill); `check.py` (pemeriksaan konsistensi) |
 
 ## Pasang lewat git (disarankan)
 ```bash
@@ -45,3 +45,11 @@ npm run install:skill     # merakit skill/ lalu menautkannya ke ~/.claude/skills
 - Fondasi adalah sumber kebenaran. Dokumentasi komponen di Figma masih memakai hex lama (mis. `#0B5FEF`); di `docs/` hex lama diberi anotasi `legacy … = blue-70`.
 - Mode gelap (Mode 2) belum dimasukkan. Halaman Spacing di Figma kosong.
 - Memperbarui token: unduh ulang dari Figma lalu jalankan `tools/*.py` (butuh token Figma di `~/.figma_token`).
+
+## Menjaga konsistensi
+`npm run check` (Python 3, tanpa dependensi) gagal bila ada yang menyimpang: CSS tidak sama dengan token; kelas/variabel token yang dipakai kode atau dokumen tidak ada; `docs/foundations` tidak sama dengan hasil generate token; komponen yang diekspor tidak punya panduan (atau sebaliknya); tautan dokumen rusak; `skill/references` tidak sinkron. `npm run verify` menambah typecheck dan build. GitHub Action `.github/workflows/check.yml` menjalankannya di setiap push dan PR.
+
+Alur mengubah sesuatu:
+1. Token: `build_tokens.py` → `npm run build:foundations` → `npm run build:skill`.
+2. Komponen/panduan: ubah `src/` dan `docs/guidelines/komponen/`, catat keputusan di `docs/DECISIONS.md`, lalu `npm run build:skill`.
+3. `npm run verify` harus lulus sebelum commit.

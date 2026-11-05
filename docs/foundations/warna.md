@@ -2,6 +2,8 @@
 
 Sumber: Figma *Seragam Dasar* (token `tokens/seragam.tokens.json`, variabel CSS `tokens/seragam.css`). **Jangan menulis hex langsung**: pakai kelas token (`bg-sd-blue-70`, `text-sd-gray-90`, `border-sd-gray-50`).
 
+> Berkas ini dihasilkan oleh `tools/build_foundations.py`. Jangan sunting manual; ubah token lalu jalankan ulang.
+
 ## Aturan cepat
 - Teks utama `gray-90`, teks sekunder `gray-60` (kontras minimal WCAG AA; jangan lebih pucat).
 - Aksi dan tautan `blue-70`. Terpilih `blue-5`. Latar halaman `gray-0`.

@@ -2,6 +2,8 @@
 
 Font: **Inter**. Sumber: token `typography` (Figma *Seragam Dasar*).
 
+> Berkas ini dihasilkan oleh `tools/build_foundations.py`. Jangan sunting manual.
+
 ## Keputusan: pakai skala Mobile di semua perangkat
 Komponen di Figma hanya dibuat versi mobile, jadi **skala Mobile dipakai di semua perangkat** (body 15/22, body-small 13/20, action 15/22 semibold, heading-medium 18/24). Jangan memakai skala Desktop (16/24, 14/20) dan jangan memakai ukuran di luar skala. Lihat [DECISIONS](../DECISIONS.md).
 

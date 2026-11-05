@@ -1,5 +1,7 @@
 # Elevasi dan radius
 
+> Berkas ini dihasilkan oleh `tools/build_foundations.py`. Jangan sunting manual.
+
 ## Elevasi
 
 Kelas: `shadow-sd-00` … `shadow-sd-08`. Pakai elevasi 01 untuk kartu, 06 untuk modal.
