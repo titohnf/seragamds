@@ -5,6 +5,7 @@ Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya.
 ## 2026-11-05 · Pilot: menu Kepegawaian di `kemendikdasmen` (v0.8.0)
 - **Keputusan:** proyek `kemendikdasmen` dimigrasi ke Seragam hanya untuk menu Kepegawaian (kepegawaian, surat-keputusan, pemetaan-jabatan, master-data), di cabang `seragam-kepegawaian`.
 - **Temuan di design system:** label `TextField` salah (14/20 semibold; Figma 15/22 regular). Diperbaiki. `readOnly` dibutuhkan formulir tetapi tidak ada di Figma; ditambahkan sebagai ekstensi bertampilan Disabled.
+- **Konvensi tombol:** aksi utama satu-satunya di sebuah tampilan memakai `ultimate` (biru); `primary` (hitam) hanya untuk mendampingi Ultimate. 5 tombol `primary` di menu Kepegawaian (Tambah, Cari, Simpan) diganti `ultimate`.
 - **Aturan migrasi:** ganti buatan sendiri dengan komponen Seragam; hex literal menjadi token; ukuran font hanya dari skala; kontrol native tanpa padanan Seragam dibiarkan tetapi bertoken.
 - **Hasil (13 berkas, cabang `seragam-kepegawaian`):** hex literal 53 → 0; `<table>` mentah 1 → 0 (`Table`); `<input>`/`<textarea>` mentah 9 → 5; `<select>` mentah 4 → 3; modal kustom 4 → 2 (`Modal`); `<button>` mentah 61 → 40 (sisanya memakai `buttonClass`, API resmi Seragam, atau tombol ikon). Semua 23 rute Kepegawaian dan 5 rute Pengaturan (memakai tabel yang sama) dimuat tanpa galat konsol.
 - **Selisih yang sengaja dibiarkan (butuh keputusan desain):**

@@ -9,13 +9,15 @@ const TEXT = { fontSize: 15, lineHeight: '22px' } as const;
 
 type Common = { label?: string; helper?: ReactNode; error?: ReactNode };
 
+/** Bila ada `label`, akarnya `<label>` sehingga teks label terhubung ke isiannya (klik label memfokuskan, dibacakan pembaca layar). */
 function Wrap({ label, helper, error, children }: Common & { children: ReactNode }) {
+  const Root = label ? 'label' : 'div';
   return (
-    <div className="flex flex-col gap-[4px]">
+    <Root className="flex flex-col gap-[4px]">
       {label && <span className="text-sd-gray-90" style={{ fontSize: 15, lineHeight: '22px' }}>{label}</span>}
       {children}
       {(error || helper) && <span className={error ? 'text-sd-red-60' : 'text-sd-gray-60'} style={{ fontSize: 12, lineHeight: '16px' }}>{error || helper}</span>}
-    </div>
+    </Root>
   );
 }
 

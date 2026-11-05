@@ -3,8 +3,11 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.8.0
+npm i github:titohnf/seragamds#v0.8.1
 ```
+
+## 0.8.1 · 2026-11-05
+- Perbaikan aksesibilitas: `TextField`, `TextArea`, dan `Select` yang diberi `label` kini berakar `<label>`, sehingga label terhubung ke isiannya (klik label memfokuskan isian; pembaca layar membacakan label). Sebelumnya label berupa `<span>` yang tidak terhubung. Tanpa `label`, akar tetap `<div>`; API tidak berubah.
 
 ## 0.8.0 · 2026-11-05
 - Perbaikan: label `TextField`/`TextArea` kini 15/22 regular sesuai Figma (sebelumnya 14/20 semibold; `Select` sudah benar).
