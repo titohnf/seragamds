@@ -32,6 +32,7 @@ Satu komponen punya tiga nama yang berbeda di tempat berbeda. Di kode repo ini, 
 | Slider | `Slider` | [slider](komponen/slider.md) | |
 | Stepper | `Stepper` | [stepper](komponen/stepper.md) | |
 | Switch | `Switch` | [switch](komponen/switch.md) | |
+| Table | `Table`, `TableHead`, `TableBody`, `TableRow`, `TableHeaderCell`, `TableCell` | [table](komponen/table.md) | Varian `vertical-striped`/`rounded` belum ada |
 | Tabs | `Tabs` | [tabs](komponen/tabs.md) | |
 | Text Field | `TextField`, `TextArea` | [text-field](komponen/text-field.md) | Label/teks bantu/galat adalah prop |
 | Toast | `Toast` | [toast](komponen/toast.md) | Tampilan saja; posisi diatur pemanggil |
@@ -59,4 +60,4 @@ Panduan lama (`dokumentasiseragam`) memakai nama pustaka resmi. Bila membaca pan
 | `isOpen` (Dialog) | `open` |
 
 ## Belum ada di kode
-Komponen yang ada di Figma/panduan tetapi belum dibuat di repo ini (hanya spesifikasi di `docs/components/`): Carousel, Table, Footer, Status Bar, Loading (Spinner/Shimmer), dan sisanya. Lihat `docs/components/_index.json`.
+Komponen yang ada di Figma/panduan tetapi belum dibuat di repo ini (hanya spesifikasi di `docs/components/`): Carousel, Footer, Status Bar, Loading (Spinner/Shimmer), dan sisanya. Lihat `docs/components/_index.json`.

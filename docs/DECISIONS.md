@@ -2,6 +2,13 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-05 · Komponen Table ditambahkan (v0.7.0)
+- **Keputusan:** membuat `Table` (+ `TableHead`, `TableBody`, `TableRow`, `TableHeaderCell`, `TableCell`) dari spesifikasi Figma `Table`, dan token `table-stripe` (`#FAFAFA`).
+- **Mengapa:** dari semua komponen yang ada di panduan tetapi belum ada kodenya, hanya Table yang nyata dibutuhkan: `kemendikdasmen` memakai `<table>` mentah di 12 berkas. Carousel dan Footer tidak dipakai sama sekali; Spinner hanya di 1 berkas, jadi ditunda.
+- **Catatan implementasi:** garis 1px di Figma berada di dalam padding, sedangkan di CSS menambah ukuran; padding dikurangi 1px di sisi bergaris sehingga tinggi header 48/40/32 dan sel 54 sama dengan Figma.
+- **Belum ada:** varian `vertical-striped`, `rounded`, dan `responsive` dari panduan lama.
+- **Berikutnya:** mengganti `<table>` mentah di `kemendikdasmen` dengan `Table` (belum dikerjakan).
+
 ## 2026-11-05 · Situs dokumentasi dibangun dari repo ini
 - **Keputusan:** `site/` (Vite + React) membaca `docs/**/*.md` langsung dan menampilkannya bersama demo hidup komponen dari `src/`. Rute memakai hash (`#/c/button`) agar bisa dihosting statis di mana saja, tanpa konfigurasi server.
 - **Mengapa:** menggantikan `dokumentasiseragam` dan Storybook engineer; dokumen tidak punya salinan kedua yang bisa menyimpang.
@@ -14,7 +21,7 @@ Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya.
 - **Dampak:** panduan dari `dokumentasiseragam` dipindahkan ke `docs/guidelines/` dengan nama dan props disesuaikan ke kode repo ini ([pemetaan](guidelines/pemetaan-nama.md)). Proyek yang masih memakai `@wartek-id` perlu dimigrasi.
 
 ## 2026-11-05 · Cakupan: 33 komponen yang sudah ada kodenya
-- **Keputusan:** panduan penggunaan hanya untuk komponen yang punya kode di `src/` (32 halaman, `TextField` dan `TextArea` satu halaman). Komponen lain (Carousel, Table, Footer, Loading, dst.) tetap hanya berupa spesifikasi di `docs/components/`.
+- **Keputusan:** panduan penggunaan hanya untuk komponen yang punya kode di `src/` (`TextField` dan `TextArea` satu halaman). Komponen lain (Carousel, Footer, Loading, dst.) tetap hanya berupa spesifikasi di `docs/components/`.
 - **Mengapa:** menjaga dokumen sinkron dengan kode; menambah panduan untuk komponen yang belum ada kodenya hanya membuat dokumen menyimpang.
 - **Dampak:** komponen baru ditambahkan bersama panduannya, bukan terpisah.
 

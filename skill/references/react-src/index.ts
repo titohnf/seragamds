@@ -31,3 +31,4 @@ export * from './components/Rating';
 export * from './components/HeaderBar';
 export * from './components/NavigationBar';
 export * from './components/BottomSheet';
+export * from './components/Table';

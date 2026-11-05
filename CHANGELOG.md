@@ -3,8 +3,14 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.6.0
+npm i github:titohnf/seragamds#v0.7.0
 ```
+
+## 0.7.0 · 2026-11-05
+- Baru: komponen `Table` (`Table`, `TableHead`, `TableBody`, `TableRow`, `TableHeaderCell`, `TableCell`): ukuran `lg/md/sm`, `striped`, `bordered`, `headerTone`, `caption`. Sesuai spesifikasi Figma (header 48/40/32, sel 15/22).
+- Baru: token `table-stripe` (`#FAFAFA`).
+- Baru: halaman panduan `table`, demo di situs, dan bagian Table di Galeri.
+- Workflow GitHub: aksi dinaikkan (checkout/setup-node v7, pages v5) dan runner dikunci `ubuntu-24.04`.
 
 ## 0.6.0 · 2026-11-05
 Dokumentasi menjadi satu sumber kebenaran. **Tidak ada perubahan yang memutus kode komponen.**

@@ -19,6 +19,17 @@ function ExpanderDemo() { const [e, setE] = useState(false); return <Box><p clas
 function ModalDemo() { const [o, setO] = useState(false); return <><S.Button onClick={() => setO(true)}>Buka modal</S.Button><S.Modal open={o} onClose={() => setO(false)} title="Hapus laporan?" footer={<><S.Button variant="secondary" onClick={() => setO(false)}>Batal</S.Button><S.Button variant="destructive" onClick={() => setO(false)}>Hapus laporan</S.Button></>}>Laporan yang dihapus tidak bisa dikembalikan.</S.Modal></>; }
 function SheetDemo() { const [o, setO] = useState(false); const [s, setS] = useState(0); return <><S.Button variant="secondary" onClick={() => setO(true)}>Buka bottom sheet</S.Button><S.BottomSheet open={o} onClose={() => setO(false)} title="Pilih urutan">{['Terbaru', 'Terlama', 'Nama A–Z'].map((t, i) => <S.BottomSheetItem key={t} selected={s === i} onClick={() => { setS(i); setO(false); }}>{t}</S.BottomSheetItem>)}</S.BottomSheet></>; }
 
+
+const ROWS = [['Hesti Usada', 'Guru Matematika', 'Aktif'], ['Budi Santoso', 'Kepala Sekolah', 'Aktif'], ['Sari Dewi', 'Staf TU', 'Cuti'], ['Andi Pratama', 'Guru Bahasa', 'Aktif']];
+function TableDemo({ size, striped, bordered = true, headerTone }: { size?: S.TableSize; striped?: boolean; bordered?: boolean; headerTone?: S.TableHeaderTone }) {
+  return (
+    <S.Table size={size} striped={striped} bordered={bordered} headerTone={headerTone} caption="Daftar pegawai">
+      <S.TableHead><S.TableRow><S.TableHeaderCell>Nama</S.TableHeaderCell><S.TableHeaderCell>Jabatan</S.TableHeaderCell><S.TableHeaderCell>Status</S.TableHeaderCell></S.TableRow></S.TableHead>
+      <S.TableBody>{ROWS.map((r) => <S.TableRow key={r[0]}><S.TableCell>{r[0]}</S.TableCell><S.TableCell>{r[1]}</S.TableCell><S.TableCell><S.Badge tone={r[2] === 'Aktif' ? 'green' : 'amber'}>{r[2]}</S.Badge></S.TableCell></S.TableRow>)}</S.TableBody>
+    </S.Table>
+  );
+}
+
 export const demos: Record<string, () => ReactNode> = {
   button: () => <div className="flex flex-col gap-[16px]">{(['ultimate', 'primary', 'secondary', 'quiet', 'destructive', 'destructive-secondary'] as const).map((v) => <Row key={v} label={v}><S.Button variant={v}>Simpan</S.Button><S.Button variant={v} size="md">Medium</S.Button><S.Button variant={v} size="sm">Small</S.Button><S.Button variant={v} loading>Memuat</S.Button><S.Button variant={v} disabled>Nonaktif</S.Button></Row>)}</div>,
   'text-field': () => <div className="flex flex-col gap-[16px]"><Box><S.TextField label="Nama lengkap" placeholder="cth. Budi Santoso" helper="Sesuai kartu identitas" /></Box><Box><S.TextField label="Email aktif" defaultValue="budi@" error="Email tidak valid. Pastikan menggunakan format nama@email.com" /></Box><Box><S.TextField label="Nonaktif" disabled defaultValue="Tidak bisa diubah" /></Box><Box><S.TextArea label="Catatan" placeholder="Tulis catatan" /></Box></div>,
@@ -49,6 +60,7 @@ export const demos: Record<string, () => ReactNode> = {
   card: () => <Box><S.Card title="Judul kartu" action={<S.Button size="sm">Aksi</S.Button>}>Deskripsi singkat kartu.</S.Card></Box>,
   'progress-bar': () => <div className="flex w-full max-w-[328px] flex-col gap-[16px]"><S.ProgressBar value={25} /><S.ProgressBar value={60} label="60%" /><S.ProgressBar value={100} label="Selesai" labelPosition="left" /></div>,
   separator: () => <Box w={328}><p style={{ fontSize: 15 }}>Atas</p><S.Separator /><p style={{ fontSize: 15 }}>Tengah</p><S.Separator subdued /><p style={{ fontSize: 15 }}>Bawah</p></Box>,
+  table: () => <div className="flex w-full flex-col gap-[24px]"><Row label="Dasar (lg)"><div className="w-full"><TableDemo /></div></Row><Row label="Belang, header subtle, md"><div className="w-full"><TableDemo size="md" striped headerTone="subtle" /></div></Row><Row label="Tanpa garis, sm"><div className="w-full"><TableDemo size="sm" bordered={false} /></div></Row></div>,
   slider: () => <SliderDemo />,
   rating: () => <RatingDemo />,
   'header-bar': () => <Box w={420}><S.HeaderBar title="Judul halaman" actions={<S.Button size="sm">Simpan</S.Button>} /><div className="h-[16px]" /><S.HeaderBar title="Tanpa bayangan" borderless compact /></Box>,

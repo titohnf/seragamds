@@ -196,3 +196,4 @@ Nilai hex tetap yang tidak berasal dari primitif.
 | `modal-header` | `#F5F5F5` |
 | `modal-border` | `#C9CBCF` |
 | `modal-footer-border` | `#D9DBDD` |
+| `table-stripe` | `#FAFAFA` |
