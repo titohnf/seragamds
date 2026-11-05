@@ -12,11 +12,37 @@
     "./tokens": "./tokens/seragam.tokens.json",
     "./docs/*": "./docs/*"
   },
-  "files": ["src", "tokens", "docs", "skill", "examples", "tools"],
+  "files": [
+    "src",
+    "tokens",
+    "docs",
+    "skill",
+    "examples",
+    "tools"
+  ],
   "scripts": {
     "build:tokens": "python3 tools/build_tokens.py $FIGMA_STYLES_JSON",
     "build:skill": "sh tools/build_skill.sh",
-    "install:skill": "sh tools/build_skill.sh && mkdir -p ~/.claude/skills && ln -sfn \"$PWD/skill\" ~/.claude/skills/seragam"
+    "install:skill": "sh tools/build_skill.sh && mkdir -p ~/.claude/skills && ln -sfn \"$PWD/skill\" ~/.claude/skills/seragam",
+    "dev": "vite",
+    "build:gallery": "vite build",
+    "preview": "vite preview"
   },
-  "peerDependencies": { "react": ">=18", "lucide-react": ">=0.400", "tailwindcss": ">=4" }
+  "peerDependencies": {
+    "lucide-react": ">=0.400",
+    "react": ">=18",
+    "tailwindcss": ">=4"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "lucide-react": "^1.69.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.4",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.6"
+  }
 }
