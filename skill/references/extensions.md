@@ -12,6 +12,9 @@ Outline merah untuk aksi destruktif bernada rendah (Tolak, Hapus).
 ## TextField dan TextArea: `readOnly`
 Figma hanya punya state Disabled. Isian `readOnly` (data yang ditampilkan tetapi tidak boleh diubah, tetap bisa difokuskan dan disalin) memakai tampilan yang sama dengan Disabled: latar `badge-neutral`, border `modal-footer-border`, teks `gray-50`, tanpa cincin fokus biru.
 
+## Vertical Navigation: varian `light`
+Figma Seragam Web punya varian putih, tetapi lapisan hover dan aktifnya putih 10% (tak terlihat). Kode memakai `gray-5` untuk keduanya dan cincin fokus `blue-50`. Sisanya sesuai Figma. Lihat [vertical-navigation.md](guidelines/komponen/vertical-navigation.md).
+
 ## Panel
 Kartu berbagian dengan header berjudul (ikon opsional, aksi opsional) dan garis pemisah. Ditemukan 5 salinan berbeda di `kemendikdasmen` (beda warna judul, garis atau bayangan, padding 12/14/16). Standar: radius 8; `elevated` = Elevation 01, `outlined` = border `modal-footer-border`; judul 15/22 semibold `gray-60`; padding header 12×16 dan isi 16. Spesifikasi lengkap di [panel.md](guidelines/komponen/panel.md).
 

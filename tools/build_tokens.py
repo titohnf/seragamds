@@ -33,7 +33,7 @@ sem = {
 # Warna lencana/status yang dipakai literal oleh komponen (tidak ada di primitif)
 fixed = {'badge-success':'#9AE5B9','badge-warning':'#FFDFA3','badge-critical':'#FFE9EA','badge-info':'#98DAFB','badge-neutral':'#EFEFEF',
          'warning-surface':'#FFEFD6','warning-border':'#EDA62B','success-border':'#4CA375','critical-border':'#E02D38',
-         'modal-header':'#F5F5F5','modal-border':'#C9CBCF','modal-footer-border':'#D9DBDD','table-stripe':'#FAFAFA'}
+         'modal-header':'#F5F5F5','modal-border':'#C9CBCF','modal-footer-border':'#D9DBDD','table-stripe':'#FAFAFA','surface-dark-blue':'#103178'}
 
 slug = lambda n: re.sub(r'[^a-z0-9]+','-', n.lower()).strip('-')
 type_ = {}; elev = {}

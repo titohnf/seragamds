@@ -12,7 +12,7 @@ Satu sumber kebenaran untuk Design System Seragam di proyek Kemendikdasmen. Urut
 ## Bila ada konflik
 Token: berkas `tokens/` menang. Teknis (props, perilaku): kode di `src/` menang. Penggunaan dan penulisan: `docs/guidelines/`. Spesifikasi visual: `docs/components/`. Konflik yang ditemukan harus diperbaiki di sumbernya dan dicatat di [DECISIONS](DECISIONS.md).
 
-## Status komponen (36 komponen dengan kode)
+## Status komponen (37 komponen dengan kode)
 | Komponen | Kode | Panduan |
 |---|---|---|
 | [Accordion](guidelines/komponen/accordion.md) | `Accordion` | dari panduan Seragam |
@@ -45,6 +45,7 @@ Token: berkas `tokens/` menang. Teknis (props, perilaku): kode di `src/` menang.
 | [Slider](guidelines/komponen/slider.md) | `Slider` | draf |
 | [Stepper](guidelines/komponen/stepper.md) | `Stepper` | dari panduan Seragam |
 | [Switch](guidelines/komponen/switch.md) | `Switch` | draf |
+| [Vertical Navigation](guidelines/komponen/vertical-navigation.md) | `VerticalNavigation` | draf |
 | [Table](guidelines/komponen/table.md) | `Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell` | dari panduan Seragam |
 | [Tabs](guidelines/komponen/tabs.md) | `Tabs` | dari panduan Seragam |
 | [Text Field](guidelines/komponen/text-field.md) | `TextField, TextArea` | dari panduan Seragam |

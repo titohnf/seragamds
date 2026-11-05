@@ -34,3 +34,4 @@ export * from './components/BottomSheet';
 export * from './components/Table';
 export * from './components/Panel';
 export * from './components/DescriptionList';
+export * from './components/VerticalNavigation';

@@ -2,6 +2,13 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-05 · Vertical Navigation ditambahkan (v0.10.0)
+- **Keputusan:** membuat `VerticalNavigation` dari file Figma *Seragam Web* (node `10:2`): menu samping 300px, dua varian (`dark` Surface/Dark Blue, `light` putih), item induk dengan accordion, sub-menu, dan state Default/Hover/Active/Focused. Menjawab selisih "sidebar Kepegawaian tidak punya padanan Seragam" dari pilot.
+- **Token baru:** `surface-dark-blue` (`#103178`, "Expressive/Surface/Dark Blue" di Figma), ditambahkan seperti `table-stripe` (kelompok fixed).
+- **Selisih yang diputuskan:** di Figma varian putih memakai lapisan hover/aktif putih 10% (tak terlihat di latar putih). Kode memakai `gray-5` (sama dengan Navigation Bar) di varian `light`, dan cincin fokus `blue-50` alih-alih putih. Perlu dikonfirmasi tim desain.
+- **Tidak diambil dari Figma:** ikon. Figma memakai ikon Material; kode menerima ikon lucide lewat `icon` (24px), chevron memakai lucide `ChevronDown/ChevronUp`.
+- **Belum ada:** versi responsif (menu ciut/drawer) dan sub-menu lebih dari satu tingkat.
+
 ## 2026-11-05 · Standar Panel dan DescriptionList (v0.9.0)
 - **Keputusan:** menetapkan dua komponen ekstensi karena polanya ditemukan berulang: `Panel` (5 salinan berbeda di `kemendikdasmen`: judul `gray-60` vs `gray-90`, garis vs bayangan, padding 12/14/16) dan `DescriptionList` (label di atas nilai, diulang di data profil, detail usulan, dan formulir hanya-baca).
 - **Standar yang dipilih:** judul `gray-60` 15/22 semibold (mayoritas pemakaian); bayangan Elevation 01 sebagai default dan border sebagai `outlined`; semua jarak kelipatan 4 (sebelumnya 2 dan 14).

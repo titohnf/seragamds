@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import * as S from '../src';
-import { User, Building2 } from 'lucide-react';
+import { User, Building2, House, Users, FolderOpen, Palette, Image, LayoutGrid } from 'lucide-react';
 
 const Row = ({ children, label }: { children: ReactNode; label?: string }) => (
   <div className="flex flex-col gap-[8px]">
@@ -38,6 +38,20 @@ const PROFIL = [
   { label: 'Alamat', value: 'Jl. Merdeka No. 1, Kelurahan Gambir, Jakarta Pusat', full: true },
 ];
 
+const MENU: S.VerticalNavItem[] = [
+  { key: 'beranda', label: 'Beranda', icon: <House />, href: '#' },
+  { key: 'pengguna', label: 'Manajemen pengguna', icon: <Users />, children: [{ key: 'daftar', label: 'Daftar pengguna' }, { key: 'peran', label: 'Peran akses' }, { key: 'log', label: 'Riwayat aktivitas' }] },
+  { key: 'dokumen', label: 'Dokumen', icon: <FolderOpen />, children: [{ key: 'sk', label: 'Surat keputusan' }] },
+  { key: 'tampilan', label: 'Tampilan', icon: <Palette />, children: [{ key: 'tema', label: 'Tema' }] },
+  { key: 'media', label: 'Media', icon: <Image />, children: [{ key: 'galeri', label: 'Galeri' }] },
+  { key: 'aplikasi', label: 'Aplikasi', icon: <LayoutGrid />, children: [{ key: 'integrasi', label: 'Integrasi' }] },
+];
+function VerticalNavigationDemo() {
+  const [active, setActive] = useState('daftar');
+  const items = MENU.map((i) => ({ ...i, onClick: i.href ? () => setActive(i.key) : undefined, children: i.children?.map((c) => ({ ...c, onClick: () => setActive(c.key) })) }));
+  return <div className="flex flex-wrap gap-[24px]"><S.VerticalNavigation items={items} active={active} /><S.VerticalNavigation tone="light" items={items} active={active} /></div>;
+}
+
 export const demos: Record<string, () => ReactNode> = {
   button: () => <div className="flex flex-col gap-[16px]">{(['ultimate', 'primary', 'secondary', 'quiet', 'destructive', 'destructive-secondary'] as const).map((v) => <Row key={v} label={v}><S.Button variant={v}>Simpan</S.Button><S.Button variant={v} size="md">Medium</S.Button><S.Button variant={v} size="sm">Small</S.Button><S.Button variant={v} loading>Memuat</S.Button><S.Button variant={v} disabled>Nonaktif</S.Button></Row>)}</div>,
   'text-field': () => <div className="flex flex-col gap-[16px]"><Box><S.TextField label="Nama lengkap" placeholder="cth. Budi Santoso" helper="Sesuai kartu identitas" /></Box><Box><S.TextField label="Email aktif" defaultValue="budi@" error="Email tidak valid. Pastikan menggunakan format nama@email.com" /></Box><Box><S.TextField label="Nonaktif" disabled defaultValue="Tidak bisa diubah" /></Box><Box><S.TextArea label="Catatan" placeholder="Tulis catatan" /></Box></div>,
@@ -71,6 +85,7 @@ export const demos: Record<string, () => ReactNode> = {
   table: () => <div className="flex w-full flex-col gap-[24px]"><Row label="Dasar (lg)"><div className="w-full"><TableDemo /></div></Row><Row label="Belang, header subtle, md"><div className="w-full"><TableDemo size="md" striped headerTone="subtle" /></div></Row><Row label="Tanpa garis, sm"><div className="w-full"><TableDemo size="sm" bordered={false} /></div></Row></div>,
   panel: () => <div className="flex w-full max-w-[520px] flex-col gap-[16px]"><S.Panel title="Data Diri" icon={<User />}><S.DescriptionList items={PROFIL.slice(0, 4)} /></S.Panel><S.Panel variant="outlined" subtleHeader title="Unit Organisasi" icon={<Building2 />} action={<S.Button variant="quiet" size="sm">Lihat semua</S.Button>}>Balai Penjaminan Mutu Pendidikan Provinsi D.K.I. Jakarta</S.Panel></div>,
   'description-list': () => <div className="flex w-full max-w-[640px] flex-col gap-[16px]"><S.Panel title="Data Diri" icon={<User />}><S.DescriptionList items={PROFIL} /></S.Panel><S.Panel title="Satu kolom, nilai tidak berubah" variant="outlined"><S.DescriptionList columns={1} items={[{ label: 'Nama', value: 'Hesti Usada', emphasis: 'normal' }, { label: 'Catatan', value: '-', muted: true, emphasis: 'normal' }]} /></S.Panel></div>,
+  'vertical-navigation': () => <VerticalNavigationDemo />,
   slider: () => <SliderDemo />,
   rating: () => <RatingDemo />,
   'header-bar': () => <Box w={420}><S.HeaderBar title="Judul halaman" actions={<S.Button size="sm">Simpan</S.Button>} /><div className="h-[16px]" /><S.HeaderBar title="Tanpa bayangan" borderless compact /></Box>,
