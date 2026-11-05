@@ -6,6 +6,12 @@ Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya.
 - **Keputusan:** proyek `kemendikdasmen` dimigrasi ke Seragam hanya untuk menu Kepegawaian (kepegawaian, surat-keputusan, pemetaan-jabatan, master-data), di cabang `seragam-kepegawaian`.
 - **Temuan di design system:** label `TextField` salah (14/20 semibold; Figma 15/22 regular). Diperbaiki. `readOnly` dibutuhkan formulir tetapi tidak ada di Figma; ditambahkan sebagai ekstensi bertampilan Disabled.
 - **Aturan migrasi:** ganti buatan sendiri dengan komponen Seragam; hex literal menjadi token; ukuran font hanya dari skala; kontrol native tanpa padanan Seragam dibiarkan tetapi bertoken.
+- **Hasil (13 berkas, cabang `seragam-kepegawaian`):** hex literal 53 → 0; `<table>` mentah 1 → 0 (`Table`); `<input>`/`<textarea>` mentah 9 → 5; `<select>` mentah 4 → 3; modal kustom 4 → 2 (`Modal`); `<button>` mentah 61 → 40 (sisanya memakai `buttonClass`, API resmi Seragam, atau tombol ikon). Semua 23 rute Kepegawaian dan 5 rute Pengaturan (memakai tabel yang sama) dimuat tanpa galat konsol.
+- **Selisih yang sengaja dibiarkan (butuh keputusan desain):**
+  1. Modal *Detail Usulan* dan *Sinkronisasi SIASN* lebar 1040px dengan dua panel; Figma membatasi Modal sampai Large 888px. Hanya radius, overlay, bayangan, dan tombol tutup yang diselaraskan.
+  2. Tombol hanya-ikon (ubah, lihat, aksi, hapus filter) tidak punya komponen Seragam (`IconButton`).
+  3. Sidebar menu Kepegawaian (navigasi vertikal) dan tooltip grafik tidak punya padanan Seragam.
+  4. Pagination statis (`pageCount=1`) karena data contoh; belum ada pagination sungguhan.
 
 ## 2026-11-05 · Komponen Table ditambahkan (v0.7.0)
 - **Keputusan:** membuat `Table` (+ `TableHead`, `TableBody`, `TableRow`, `TableHeaderCell`, `TableCell`) dari spesifikasi Figma `Table`, dan token `table-stripe` (`#FAFAFA`).
