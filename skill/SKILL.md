@@ -5,7 +5,7 @@ description: Terapkan Design System Seragam (GovTech Kemendikdasmen) saat membua
 
 # Seragam Design System
 
-Sumber kebenaran (folder `references/` di samping berkas ini): `references/seragam.tokens.json` dan `references/seragam.css` (token), `references/components-spec/<nama>.md` (spesifikasi tiap komponen dari Figma), `references/react-src/` (kode komponen React siap salin).
+Sumber kebenaran (folder `references/` di samping berkas ini): `references/seragam.tokens.json` dan `references/seragam.css` (token), `references/components-spec/<nama>.md` (spesifikasi tiap komponen dari Figma), `references/react-src/` (kode komponen React siap salin), `references/foundations/` (warna, tipografi, elevasi, spacing), `references/guidelines/` (panduan penggunaan per komponen di `komponen/<nama>.md`, panduan penulisan `penulisan.md`, pemetaan nama `pemetaan-nama.md`), `references/extensions.md` dan `references/DECISIONS.md`.
 
 Untuk proyek baru: salin `references/seragam.css` ke proyek dan impor setelah `@import "tailwindcss"`; salin komponen yang dibutuhkan dari `references/react-src/components/` beserta `tokens.ts`. Di proyek yang memasang paket `seragam-design-system`, impor dari paket itu dan tambahkan `@source "../node_modules/seragam-design-system/src";` di CSS agar Tailwind memindai kelasnya.
 
@@ -18,3 +18,6 @@ Untuk proyek baru: salin `references/seragam.css` ke proyek dan impor setelah `@
 6. Pastikan kontras teks minimal WCAG AA (teks sekunder pakai `gray-60`, bukan lebih pucat).
 7. Button: pakai `variant` ultimate (aksi utama, biru), primary (hitam), secondary (outline), quiet (teks), destructive (merah solid), atau `destructive-secondary` (outline merah, ekstensi untuk Tolak/Hapus). Jangan menulis kelas tombol sendiri.
 8. Tabel: header 13/16 semibold kapital, sel 15/22. Kolom Aksi: ≤2 tombol tampil langsung, >2 masuk menu ⋮.
+9. **Panduan penggunaan**: sebelum memakai komponen, baca `references/guidelines/komponen/<nama>.md` (kapan dipakai, do & don't). Halaman bertanda *draf* belum resmi; ikuti sebagai saran dan tandai bila Anda menyimpang.
+10. **Penulisan teks UI**: baca `references/guidelines/penulisan.md` sebelum menulis teks. Semua teks Bahasa Indonesia; tombol: kata kerja, sentence case, maks 3 kata; galat: masalah + solusi; empty state: judul Title Case, jelaskan alasan kosong dan arahkan langkah berikutnya; tidak ada "Lorem ipsum".
+11. **Nama komponen**: gunakan nama kode (mis. `TextField`, `Modal`, `BottomSheet`). Nama `@wartek-id` (`Input`, `Dialog`, `Sheet`, `Navbar`) tidak ada di sini; lihat `references/guidelines/pemetaan-nama.md`.

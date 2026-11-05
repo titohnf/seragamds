@@ -6,4 +6,7 @@ rm -rf skill/references && mkdir -p skill/references
 cp tokens/seragam.tokens.json tokens/seragam.css skill/references/
 cp -R docs/components skill/references/components-spec
 cp -R src skill/references/react-src
+cp -R docs/foundations skill/references/foundations
+cp -R docs/guidelines skill/references/guidelines
+cp docs/extensions.md docs/DECISIONS.md skill/references/
 echo "skill/ siap: $(du -sh skill | cut -f1)"
