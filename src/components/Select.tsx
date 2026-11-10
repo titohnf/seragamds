@@ -15,7 +15,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSel
           {placeholder && <option value="">{placeholder}</option>}
           {children}
         </select>
-        <svg aria-hidden viewBox="0 0 24 24" className="pointer-events-none absolute right-[12px] top-1/2 size-[20px] -translate-y-1/2 text-sd-gray-60" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+        <svg aria-hidden viewBox="0 0 24 24" className="pointer-events-none absolute right-[12px] top-1/2 size-[24px] -translate-y-1/2 text-sd-gray-70" fill="currentColor"><path d="M7 10l5 5 5-5z" /></svg>
       </div>
       {(error || helper) && <span className={error ? 'text-sd-red-60' : 'text-sd-gray-60'} style={{ fontSize: 12, lineHeight: '16px' }}>{error || helper}</span>}
     </Root>

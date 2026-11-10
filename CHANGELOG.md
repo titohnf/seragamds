@@ -6,6 +6,9 @@ Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Version
 npm i github:titohnf/seragamds#v0.10.0
 ```
 
+## Belum dirilis
+- `Select`: panah dropdown kini berupa segitiga isi (`arrow_drop_down`, 24px, `gray-70`) sesuai Figma Rapor Pendidikan, bukan chevron garis. Chevron garis tetap dipakai `Accordion` dan `Expander` (penanda buka/tutup).
+
 ## 0.10.0 · 2026-11-05
 - Baru: `VerticalNavigation` (menu samping dari Figma Seragam Web): varian `dark`/`light`, induk accordion (terkendali atau tak terkendali), sub-menu, state hover/aktif/fokus, `aria-expanded` dan `aria-current`.
 - Token baru: `surface-dark-blue` (`#103178`).
