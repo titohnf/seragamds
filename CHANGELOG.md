@@ -3,8 +3,12 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.10.1
+npm i github:titohnf/seragamds#v0.11.0
 ```
+
+## 0.11.0 · 2026-11-10
+- Baru (ekstensi di luar Figma): `Table` menerima `bordered="rows"`, hanya garis horizontal antar baris tanpa garis vertikal antar kolom. `bordered` kini bertipe `true | 'rows' | false` (bawaan `true`, tidak berubah). Tipe `TableBorder` diekspor. `TableRow` menerima `selected`. Semua baris punya status hover dan isi rata tengah vertikal. Lihat `docs/extensions.md`.
+- Panduan `table.md`: aturan en dash untuk nilai kosong, maksimal 2 baris per sel di desktop, kotak centang untuk baris terpilih, larangan `striped` pada tabel interaktif.
 
 ## 0.10.1 · 2026-11-10
 - `Select`: panah dropdown kini berupa segitiga isi (`arrow_drop_down`, 24px, `gray-70`) sesuai Figma Rapor Pendidikan, bukan chevron garis. Chevron garis tetap dipakai `Accordion` dan `Expander` (penanda buka/tutup).

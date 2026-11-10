@@ -2,6 +2,12 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-10 · Table: pemisah antar baris, hover, dan baris terpilih (v0.11.0)
+- **Keputusan:** `Table.bordered` menjadi `true | 'rows' | false` (`true` tetap bawaan). `'rows'` memberi hanya garis horizontal antar baris. Semua baris mendapat status hover, isi rata tengah vertikal, dan `TableRow` punya prop `selected`. Panduan menambah aturan en dash, maksimal 2 baris per sel, kotak centang untuk baris terpilih, dan larangan `striped` pada tabel interaktif.
+- **Mengapa:** ditemukan saat membangun tabel pemilihan indikator di prototipe platform-spmp. Figma Seragam Web (node `505:24585`) dan halaman Table di seragam.belajar.id memakai pemisah antar baris, sedangkan Figma mobile (dasar kode) memakai kotak penuh atau tanpa garis.
+- **Tidak diadopsi:** dari Figma Web, header abu `#D9DBDD`, judul kolom Title Case, dan teks 14/20. Tim memutuskan standar tetap token Seragam dan skala mobile (header `subtle`/putih 13/16 kapital, sel 15/22); file Figma Web diperkirakan belum diperbarui. Perlu dikonfirmasi tim desain Seragam.
+- **Dampak:** tidak merusak. `true` dan `false` berperilaku seperti sebelumnya; hover dan perataan tengah vertikal menambah perilaku baru pada semua tabel.
+
 ## 2026-11-05 · Vertical Navigation ditambahkan (v0.10.0)
 - **Keputusan:** membuat `VerticalNavigation` dari file Figma *Seragam Web* (node `10:2`): menu samping 300px, dua varian (`dark` Surface/Dark Blue, `light` putih), item induk dengan accordion, sub-menu, dan state Default/Hover/Active/Focused. Menjawab selisih "sidebar Kepegawaian tidak punya padanan Seragam" dari pilot.
 - **Token baru:** `surface-dark-blue` (`#103178`, "Expressive/Surface/Dark Blue" di Figma), ditambahkan seperti `table-stripe` (kelompok fixed).
