@@ -8,6 +8,7 @@ npm i github:titohnf/seragamds#v0.11.0
 
 ## 0.11.0 · 2026-11-10
 - Baru (ekstensi di luar Figma): `Table` menerima `bordered="rows"`, hanya garis horizontal antar baris tanpa garis vertikal antar kolom. `bordered` kini bertipe `true | 'rows' | false` (bawaan `true`, tidak berubah). Tipe `TableBorder` diekspor. `TableRow` menerima `selected`. Semua baris punya status hover dan isi rata tengah vertikal. Lihat `docs/extensions.md`.
+- Baru (ekstensi): `Table headerTone="neutral"` (`#EFEFEF`) dan `Table hoverable` (matikan hover baris). `Tabs`: hitungan pada tab aktif berlatar `action-default`. Keputusan dari penerapan di prototipe platform-spmp dicatat di `DECISIONS.md` (termasuk skala huruf Desktop untuk produk web desktop).
 - Panduan `table.md`: aturan en dash untuk nilai kosong, maksimal 2 baris per sel di desktop, kotak centang untuk baris terpilih, larangan `striped` pada tabel interaktif.
 
 ## 0.10.1 · 2026-11-10
