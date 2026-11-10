@@ -3,10 +3,10 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.10.0
+npm i github:titohnf/seragamds#v0.10.1
 ```
 
-## Belum dirilis
+## 0.10.1 · 2026-11-10
 - `Select`: panah dropdown kini berupa segitiga isi (`arrow_drop_down`, 24px, `gray-70`) sesuai Figma Rapor Pendidikan, bukan chevron garis. Chevron garis tetap dipakai `Accordion` dan `Expander` (penanda buka/tutup).
 
 ## 0.10.0 · 2026-11-05
