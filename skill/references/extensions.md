@@ -12,6 +12,15 @@ Outline merah untuk aksi destruktif bernada rendah (Tolak, Hapus).
 ## TextField dan TextArea: `readOnly`
 Figma hanya punya state Disabled. Isian `readOnly` (data yang ditampilkan tetapi tidak boleh diubah, tetap bisa difokuskan dan disalin) memakai tampilan yang sama dengan Disabled: latar `badge-neutral`, border `modal-footer-border`, teks `gray-50`, tanpa cincin fokus biru.
 
+## Table: `bordered="rows"`
+Figma mobile hanya punya Border=True (garis di semua sisi sel) dan Border=False (tanpa garis, baris menempel kecuali `striped`). Untuk daftar data dengan tombol aksi, garis vertikal antar kolom terasa kaku, sedangkan Figma Web dan halaman panduan web menampilkan pemisah antar baris saja. `bordered="rows"` memberi garis 1px `modal-footer-border` hanya di atas header, di bawah header, dan di bawah tiap baris, tanpa garis kiri, kanan, atau antar kolom. Padding tetap 16/12/8 (garis di dalam padding). Header dan sel sama dengan `Table` lain. Lihat [table.md](guidelines/komponen/table.md).
+
+## Table: `headerTone="neutral"` dan `hoverable`
+`neutral` memberi header abu `#EFEFEF` (token `badge-neutral`). Varian `subtle` (`#F5F5F5`) hampir sama dengan latar halaman `gray-0` (`#F9F9F9`) sehingga header menyatu dengan latar di halaman berlatar abu. `hoverable={false}` mematikan sorotan hover baris untuk tabel yang barisnya tidak bisa diklik (hanya tombol di dalamnya yang interaktif); bawaannya tetap hover aktif. Lihat [table.md](guidelines/komponen/table.md).
+
+## Tabs: hitungan pada tab aktif
+Hitungan (`count`) pada tab aktif memakai latar `action-default` dengan teks putih; di Figma semua hitungan abu netral sehingga hitungan pada tab aktif sulit terlihat. Lihat [tabs.md](guidelines/komponen/tabs.md).
+
 ## Vertical Navigation: varian `light`
 Figma Seragam Web punya varian putih, tetapi lapisan hover dan aktifnya putih 10% (tak terlihat). Kode memakai `gray-5` untuk keduanya dan cincin fokus `blue-50`. Sisanya sesuai Figma. Lihat [vertical-navigation.md](guidelines/komponen/vertical-navigation.md).
 

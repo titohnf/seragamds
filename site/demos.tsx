@@ -22,9 +22,9 @@ function SheetDemo() { const [o, setO] = useState(false); const [s, setS] = useS
 
 
 const ROWS = [['Hesti Usada', 'Guru Matematika', 'Aktif'], ['Budi Santoso', 'Kepala Sekolah', 'Aktif'], ['Sari Dewi', 'Staf TU', 'Cuti'], ['Andi Pratama', 'Guru Bahasa', 'Aktif']];
-function TableDemo({ size, striped, bordered = true, headerTone }: { size?: S.TableSize; striped?: boolean; bordered?: boolean; headerTone?: S.TableHeaderTone }) {
+function TableDemo({ size, striped, bordered = true, hoverable, headerTone }: { size?: S.TableSize; striped?: boolean; bordered?: S.TableBorder; hoverable?: boolean; headerTone?: S.TableHeaderTone }) {
   return (
-    <S.Table size={size} striped={striped} bordered={bordered} headerTone={headerTone} caption="Daftar pegawai">
+    <S.Table size={size} striped={striped} bordered={bordered} hoverable={hoverable} headerTone={headerTone} caption="Daftar pegawai">
       <S.TableHead><S.TableRow><S.TableHeaderCell>Nama</S.TableHeaderCell><S.TableHeaderCell>Jabatan</S.TableHeaderCell><S.TableHeaderCell>Status</S.TableHeaderCell></S.TableRow></S.TableHead>
       <S.TableBody>{ROWS.map((r) => <S.TableRow key={r[0]}><S.TableCell>{r[0]}</S.TableCell><S.TableCell>{r[1]}</S.TableCell><S.TableCell><S.Badge tone={r[2] === 'Aktif' ? 'green' : 'amber'}>{r[2]}</S.Badge></S.TableCell></S.TableRow>)}</S.TableBody>
     </S.Table>
@@ -82,7 +82,7 @@ export const demos: Record<string, () => ReactNode> = {
   card: () => <Box><S.Card title="Judul kartu" action={<S.Button size="sm">Aksi</S.Button>}>Deskripsi singkat kartu.</S.Card></Box>,
   'progress-bar': () => <div className="flex w-full max-w-[328px] flex-col gap-[16px]"><S.ProgressBar value={25} /><S.ProgressBar value={60} label="60%" /><S.ProgressBar value={100} label="Selesai" labelPosition="left" /></div>,
   separator: () => <Box w={328}><p style={{ fontSize: 15 }}>Atas</p><S.Separator /><p style={{ fontSize: 15 }}>Tengah</p><S.Separator subdued /><p style={{ fontSize: 15 }}>Bawah</p></Box>,
-  table: () => <div className="flex w-full flex-col gap-[24px]"><Row label="Dasar (lg)"><div className="w-full"><TableDemo /></div></Row><Row label="Belang, header subtle, md"><div className="w-full"><TableDemo size="md" striped headerTone="subtle" /></div></Row><Row label="Tanpa garis, sm"><div className="w-full"><TableDemo size="sm" bordered={false} /></div></Row></div>,
+  table: () => <div className="flex w-full flex-col gap-[24px]"><Row label="Dasar (lg)"><div className="w-full"><TableDemo /></div></Row><Row label="Belang, header subtle, md"><div className="w-full"><TableDemo size="md" striped headerTone="subtle" /></div></Row><Row label="Garis antar baris, header subtle (ekstensi)"><div className="w-full"><TableDemo bordered="rows" headerTone="subtle" /></div></Row><Row label="Garis antar baris, header neutral, tanpa hover (ekstensi)"><div className="w-full"><TableDemo bordered="rows" headerTone="neutral" hoverable={false} /></div></Row><Row label="Tanpa garis, sm"><div className="w-full"><TableDemo size="sm" bordered={false} /></div></Row></div>,
   panel: () => <div className="flex w-full max-w-[520px] flex-col gap-[16px]"><S.Panel title="Data Diri" icon={<User />}><S.DescriptionList items={PROFIL.slice(0, 4)} /></S.Panel><S.Panel variant="outlined" subtleHeader title="Unit Organisasi" icon={<Building2 />} action={<S.Button variant="quiet" size="sm">Lihat semua</S.Button>}>Balai Penjaminan Mutu Pendidikan Provinsi D.K.I. Jakarta</S.Panel></div>,
   'description-list': () => <div className="flex w-full max-w-[640px] flex-col gap-[16px]"><S.Panel title="Data Diri" icon={<User />}><S.DescriptionList items={PROFIL} /></S.Panel><S.Panel title="Satu kolom, nilai tidak berubah" variant="outlined"><S.DescriptionList columns={1} items={[{ label: 'Nama', value: 'Hesti Usada', emphasis: 'normal' }, { label: 'Catatan', value: '-', muted: true, emphasis: 'normal' }]} /></S.Panel></div>,
   'vertical-navigation': () => <VerticalNavigationDemo />,

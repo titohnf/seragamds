@@ -33,7 +33,7 @@ def tipografi(d):
     L = ["# Tipografi", "", "Font: **Inter**. Sumber: token `typography` (Figma *Seragam Dasar*).", "",
          "> Berkas ini dihasilkan oleh `tools/build_foundations.py`. Jangan sunting manual.", "",
          "## Keputusan: pakai skala Mobile di semua perangkat",
-         "Komponen di Figma hanya dibuat versi mobile, jadi **skala Mobile dipakai di semua perangkat** (body 15/22, body-small 13/20, action 15/22 semibold, heading-medium 18/24). Jangan memakai skala Desktop (16/24, 14/20) dan jangan memakai ukuran di luar skala. Lihat [DECISIONS](../DECISIONS.md).", "",
+         "Komponen di Figma hanya dibuat versi mobile, jadi **skala Mobile dipakai di semua perangkat** (body 15/22, body-small 13/20, action 15/22 semibold, heading-medium 18/24). Jangan memakai ukuran di luar skala. Pengecualian: produk web desktop (mis. prototipe platform-spmp) memakai skala Desktop (body 16/24, body-small 14/20, action 16/24 semibold, heading-medium 19/24) sesuai keputusan 2026-11-10. Lihat [DECISIONS](../DECISIONS.md).", "",
          "Kelas CSS: `.sd-t-mobile-<nama>` (dan `.sd-t-desktop-<nama>` bila perlu).", "", "## Skala Mobile (dipakai)", ""] + head
     for n, t in sorted(T['mobile'].items(), key=lambda x: -x[1]['size']): L.append(row(n, t))
     L += ["", "## Skala Desktop (referensi, tidak dipakai)", ""] + head

@@ -2,6 +2,21 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-10 · Keputusan dari penerapan di prototipe platform-spmp (v0.11.0)
+Diputuskan Tito saat menyelaraskan prototipe desktop platform-spmp dengan Seragam. Berlaku untuk produk web desktop.
+- **Skala huruf Desktop untuk produk web desktop.** Prototipe memakai token `--sd-type-desktop-*` (helper 12/16, subheading 14/16, bodysmall 14/20, body 16/24, action 16/24 semibold, headingmedium 19/24, headinglarge 22/28, displaysmall 24/28), bukan skala Mobile. Ini mengecualikan keputusan v0.5.0 ("skala Mobile di semua perangkat") untuk produk desktop; skala Mobile tetap untuk aplikasi mobile dan komponen di repo ini. Padanan: body 15/22 ↔ 16/24, bodysmall 13/20 ↔ 14/20, action 15/22 ↔ 16/24, subheading 13/16 ↔ 14/16. Kode komponen di repo ini belum dimigrasi ke skala Desktop; perlu keputusan lanjutan. Hanya berat 400 dan 600 yang dipakai (tidak ada 700).
+- **Header tabel `neutral` `#EFEFEF`.** Warna `subtle` `#F5F5F5` hampir sama dengan latar halaman `gray-0` `#F9F9F9`, sehingga header terlihat menyatu. Warna abu `#D9DBDD` dan teks 14/20 dari Figma *Seragam Web* (node `505:24585`) tidak dipakai; Tito menilai file Figma itu perlu diperbarui.
+- **Hover baris hanya bila baris bisa diklik.** Baris yang hanya berisi tombol (mis. daftar indikator dengan tombol Pilih) tidak disorot saat kursor lewat, karena terlihat seperti bisa diklik. Ditambah `Table hoverable` (bawaan `true`).
+- **Pemilihan yang membuka dialog memakai tombol, bukan kotak centang.** Klik Pilih pada indikator membuka dialog target; kotak centang dicadangkan untuk pemilihan langsung tanpa dialog. Tombol Pilih memakai Secondary, Batalkan memakai `destructive-secondary`; Ultimate tetap satu per layar di luar tabel.
+- **Hitungan pada tab aktif berwarna aksi** (`Tabs count`), karena abu netral tidak terlihat di tab aktif.
+- **Hover Secondary** mengikuti komponen: latar `gray-0`, border tetap `gray-50`, tekan `gray-10` (bukan abu lebih gelap dengan border `gray-70`).
+
+## 2026-11-10 · Table: pemisah antar baris, hover, dan baris terpilih (v0.11.0)
+- **Keputusan:** `Table.bordered` menjadi `true | 'rows' | false` (`true` tetap bawaan). `'rows'` memberi hanya garis horizontal antar baris. Semua baris mendapat status hover, isi rata tengah vertikal, dan `TableRow` punya prop `selected`. Panduan menambah aturan en dash, maksimal 2 baris per sel, kotak centang untuk baris terpilih, dan larangan `striped` pada tabel interaktif.
+- **Mengapa:** ditemukan saat membangun tabel pemilihan indikator di prototipe platform-spmp. Figma Seragam Web (node `505:24585`) dan halaman Table di seragam.belajar.id memakai pemisah antar baris, sedangkan Figma mobile (dasar kode) memakai kotak penuh atau tanpa garis.
+- **Tidak diadopsi:** dari Figma Web, header abu `#D9DBDD`, judul kolom Title Case, dan teks 14/20. Tim memutuskan standar tetap token Seragam dan skala mobile (header `subtle`/putih 13/16 kapital, sel 15/22); file Figma Web diperkirakan belum diperbarui. Perlu dikonfirmasi tim desain Seragam.
+- **Dampak:** tidak merusak. `true` dan `false` berperilaku seperti sebelumnya; hover dan perataan tengah vertikal menambah perilaku baru pada semua tabel.
+
 ## 2026-11-05 · Vertical Navigation ditambahkan (v0.10.0)
 - **Keputusan:** membuat `VerticalNavigation` dari file Figma *Seragam Web* (node `10:2`): menu samping 300px, dua varian (`dark` Surface/Dark Blue, `light` putih), item induk dengan accordion, sub-menu, dan state Default/Hover/Active/Focused. Menjawab selisih "sidebar Kepegawaian tidak punya padanan Seragam" dari pilot.
 - **Token baru:** `surface-dark-blue` (`#103178`, "Expressive/Surface/Dark Blue" di Figma), ditambahkan seperti `table-stripe` (kelompok fixed).
