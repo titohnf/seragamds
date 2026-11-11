@@ -22,7 +22,7 @@ Satu komponen punya tiga nama yang berbeda di tempat berbeda. Di kode repo ini, 
 | Link | `Link` | [link](komponen/link.md) | |
 | List | `List`, `ListItem` | [list](komponen/list.md) | |
 | Modal | `Modal` | [modal](komponen/modal.md) | |
-| Vertical Navigation / Sidebar Menu | `VerticalNavigation` | [vertical-navigation](komponen/vertical-navigation.md) | Dari Figma Seragam Web; menu samping. Halaman Sidebar Menu di situs gagal dimuat |
+| Vertical Navigation / Sidebar Menu | `VerticalNavigation` | [vertical-navigation](komponen/vertical-navigation.md) | Dari Figma Seragam Web; menu samping. Jenis Main Menu dan Main Menu + Additional (`additional`) |
 | Navigation Bar | `NavigationBar` | [navigation-bar](komponen/navigation-bar.md) | Menu atas desktop |
 | (ekstensi) Description List | `DescriptionList` | [description-list](komponen/description-list.md) | Tidak ada di Figma |
 | Pagination | `Pagination` | [pagination](komponen/pagination.md) | Figma menandai WIP |

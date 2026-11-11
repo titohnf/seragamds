@@ -51,7 +51,7 @@ Token: berkas `tokens/` menang. Teknis (props, perilaku): kode di `src/` menang.
 | [Slider](guidelines/komponen/slider.md) | `Slider` | draf |
 | [Stepper](guidelines/komponen/stepper.md) | `Stepper` | dari panduan Seragam |
 | [Switch](guidelines/komponen/switch.md) | `Switch` | draf |
-| [Vertical Navigation](guidelines/komponen/vertical-navigation.md) | `VerticalNavigation` | draf |
+| [Vertical Navigation](guidelines/komponen/vertical-navigation.md) | `VerticalNavigation` | dari panduan Seragam |
 | [Table](guidelines/komponen/table.md) | `Table, TableHead, TableBody, TableRow, TableHeaderCell, TableCell` | dari panduan Seragam |
 | [Tabs](guidelines/komponen/tabs.md) | `Tabs` | dari panduan Seragam |
 | [Text Field](guidelines/komponen/text-field.md) | `TextField, TextArea` | dari panduan Seragam |

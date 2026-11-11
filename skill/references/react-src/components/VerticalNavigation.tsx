@@ -31,19 +31,21 @@ const LABEL = { ...typo.body } as const;
  * Item 48px (padding 12, gap 12, label 16/24, ikon 24, radius 8). Aktif = label bold + lapisan putih 10%;
  * fokus = border 2px putih (radius 4). Item dengan `children` membuka accordion (chevron 24) dan sub-menu
  * menjorok 36px dengan jarak 8. `tone="dark"` (default, Surface/Dark Blue) atau `"light"` (putih, teks gray-90).
+ * Dua jenis (panduan seragam.belajar.id/sidebar-menu): **Main Menu** (`items`) dan **Main Menu + Additional** (`additional`: menu tambahan generik seperti Pengaturan dan Bantuan, dipisah garis dan menempel di dasar menu).
+ * Responsif: di bawah 800px lebar mengikuti layar (penuh); mulai 800px lebar minimum 300px.
  * `active` adalah key item atau sub-menu yang sedang dibuka; induknya terbuka otomatis. Kontrol buka-tutup dengan
  * `expanded` + `onExpandedChange`, atau biarkan tak terkendali lewat `defaultExpanded`.
  */
 export function VerticalNavigation({
-  items, active, tone = 'dark', expanded, defaultExpanded, onExpandedChange, 'aria-label': ariaLabel = 'Navigasi samping', className = '',
+  items, additional, active, tone = 'dark', expanded, defaultExpanded, onExpandedChange, 'aria-label': ariaLabel = 'Navigasi samping', className = '',
 }: {
-  items: VerticalNavItem[]; active?: string; tone?: Tone;
+  items: VerticalNavItem[]; additional?: VerticalNavItem[]; active?: string; tone?: Tone;
   expanded?: string[]; defaultExpanded?: string[]; onExpandedChange?: (keys: string[]) => void;
   'aria-label'?: string; className?: string;
 }) {
   const uid = useId();
   const t = TONE[tone];
-  const [inner, setInner] = useState<string[]>(() => defaultExpanded ?? items.filter((i) => i.children?.some((c) => c.key === active)).map((i) => i.key));
+  const [inner, setInner] = useState<string[]>(() => defaultExpanded ?? [...items, ...(additional ?? [])].filter((i) => i.children?.some((c) => c.key === active)).map((i) => i.key));
   const open = expanded ?? inner;
   const toggle = (key: string) => {
     const next = open.includes(key) ? open.filter((k) => k !== key) : [...open, key];
@@ -63,30 +65,33 @@ export function VerticalNavigation({
     );
   };
 
+  const renderItems = (list: VerticalNavItem[]) => list.map((it) => {
+    if (!it.children?.length) return <li key={it.key}>{leaf(it, it.icon)}</li>;
+    const isOpen = open.includes(it.key);
+    const panelId = `${uid}-${it.key}`;
+    const Chevron = isOpen ? ChevronUp : ChevronDown;
+    return (
+      <li key={it.key} className="flex flex-col gap-[12px]">
+        <button type="button" aria-expanded={isOpen} aria-controls={panelId} onClick={() => toggle(it.key)} className={rowClass(false)}>
+          {it.icon && <span aria-hidden className="grid size-[24px] shrink-0 place-items-center [&>svg]:size-[24px]">{it.icon}</span>}
+          <span className="min-w-px flex-1" style={{ ...LABEL, fontWeight: 400 }}>{it.label}</span>
+          <Chevron aria-hidden className="size-[24px] shrink-0" />
+        </button>
+        {isOpen && (
+          <ul id={panelId} className="ml-[36px] flex flex-col gap-[8px]">
+            {it.children.map((c) => <li key={c.key}>{leaf(c)}</li>)}
+          </ul>
+        )}
+      </li>
+    );
+  });
+
   return (
-    <nav aria-label={ariaLabel} className={`w-[300px] shadow-sd-01 ${t.root} ${className}`}>
-      <ul className="flex flex-col gap-[12px] px-[12px] pb-[20px] pt-[20px]">
-        {items.map((it) => {
-          if (!it.children?.length) return <li key={it.key}>{leaf(it, it.icon)}</li>;
-          const isOpen = open.includes(it.key);
-          const panelId = `${uid}-${it.key}`;
-          const Chevron = isOpen ? ChevronUp : ChevronDown;
-          return (
-            <li key={it.key} className="flex flex-col gap-[12px]">
-              <button type="button" aria-expanded={isOpen} aria-controls={panelId} onClick={() => toggle(it.key)} className={rowClass(false)}>
-                {it.icon && <span aria-hidden className="grid size-[24px] shrink-0 place-items-center [&>svg]:size-[24px]">{it.icon}</span>}
-                <span className="min-w-px flex-1" style={{ ...LABEL, fontWeight: 400 }}>{it.label}</span>
-                <Chevron aria-hidden className="size-[24px] shrink-0" />
-              </button>
-              {isOpen && (
-                <ul id={panelId} className="ml-[36px] flex flex-col gap-[8px]">
-                  {it.children.map((c) => <li key={c.key}>{leaf(c)}</li>)}
-                </ul>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+    <nav aria-label={ariaLabel} className={`flex w-full flex-col shadow-sd-01 min-[800px]:w-[300px] min-[800px]:min-w-[300px] ${t.root} ${className}`}>
+      <ul className="flex flex-col gap-[12px] px-[12px] pb-[20px] pt-[20px]">{renderItems(items)}</ul>
+      {additional && additional.length > 0 && (
+        <ul aria-label="Menu tambahan" className={`mt-auto flex flex-col gap-[12px] border-t px-[12px] pb-[20px] pt-[20px] ${tone === 'dark' ? 'border-white/20' : 'border-sd-modal-footer-border'}`}>{renderItems(additional)}</ul>
+      )}
     </nav>
   );
 }
