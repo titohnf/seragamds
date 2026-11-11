@@ -26,6 +26,8 @@ Rangkuman keputusan UX untuk membangun halaman dan alur dengan Seragam: komponen
 | Memilih beberapa, atau menyetujui | [Checkbox](komponen/checkbox.md) | Radio, Switch |
 | Pengaturan on/off yang langsung berlaku | [Switch](komponen/switch.md) | Checkbox |
 | Angka naik-turun bertahap | [Stepper](komponen/stepper.md) | Text Field |
+| Tanggal | [Date Picker](komponen/date-picker.md) | Select tiga kolom, teks bebas |
+| Kelompok Radio atau Checkbox berlabel | [Field Group](komponen/form-field.md) | `<span>` sebagai judul |
 | Data berbasis teks, banyak, mudah dipindai | [List](komponen/list.md) | Card |
 | Data berkolom dan dibandingkan | [Table](komponen/table.md) | List |
 | Visual jadi fokus | [Card](komponen/card.md) | List |

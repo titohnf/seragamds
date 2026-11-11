@@ -42,3 +42,5 @@ export * from './components/Carousel';
 export * from './components/Footer';
 export * from './components/Loading';
 export * from './components/Platform';
+export * from './components/DatePicker';
+export * from './components/FormField';

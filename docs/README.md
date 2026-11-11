@@ -7,12 +7,12 @@ Satu sumber kebenaran untuk Design System Seragam di proyek Kemendikdasmen. Urut
 3. **[Panduan penggunaan komponen](guidelines/README.md)**: kapan memakai apa, ditambah do & don't (halaman di bawah).
 4. **[Spesifikasi visual](components/)**: ukuran, padding, radius, warna token tiap komponen, dari Figma.
 5. **[Pemetaan nama](guidelines/pemetaan-nama.md)**: nama Figma ↔ nama kode ↔ nama `@wartek-id`.
-6. **[Ekstensi di luar Figma](extensions.md)** dan **[catatan keputusan](DECISIONS.md)**.
+6. **[Ekstensi di luar Figma](extensions.md)**, **[catatan keputusan](DECISIONS.md)**, dan **[perlu keputusan desain](PERLU-KEPUTUSAN-DESAIN.md)**.
 
 ## Bila ada konflik
 Token: berkas `tokens/` menang. Teknis (props, perilaku): kode di `src/` menang. Penggunaan dan penulisan: `docs/guidelines/`. Spesifikasi visual: `docs/components/`. Konflik yang ditemukan harus diperbaiki di sumbernya dan dicatat di [DECISIONS](DECISIONS.md).
 
-## Status komponen (45 komponen dengan kode)
+## Status komponen (57 nama komponen dengan kode)
 | Komponen | Kode | Panduan |
 |---|---|---|
 | [Accordion](guidelines/komponen/accordion.md) | `Accordion` | dari panduan Seragam |
@@ -23,6 +23,8 @@ Token: berkas `tokens/` menang. Teknis (props, perilaku): kode di `src/` menang.
 | [Breadcrumb](guidelines/komponen/breadcrumb.md) | `Breadcrumb` | dari panduan Seragam |
 | [Button](guidelines/komponen/button.md) | `Button` | dari panduan Seragam |
 | [Card](guidelines/komponen/card.md) | `Card` | draf |
+| [Date Picker](guidelines/komponen/date-picker.md) | `DatePicker, Calendar` | ekstensi |
+| [Form Field](guidelines/komponen/form-field.md) | `FormField, FieldGroup` | ekstensi |
 | [Description List](guidelines/komponen/description-list.md) | `DescriptionList` | ekstensi |
 | [Carousel](guidelines/komponen/carousel.md) | `Carousel` | dari panduan Seragam |
 | [Checkbox](guidelines/komponen/checkbox.md) | `Checkbox` | dari panduan Seragam |

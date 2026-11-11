@@ -108,7 +108,33 @@ function ProcessStepsDemo() {
   </div>;
 }
 
+function DatePickerDemo() {
+  const [a, setA] = useState<string | null>('1990-05-17'); const [b, setB] = useState<string | null>('2025-11-12'); const [c, setC] = useState<string | null>(null);
+  return <div className="flex w-full max-w-[420px] flex-col gap-[24px]">
+    <S.DatePicker label="Tanggal lahir" helper="Sesuai kartu identitas" value={a} onChange={setA} />
+    <S.DatePicker label="Tanggal pelaksanaan" helper="Pilih 5 sampai 25 November 2025" value={b} onChange={setB} min="2025-11-05" max="2025-11-25" />
+    <S.DatePicker label="Tanggal berakhir" optional value={c} onChange={setC} />
+    <S.DatePicker label="Tanggal (nonaktif)" disabled value="2025-01-01" onChange={() => {}} />
+  </div>;
+}
+function FormFieldDemo() {
+  const [j, setJ] = useState('sd'); const [err, setErr] = useState(true);
+  const input = 'h-[calc(var(--sd-text-body-line)_+_24px)] w-full rounded-[4px] border border-sd-gray-50 bg-white px-[16px] text-sd-gray-90 sd-t-body';
+  return <div className="flex w-full max-w-[420px] flex-col gap-[24px]">
+    <S.FormField label="Unit kerja" helper="Tulis nama unit sesuai SK" optional>{(p) => <input {...p} className={input} placeholder="cth. Balai Penjaminan Mutu" />}</S.FormField>
+    <S.FormField label="Nomor SK" error="Nomor SK wajib diisi. Isi sesuai surat keputusan." required>{(p) => <input {...p} className={`${input} !border-sd-critical-border`} />}</S.FormField>
+    <S.FieldGroup legend="Jenjang pendidikan" helper="Pilih satu">
+      {['sd', 'smp', 'sma'].map((v) => <S.Radio key={v} name="jenjang-demo" label={v.toUpperCase()} checked={j === v} onChange={() => setJ(v)} />)}
+    </S.FieldGroup>
+    <S.FieldGroup legend="Jenjang yang diajar" orientation="horizontal" error={err ? 'Pilih minimal satu jenjang.' : undefined} optional>
+      {['SD', 'SMP', 'SMA'].map((v) => <S.Checkbox key={v} label={v} onChange={() => setErr(false)} />)}
+    </S.FieldGroup>
+  </div>;
+}
+
 export const demos: Record<string, () => ReactNode> = {
+  'date-picker': () => <DatePickerDemo />,
+  'form-field': () => <FormFieldDemo />,
   'page-header': () => <div className="flex w-full flex-col gap-[16px]">{(['blue', 'dark', 'light'] as const).map((tone) => <S.PageHeader key={tone} tone={tone} breadcrumb={<S.Breadcrumb inverse={tone !== 'light'} items={[{ label: 'Beranda', href: '#' }, { label: 'Kepegawaian' }]} />} title="Data kepegawaian" description="Kelola data pegawai dan unit kerja di satu tempat." />)}</div>,
   'process-steps': () => <ProcessStepsDemo />,
   platform: () => <div className="flex w-full flex-col gap-[16px]">{(['mobile', 'desktop'] as const).map((p) => <S.Platform key={p} platform={p}><div className="rounded-[8px] border border-sd-gray-10 bg-white p-[16px]"><p className="mb-[8px] text-sd-gray-60 sd-t-bodysmall">Platform {p}</p><S.TextField label="Nama lengkap" placeholder="cth. Budi Santoso" /><div className="mt-[12px]"><S.Button>Simpan perubahan</S.Button></div></div></S.Platform>)}</div>,
