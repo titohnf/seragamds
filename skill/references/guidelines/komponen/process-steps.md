@@ -10,6 +10,7 @@ Rel horizontal untuk alur berurutan yang boleh dilompati, mis. siklus 6M. Setiap
 `steps` (`{ key, label, caption?, state: 'done' | 'active' | 'todo', detail? }`; `detail` hanya untuk vertikal), `current` (key halaman yang dibuka), `onSelect`, `inverse`, `orientation` (`horizontal` bawaan, atau `vertical`), `aria-label`.
 
 ## Perilaku
+- **Garis penghubung (horizontal)**: hanya di antara tepi dua lingkaran (celah 6px), tepat di tengah vertikal lingkaran, dan **di atas** latar hover langkah, jadi tidak hilang saat hover dan, pada `inverse` (lingkaran todo/berjalan transparan), tidak tampak masuk ke dalam lingkaran berikutnya. Hijau bila langkah sebelumnya selesai, selain itu abu.
 - Rel **horizontal** selebar minimum 720px dan **menggulir sendiri** (wadah `overflow-x-auto`) di layar yang lebih sempit, sehingga halaman tidak ikut melebar (360px).
 - Tiga status, semuanya menampilkan nomor: `todo` = outline abu, `active` (berjalan) = outline biru, `done` = hijau terisi. Tanpa tanda centang.
 - `current` memberi cincin fokus agar terlihat posisi pengguna, terpisah dari status.

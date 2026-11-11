@@ -67,7 +67,9 @@ export function ProcessSteps({ steps, current, onSelect, inverse = false, orient
         const garisOn = i > 0 && steps[i - 1].state === 'done';
         return (
           <li key={s.key} className="relative flex-1">
-            {i > 0 && <span aria-hidden className={`absolute left-[-50%] right-[50%] top-[22px] h-[3px] ${garisOn ? t.lineOn : t.lineOff}`} />}
+            {/* Garis hanya di antara tepi dua lingkaran (radius 16 + celah 6), tepat di tengah vertikal lingkaran (6 + 16 = 22), dan di ATAS latar hover tombol (z-[2], tanpa pointer) agar tidak hilang saat hover.
+                Tidak boleh dimulai/berakhir di pusat lingkaran: pada varian inverse lingkaran todo/aktif transparan sehingga garis akan tampak masuk ke dalamnya. */}
+            {i > 0 && <span aria-hidden data-connector className={`pointer-events-none absolute top-[20.5px] z-[2] h-[3px] ${garisOn ? t.lineOn : t.lineOff}`} style={{ left: 'calc(-50% + 22px)', right: 'calc(50% + 22px)' }} />}
             <button
               type="button" onClick={() => onSelect?.(s.key)} aria-current={on ? 'step' : undefined}
               className={`relative z-[1] flex w-full flex-col items-center gap-[6px] rounded-[8px] px-[4px] py-[6px] text-center outline-none ${t.hover} ${t.focus}`}

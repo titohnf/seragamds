@@ -2,6 +2,12 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-11 · Perbaikan garis ProcessSteps horizontal (v0.19.0)
+- **Laporan (Tito):** pada rel horizontal garis penghubung hilang saat hover, dan pada `inverse` garisnya masuk ke dalam lingkaran langkah berikutnya.
+- **Penyebab:** garis dibentangkan dari *pusat* lingkaran sebelumnya ke *pusat* lingkaran ini dan diletakkan *di belakang* tombol langkah; tombol punya latar hover solid sehingga menutupi garis, dan di `inverse` lingkaran todo/berjalan transparan sehingga garis tampak masuk ke dalamnya (di mode terang lingkaran putih menyembunyikannya). Garis juga ±1,5px di bawah titik tengah lingkaran.
+- **Perbaikan:** garis dimulai dan berakhir di tepi lingkaran (radius 16 + celah 6), tepat di tengah vertikal (top 20,5px), dan `z-[2]` di atas tombol (`pointer-events: none`). Orientasi vertikal tidak bermasalah (berhenti di tepi lingkaran; tombolnya tanpa latar hover).
+- **Pengujian:** 2 tes baru (terang dan inverse) memeriksa geometri (garis di antara tepi lingkaran, sejajar tengah) dan urutan tumpukan saat hover di Chromium, Firefox, dan WebKit; terbukti gagal pada geometri lama. Diperiksa juga dengan tangkapan layar. Pelajaran: tes sebelumnya tidak menangkap ini karena hanya memeriksa aksesibilitas dan tidak membandingkan geometri antarelemen.
+
 ## 2026-11-11 · Ketahanan popup, lintas peramban dan sentuhan, hidrasi (v0.19.0)
 - **Popup tahan tepi layar:** hook `useFixedPopup` (`src/popup.ts`) dipakai Popover, CustomSelect, DatePicker, menu "Lainnya" Navbar, dan Tooltip. Posisi `fixed` dari `getBoundingClientRect()` pemicu (tidak terpotong wadah `overflow-hidden`; urutan DOM dan Tab tetap, jadi tanpa portal), **membalik** sisi bila tak muat dan sisi lawan lebih lega, **menggeser** agar tetap di dalam layar (margin 8px), membatasi tinggi daftar ke ruang yang ada, dan mengikuti pemicu saat gulir atau ubah ukuran. Keputusan: `fixed` tanpa portal karena portal merusak urutan Tab dialog (Date Picker) dan memerlukan penguncian fokus tambahan.
 - **Tooltip** ditulis ulang berbasis state: `aria-describedby` otomatis pada pemicu (sebelumnya tidak terhubung ke pembaca layar), `Esc` menutup (WCAG 1.4.13), membalik dan bergeser dari tepi layar. Tooltip belum bisa disorot pointer (tetap `pointer-events: none`); WCAG 1.4.13 "hoverable" belum dipenuhi penuh.

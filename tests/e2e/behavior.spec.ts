@@ -379,3 +379,38 @@ test.describe('Form Field dan Field Group', () => {
     await expect(cb).not.toContainText('Pilih minimal satu jenjang.');
   });
 });
+
+test.describe('Process Steps', () => {
+  /** Garis penghubung rel horizontal: hanya di antara tepi lingkaran, sejajar tengah, dan tidak tertutup latar hover. */
+  async function cekGaris(page: import('@playwright/test').Page, ol: import('@playwright/test').Locator) {
+    const lis = ol.locator('> li');
+    await expect(lis).toHaveCount(3);
+    for (let i = 1; i < 3; i++) {
+      const line = lis.nth(i).locator('[data-connector]');
+      const prev = (await lis.nth(i - 1).locator('button > span').first().boundingBox())!;
+      const cur = (await lis.nth(i).locator('button > span').first().boundingBox())!;
+      const l = (await line.boundingBox())!;
+      expect(l.x, 'garis mulai setelah tepi kanan lingkaran sebelumnya').toBeGreaterThanOrEqual(prev.x + prev.width + 2);
+      expect(l.x + l.width, 'garis berakhir sebelum tepi kiri lingkaran ini').toBeLessThanOrEqual(cur.x - 2);
+      expect(Math.abs(l.y + l.height / 2 - (cur.y + cur.height / 2)), 'garis di tengah vertikal lingkaran').toBeLessThanOrEqual(1);
+      for (const btn of [lis.nth(i - 1).locator('button'), lis.nth(i).locator('button')]) {
+        await btn.hover();
+        // latar hover tombol bersifat solid; garis harus berada DI ATAS tombol dalam urutan tumpukan agar tidak tertutup
+        const z = await line.evaluate((el, b) => { const g = (n: Element) => Number(getComputedStyle(n).zIndex); return { garis: g(el), tombol: g(b as Element), posisi: getComputedStyle(el).position, hoverBg: getComputedStyle(b as Element).backgroundColor }; }, await btn.elementHandle());
+        expect(z.posisi).toBe('absolute');
+        expect(z.hoverBg, 'latar hover memang solid').not.toBe('rgba(0, 0, 0, 0)');
+        expect(z.garis, 'garis di atas tombol saat hover').toBeGreaterThan(z.tombol);
+      }
+    }
+  }
+
+  test('horizontal terang: garis di antara lingkaran dan tetap terlihat saat hover', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    await cekGaris(page, demo.locator('ol').nth(0));
+  });
+
+  test('horizontal inverse: garis tidak masuk ke dalam lingkaran berikutnya', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    await cekGaris(page, demo.locator('ol').nth(2));
+  });
+});
