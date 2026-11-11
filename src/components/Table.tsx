@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import type { HTMLAttributes, ReactNode, TdHTMLAttributes, ThHTMLAttributes } from 'react';
+import { typo } from '../tokens';
 
 export type TableSize = 'lg' | 'md' | 'sm';
 /** `default` putih, `subtle` abu muda #F5F5F5, `neutral` abu #EFEFEF (badge-neutral; terbaca beda dari latar halaman #F9F9F9). */
@@ -66,12 +67,12 @@ export function TableHeaderCell({ className = '', scope = 'col', style, ...rest 
       scope={scope}
       {...rest}
       className={`bg-white align-middle font-semibold uppercase shadow-[0_2px_1px_rgba(0,0,0,0.05)] [table[data-header-tone=subtle]_&]:bg-sd-modal-header [table[data-header-tone=neutral]_&]:bg-sd-badge-neutral ${className}`}
-      style={{ fontSize: 13, lineHeight: '16px', letterSpacing: 0.5, ...pad(size, bordered, true), ...style }}
+      style={{ ...typo.subHeading, ...pad(size, bordered, true), ...style }}
     />
   );
 }
 
 export function TableCell({ className = '', style, ...rest }: TdHTMLAttributes<HTMLTableCellElement>) {
   const { size, bordered } = useContext(TableContext);
-  return <td {...rest} className={`align-middle font-normal ${className}`} style={{ fontSize: 15, lineHeight: '22px', ...pad(size, bordered, false), ...style }} />;
+  return <td {...rest} className={`align-middle font-normal ${className}`} style={{ ...typo.body, ...pad(size, bordered, false), ...style }} />;
 }

@@ -17,6 +17,7 @@ Token dan komponen React dari Figma **Seragam Dasar** (fondasi) dan **Dokumentas
 | `site/` | **Situs dokumentasi** (Vite): fondasi, panduan, demo hidup 33 komponen, spesifikasi Figma, Galeri. Jalankan `npm run dev` |
 | `examples/Gallery.tsx` | Galeri semua komponen untuk cek visual (pasang di rute mana pun) |
 | `skill/SKILL.md` | Claude Skill agar proyek lain otomatis mengikuti Seragam |
+| `skill-illustration/` | Claude Skill `seragam-illustration`: membuat ilustrasi SVG (Spot, Empty State, Hero) sesuai panduan ilustrasi, dengan palet terkunci, contoh, validator, dan pratinjau. Mandiri; tidak dirakit oleh `build:skill` |
 | `tools/` | `extract.py`, `render_docs.py`, `build_tokens.py` (ekstraksi dari Figma); `build_foundations.py` (fondasi dari token); `build_skill.sh` (rakit skill); `check.py` (pemeriksaan konsistensi) |
 
 ## Pasang lewat git (disarankan)
@@ -43,7 +44,7 @@ npm run install:skill     # merakit skill/ lalu menautkannya ke ~/.claude/skills
 3. Salin `skill/` ke `.claude/skills/seragam/` (atau `~/.claude/skills/seragam/`).
 
 ## Catatan
-- **Skala tipografi:** pakai skala Mobile di semua perangkat (body 15/22, body-small 13/20, heading-medium 18/24). Komponen di Figma hanya dibuat versi mobile, jadi desktop mengikutinya agar konsisten.
+- **Skala tipografi:** satu komponen, dua skala. Mobile di layar kecil (body 15/22, body-small 13/20, heading-medium 18/24) dan Desktop di layar lebar (16/24, 14/20, 19/24), dipilih atribut `data-sd-platform` (`auto` bawaan: Desktop mulai 1024px; `desktop`; `mobile`) atau komponen `Platform`. Di kode pakai `typo.*` atau kelas `sd-t-<nama>`, jangan angka. Lihat `docs/foundations/tipografi.md`.
 - Fondasi adalah sumber kebenaran. Dokumentasi komponen di Figma masih memakai hex lama (mis. `#0B5FEF`); di `docs/` hex lama diberi anotasi `legacy … = blue-70`.
 - Mode gelap (Mode 2) belum dimasukkan. Halaman Spacing di Figma kosong.
 - Memperbarui token: unduh ulang dari Figma lalu jalankan `tools/*.py` (butuh token Figma di `~/.figma_token`).

@@ -27,16 +27,18 @@ def warna(d):
     return "\n".join(L) + "\n"
 
 def tipografi(d):
-    T = d['typography']
+    T = d['typography']; M, D = T['mobile'], T['desktop']
     row = lambda n, t: f"| `{n}` | {t['size']:g}/{t['lineHeight']:g} | {t['weight']} | {t['letterSpacing']:g} | {t['textCase'] or '-'} |"
     head = ["| Nama | Ukuran/baris (px) | Berat | Jarak huruf | Huruf |", "|---|---|---|---|---|"]
     L = ["# Tipografi", "", "Font: **Inter**. Sumber: token `typography` (Figma *Seragam Dasar*).", "",
          "> Berkas ini dihasilkan oleh `tools/build_foundations.py`. Jangan sunting manual.", "",
-         "## Keputusan: pakai skala Mobile di semua perangkat",
-         "Komponen di Figma hanya dibuat versi mobile, jadi **skala Mobile dipakai di semua perangkat** (body 15/22, body-small 13/20, action 15/22 semibold, heading-medium 18/24). Jangan memakai ukuran di luar skala. Pengecualian: produk web desktop (mis. prototipe platform-spmp) memakai skala Desktop (body 16/24, body-small 14/20, action 16/24 semibold, heading-medium 19/24) sesuai keputusan 2026-11-10. Lihat [DECISIONS](../DECISIONS.md).", "",
-         "Kelas CSS: `.sd-t-mobile-<nama>` (dan `.sd-t-desktop-<nama>` bila perlu).", "", "## Skala Mobile (dipakai)", ""] + head
+         "## Keputusan: satu komponen, dua skala (Mobile dan Desktop)",
+         "Figma hanya punya komponen mobile, sehingga di desktop huruf terlihat kecil. Komponen tetap **satu** (bentuk, warna, props sama); yang berganti menurut platform hanyalah skala huruf dan tinggi kontrol turunannya. Skala dipilih oleh atribut `data-sd-platform` (`auto` bawaan = Mobile, berganti ke Desktop mulai lebar 1024px; `desktop`; `mobile`). Lihat [Platform](../guidelines/komponen/platform.md) dan [DECISIONS](../DECISIONS.md) (2026-11-11). Ini menggantikan keputusan v0.5.0 \"skala Mobile di semua perangkat\".", "",
+         "**Pakai token responsif, jangan angka.** Di kode: `style={typo.body}` (`src/tokens.ts`) atau kelas `.sd-t-<nama>` (`.sd-t-body`, `.sd-t-action`, ...), yang membaca `--sd-text-<nama>-{size,line,weight}`. Kelas `.sd-t-mobile-<nama>` / `.sd-t-desktop-<nama>` mengunci satu skala secara eksplisit. Jangan memakai ukuran di luar skala; hanya berat 400 dan 600.", "",
+         "| Peran | Mobile | Desktop |", "|---|---|---|"] + [f"| `{n}` | {M[n]['size']:g}/{M[n]['lineHeight']:g} | {D[n]['size']:g}/{D[n]['lineHeight']:g} |" for n in ('body', 'bodysmall', 'action', 'subheading', 'headingsmall', 'headingmedium', 'headinglarge', 'displaysmall', 'helper')] + ["",
+         "Nama yang hanya ada di satu platform (`headline*`, `bodylarge` = Desktop; `eyebrow*` = Mobile) dipakai di kedua platform.", "", "## Skala Mobile", ""] + head
     for n, t in sorted(T['mobile'].items(), key=lambda x: -x[1]['size']): L.append(row(n, t))
-    L += ["", "## Skala Desktop (referensi, tidak dipakai)", ""] + head
+    L += ["", "## Skala Desktop", ""] + head
     for n, t in sorted(T['desktop'].items(), key=lambda x: -x[1]['size']): L.append(row(n, t))
     return "\n".join(L) + "\n"
 

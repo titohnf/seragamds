@@ -72,4 +72,7 @@ for plat,d in type_.items():
         ls = f' letter-spacing:{v["letterSpacing"]:g}px;' if v.get('letterSpacing') else ''
         L.append(f'.sd-t-{plat}-{k} {{ font-family:Inter,system-ui,sans-serif; font-size:var(--sd-type-{plat}-{k}-size); line-height:var(--sd-type-{plat}-{k}-line); font-weight:var(--sd-type-{plat}-{k}-weight);{tc}{ls} }}')
 open(os.path.join(out,'seragam.css'),'w').write('\n'.join(L)+'\n')
+sys.path.insert(0, here)
+from build_responsive_type import patch
+patch()
 print(len(prim),'primitif',len(sem),'semantik',sum(len(d) for d in type_.values()),'tipografi',len(elev),'elevasi')

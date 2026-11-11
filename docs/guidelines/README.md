@@ -4,9 +4,10 @@ Panduan kapan dan bagaimana memakai tiap komponen. Untuk ukuran dan token visual
 
 Setiap halaman di `komponen/` menyebut status: **dari panduan Seragam** (bersumber seragam.belajar.id, disesuaikan ke props repo ini) atau **draf** (belum ada panduan resmi).
 
-Daftar lengkap ada di [docs/README.md](../README.md).
+Panduan di luar komponen: [penulisan](penulisan.md), [prinsip desain](prinsip-desain.md), [ilustrasi](ilustrasi.md). Daftar lengkap ada di [docs/README.md](../README.md).
 
 ## Aturan lintas komponen
+- Ukuran huruf lewat token tipografi responsif (`typo.*` atau `sd-t-<nama>`), bukan angka; platform dipilih `data-sd-platform` ([Platform](komponen/platform.md)). Angka ukuran huruf di `docs/components/` dan di panduan adalah skala Mobile dari Figma; di Desktop lihat [tipografi](../foundations/tipografi.md).
 - Satu aksi utama per halaman; jangan menaruh dua tombol berbeda bobot yang sama berdampingan.
 - Jangan menulis hex; pakai token. Spacing kelipatan 4.
 - Target sentuh minimal 44px.

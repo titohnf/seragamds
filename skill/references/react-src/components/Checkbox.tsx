@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useRef, type InputHTMLAttributes, type ReactNode } from 'react';
+import { typo } from '../tokens';
 
 const RING = 'peer-focus-visible:shadow-[0_0_0_2px_#fff,0_0_0_4px_var(--sd-interactive-focused)]';
 
@@ -22,7 +23,7 @@ export const Checkbox = forwardRef<HTMLInputElement, Omit<InputHTMLAttributes<HT
             {indeterminate ? <path d="M4.5 9h9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /> : <path d="M4.5 9.5l3 3 6-6.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />}
           </svg>
         </span>
-        {label != null && <span className={disabled ? 'text-sd-gray-50' : 'text-sd-gray-90'} style={{ fontSize: 15, lineHeight: '22px' }}>{label}</span>}
+        {label != null && <span className={disabled ? 'text-sd-gray-50' : 'text-sd-gray-90'} style={{ ...typo.body }}>{label}</span>}
       </label>
     );
   },

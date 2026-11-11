@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import * as S from '../src';
 import Gallery from '../examples/Gallery';
 import { componentSlugs, render, specOf, specPaths, titleOf } from './content';
 import { demos } from './demos';
@@ -21,8 +22,8 @@ const Md = ({ path }: { path: string }) => {
 
 const NAV: { heading: string; items: { to: string; label: string }[] }[] = [
   { heading: 'Mulai', items: [{ to: '/', label: 'Beranda' }, { to: '/d/DECISIONS.md', label: 'Catatan keputusan' }, { to: '/d/extensions.md', label: 'Ekstensi di luar Figma' }] },
-  { heading: 'Fondasi', items: ['warna', 'tipografi', 'elevasi-radius', 'spacing'].map((s) => ({ to: `/d/foundations/${s}.md`, label: titleOf(`foundations/${s}.md`) })) },
-  { heading: 'Panduan', items: [{ to: '/d/guidelines/penulisan.md', label: 'Penulisan' }, { to: '/d/guidelines/pemetaan-nama.md', label: 'Pemetaan nama' }, { to: '/d/guidelines/README.md', label: 'Penggunaan komponen' }] },
+  { heading: 'Fondasi', items: ['warna', 'tipografi', 'elevasi-radius', 'spacing', 'container', 'token', 'palet-ilustrasi'].map((s) => ({ to: `/d/foundations/${s}.md`, label: titleOf(`foundations/${s}.md`) })) },
+  { heading: 'Panduan', items: [{ to: '/d/guidelines/penulisan.md', label: 'Penulisan' }, { to: '/d/guidelines/prinsip-desain.md', label: 'Prinsip desain' }, { to: '/d/guidelines/ilustrasi.md', label: 'Ilustrasi' }, { to: '/d/guidelines/pemetaan-nama.md', label: 'Pemetaan nama' }, { to: '/d/guidelines/README.md', label: 'Penggunaan komponen' }] },
   { heading: 'Komponen', items: componentSlugs.map((s) => ({ to: `/c/${s}`, label: titleOf(`guidelines/komponen/${s}.md`) })) },
   { heading: 'Lainnya', items: [{ to: '/galeri', label: 'Galeri semua komponen' }, { to: '/spesifikasi', label: 'Semua spesifikasi Figma' }] },
 ];
@@ -94,9 +95,24 @@ function SpecIndex() {
   );
 }
 
+const PLATFORMS: { v: S.SeragamPlatform; label: string }[] = [{ v: 'auto', label: 'Otomatis' }, { v: 'mobile', label: 'Mobile' }, { v: 'desktop', label: 'Desktop' }];
+function PlatformSwitch({ value, onChange }: { value: S.SeragamPlatform; onChange: (v: S.SeragamPlatform) => void }) {
+  return (
+    <div role="radiogroup" aria-label="Skala huruf komponen" className="mb-[24px] flex flex-wrap items-center gap-[8px] text-sd-gray-60" style={{ fontSize: 13 }}>
+      <span>Skala huruf komponen:</span>
+      {PLATFORMS.map((p) => (
+        <button key={p.v} role="radio" aria-checked={value === p.v} onClick={() => onChange(p.v)}
+          className={`rounded-full border px-[12px] py-[4px] ${value === p.v ? 'border-sd-blue-70 bg-sd-blue-5 text-sd-blue-70' : 'border-sd-gray-30 hover:bg-sd-gray-5'}`} style={{ fontWeight: 600 }}>{p.label}</button>
+      ))}
+      <span className="text-sd-gray-50">Otomatis = Desktop mulai lebar 1024px</span>
+    </div>
+  );
+}
+
 export default function App() {
   const route = useRoute();
   const [menu, setMenu] = useState(false);
+  const [platform, setPlatform] = useState<S.SeragamPlatform>('auto');
   // Tautan contoh di demo (href="#") tidak boleh memindahkan halaman.
   useEffect(() => {
     const on = (e: MouseEvent) => { const a = (e.target as HTMLElement).closest('a'); if (a && a.getAttribute('href') === '#') e.preventDefault(); };
@@ -118,7 +134,7 @@ export default function App() {
         <span className="ml-[12px]" style={{ fontSize: 15, fontWeight: 600 }}>Seragam</span>
       </header>
       <Sidebar route={route} open={menu} onNavigate={() => setMenu(false)} />
-      <main className="px-[16px] py-[24px] lg:ml-[272px] lg:px-[48px] lg:py-[40px]"><div className="mx-auto max-w-[860px]">{page}</div></main>
+      <main className="px-[16px] py-[24px] lg:ml-[272px] lg:px-[48px] lg:py-[40px]"><div className="mx-auto max-w-[860px]"><S.Platform platform={platform}><PlatformSwitch value={platform} onChange={setPlatform} />{page}</S.Platform></div></main>
     </div>
   );
 }

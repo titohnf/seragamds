@@ -1,4 +1,5 @@
 import { forwardRef, type InputHTMLAttributes, type ReactNode } from 'react';
+import { typo } from '../tokens';
 
 /** Radio Seragam: lingkaran 20px, border gray-50; terpilih blue-70 dengan titik 8px. Label 15/22. */
 export const Radio = forwardRef<HTMLInputElement, Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & { label?: ReactNode }>(
@@ -12,7 +13,7 @@ export const Radio = forwardRef<HTMLInputElement, Omit<InputHTMLAttributes<HTMLI
           peer-focus-visible:shadow-[0_0_0_2px_#fff,0_0_0_4px_var(--sd-interactive-focused)]" />
         <span className="pointer-events-none absolute size-[8px] rounded-full bg-sd-gray-0 opacity-0 peer-checked:opacity-100" />
       </span>
-      {label != null && <span className={disabled ? 'text-sd-gray-50' : 'text-sd-gray-90'} style={{ fontSize: 15, lineHeight: '22px' }}>{label}</span>}
+      {label != null && <span className={disabled ? 'text-sd-gray-50' : 'text-sd-gray-90'} style={{ ...typo.body }}>{label}</span>}
     </label>
   ),
 );

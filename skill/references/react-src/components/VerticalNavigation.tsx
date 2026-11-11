@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import type { ReactNode } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { typo } from '../tokens';
 
 export type VerticalNavItem = {
   key: string;
@@ -23,7 +24,7 @@ const TONE = {
 } as const;
 
 const ROW = 'flex w-full items-start gap-[12px] rounded-[8px] p-[12px] text-left outline-none focus-visible:rounded-[4px] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2';
-const LABEL = { fontSize: 16, lineHeight: '24px' } as const;
+const LABEL = { ...typo.body } as const;
 
 /**
  * Vertical Navigation Seragam (Figma Seragam Web): menu samping 300px, padding 20x12, jarak antar item 12.

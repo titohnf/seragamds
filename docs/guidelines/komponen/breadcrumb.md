@@ -5,7 +5,7 @@
 
 > **Status: dari panduan Seragam** (seragam.belajar.id), disesuaikan ke props komponen di repo ini.
 
-Props: `items` (`{ label, href?, onClick? }`). Item terakhir adalah halaman saat ini.
+Props: `items` (`{ label, href?, onClick? }`), `inverse` (ekstensi, untuk latar gelap seperti `PageHeader tone="dark"`). Item terakhir adalah halaman saat ini.
 
 ## Panduan
 - Pakai bila hierarki halaman dalam.

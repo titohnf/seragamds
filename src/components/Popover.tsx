@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { typo } from '../tokens';
 
 export type PopoverItem = { label: ReactNode; onSelect: () => void; disabled?: boolean };
 
@@ -22,7 +23,7 @@ export function Popover({ trigger, items, align = 'left' }: { trigger: (p: { ope
             <li key={i} role="none">
               <button role="menuitem" disabled={it.disabled} onClick={() => { it.onSelect(); setOpen(false); }}
                 className="w-full whitespace-nowrap rounded-[4px] p-[8px] text-left text-sd-gray-90 outline-none hover:bg-sd-modal-header active:bg-sd-modal-footer-border focus-visible:shadow-[inset_0_0_0_2px_var(--sd-interactive-focused)] disabled:text-sd-gray-50"
-                style={{ fontSize: 15, lineHeight: '22px' }}>{it.label}</button>
+                style={{ ...typo.body }}>{it.label}</button>
             </li>
           ))}
         </ul>

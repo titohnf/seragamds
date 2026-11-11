@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { typo } from '../tokens';
 
 export type DescriptionItem = {
   label: ReactNode;
@@ -33,13 +34,13 @@ export function DescriptionList({ items, columns = 2, className = '' }: { items:
       <dl className={`grid gap-x-[16px] gap-y-[16px] ${COLS[columns]} ${className}`}>
         {items.map((it, i) => (
           <div key={i} className={`flex min-w-0 flex-col gap-[4px] ${it.full ? SPAN[columns] : ''}`}>
-            <dt className="flex items-center gap-[4px] text-sd-gray-60" style={{ fontSize: 13, lineHeight: '20px' }}>
+            <dt className="flex items-center gap-[4px] text-sd-gray-60" style={{ ...typo.bodySmall }}>
               {it.label}
               {it.hint && <span aria-hidden className="grid place-items-center [&>svg]:size-[13px]">{it.hint}</span>}
             </dt>
             <dd
               className={`break-words ${it.muted ? 'text-sd-gray-60' : 'text-sd-gray-90'}`}
-              style={{ fontSize: 15, lineHeight: '22px', fontWeight: it.emphasis === 'normal' ? 400 : 600 }}
+              style={{ ...typo.body, fontWeight: it.emphasis === 'normal' ? 400 : 600 }}
             >
               {it.value}
             </dd>

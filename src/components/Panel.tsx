@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import type { ElementType, HTMLAttributes, ReactNode } from 'react';
+import { typo } from '../tokens';
 
 export type PanelVariant = 'elevated' | 'outlined';
 
@@ -26,8 +27,8 @@ export function Panel({
         <div className="flex min-w-0 items-center gap-[8px] text-sd-gray-60">
           {icon && <span aria-hidden className="grid shrink-0 place-items-center [&>svg]:size-[16px]">{icon}</span>}
           <div className="min-w-0">
-            <Heading id={id} className="text-sd-gray-60" style={{ fontSize: 15, lineHeight: '22px', fontWeight: 600 }}>{title}</Heading>
-            {subtitle && <p className="text-sd-gray-60" style={{ fontSize: 13, lineHeight: '20px' }}>{subtitle}</p>}
+            <Heading id={id} className="text-sd-gray-60" style={{ ...typo.action }}>{title}</Heading>
+            {subtitle && <p className="text-sd-gray-60" style={{ ...typo.bodySmall }}>{subtitle}</p>}
           </div>
         </div>
         {action && <div className="shrink-0">{action}</div>}
