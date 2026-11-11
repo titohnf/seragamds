@@ -7,7 +7,7 @@
 
 Navigasi utama: berpindah halaman, mengenali brand, mengakses aksi kunci (CTA). Di situs disebut "Navbar". Props: `items` (`{ key, label, href?, onClick? }`), `active`, `logo`, `actions`, `collapseBelow` (bawaan 769), `sticky` (bawaan true), `moreLabel` (bawaan "Lainnya"), `aria-label`.
 
-Tanpa `logo` dan `actions` komponen hanya menu (`<nav>`, tanpa overflow/hamburger). Dengan `logo` atau `actions` menjadi **navbar utuh** (tinggi 64, putih, Elevation 03).
+Tanpa `logo` dan `actions` komponen hanya menu (`<nav>`, tanpa overflow/hamburger). Dengan `logo` atau `actions` menjadi **navbar utuh** (tinggi 64, putih, **Elevation 01**).
 
 ## Anatomi (Top Navbar)
 **Logo/brand** (`logo`; selalu di kiri, tautan ke halaman utama: bungkus dengan `<a href="/">`) · **Menu utama** (`items`, di tengah/kanan) · **Action items** (`actions`, kanan: tombol/ikon seperti pencarian dan notifikasi).
@@ -19,6 +19,11 @@ Tanpa `logo` dan `actions` komponen hanya menu (`<nav>`, tanpa overflow/hamburge
 | Without Action Items | Halaman informatif/landing sederhana | tanpa `actions` |
 | Without Menu Items | Admin/dashboard; navigasi kompleks dipasangkan dengan [Vertical Navigation](vertical-navigation.md) | `items={[]}`; aksi tetap tampil |
 | Logo Only | Jarang di web; terutama aplikasi native dengan bottom navbar | hanya `logo` |
+
+## Spesifikasi Figma (Navbar Desktop/Mobile)
+- **Desktop**: lebar penuh, tinggi 64, putih, bayangan Elevation 01; isi di wadah 1280 (padding 32), jarak 24. Logo 52×44 di kiri. Menu item: tinggi 64, wadah 68×40 padding 8×12 radius 4.
+- **Aksi (Desktop)**: Icon Button 46×46, tombol 40 tinggi (padding 8×16; `md` di Desktop), akun: avatar 36 dengan inisial (login) atau tombol (belum login).
+- **Mobile**: 360×64, padding 16, logo 52×44, ikon hamburger bila ada menu.
 
 ## State
 Default, Focused (fokus keyboard), Hovered, Pressed, **Active** (item terpilih: teks `blue-70` + garis bawah 4px). Halaman anak tetap menyalakan menu induknya.
