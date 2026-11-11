@@ -38,13 +38,24 @@ const BORDER_ROWS = '[&_th]:border-t [&_th]:border-b [&_td]:border-b [&_th]:bord
  * Isi rata tengah vertikal; baris punya status hover (Surface/Hovered) kecuali `hoverable={false}` (tabel yang barisnya tidak bisa diklik); `TableRow selected` untuk baris terpilih (Surface Selected/Default).
  * Susun dengan TableHead, TableBody, TableRow, TableHeaderCell, TableCell. Bungkus dengan scroll horizontal otomatis; tepi yang masih bisa digeser diberi bayangan (indikator gulir).
  * `stickyHeader` (+ `maxHeight`): header menempel di atas saat tabel panjang menggulir (disarankan di mobile/tablet untuk tabel panjang).
- * `stacked`: di bawah 768px setiap baris menjadi kartu bertumpuk dan tiap sel menampilkan labelnya (isi `label` pada `TableCell`); alternatif gulir horizontal untuk tabel yang kolomnya terlalu banyak.
+ * `stacked`: di bawah 768px setiap baris menjadi kartu bertumpuk dan tiap sel menampilkan labelnya: diambil OTOMATIS dari teks header kolomnya, atau isi `label` pada `TableCell` untuk menimpa; alternatif gulir horizontal untuk tabel yang kolomnya terlalu banyak.
  */
 export function Table({ size = 'lg', striped = false, bordered = true, hoverable = true, headerTone = 'default', stickyHeader = false, maxHeight, stacked = false, caption, className = '', children, ...rest }: {
   size?: TableSize; striped?: boolean; bordered?: TableBorder; hoverable?: boolean; headerTone?: TableHeaderTone; stickyHeader?: boolean; maxHeight?: number | string; stacked?: boolean; caption?: ReactNode; className?: string; children: ReactNode;
 } & Omit<HTMLAttributes<HTMLTableElement>, 'className' | 'children'>) {
   const ref = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLTableElement>(null);
   const [edge, setEdge] = useState({ left: false, right: false });
+  // stacked: isi data-label tiap sel dari teks header kolom yang sama (kecuali sel sudah punya label)
+  useEffect(() => {
+    const t = tableRef.current; if (!stacked || !t) return;
+    const fill = () => {
+      const heads = [...t.querySelectorAll('thead tr:last-child > th')].map((th) => (th.textContent ?? '').trim());
+      t.querySelectorAll('tbody tr').forEach((tr) => [...tr.children].forEach((td, i) => { if (td instanceof HTMLElement && !('labelSet' in td.dataset) && heads[i] && td.dataset.label !== heads[i]) td.dataset.label = heads[i]; }));
+    };
+    fill(); const mo = new MutationObserver(fill); mo.observe(t, { childList: true, subtree: true, characterData: true });
+    return () => mo.disconnect();
+  }, [stacked]);
   useEffect(() => {
     const el = ref.current; if (!el) return;
     const measure = () => setEdge({ left: el.scrollLeft > 1, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 1 });
@@ -57,7 +68,7 @@ export function Table({ size = 'lg', striped = false, bordered = true, hoverable
       <div className="relative w-full">
       <div ref={ref} className="w-full overflow-auto" style={{ maxHeight }}>
         <table
-          {...rest}
+          {...rest} ref={tableRef}
           className={`w-full border-separate border-spacing-0 text-left text-sd-gray-90 ${stacked ? STACKED : ''} ${bordered === 'rows' ? BORDER_ROWS : bordered ? BORDER : ''} ${className}`}
           data-header-tone={headerTone}
         >
@@ -96,5 +107,5 @@ export function TableHeaderCell({ className = '', scope = 'col', style, ...rest 
 /** `label` = nama kolom, ditampilkan di samping nilai pada `Table stacked` (mobile). */
 export function TableCell({ className = '', style, label, ...rest }: TdHTMLAttributes<HTMLTableCellElement> & { label?: string }) {
   const { size, bordered } = useContext(TableContext);
-  return <td {...rest} data-label={label} className={`align-middle font-normal ${className}`} style={{ ...typo.body, ...pad(size, bordered, false), ...style }} />;
+  return <td {...rest} data-label={label} data-label-set={label ? '' : undefined} className={`align-middle font-normal ${className}`} style={{ ...typo.body, ...pad(size, bordered, false), ...style }} />;
 }

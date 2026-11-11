@@ -34,7 +34,7 @@
 | `hoverable` | `true` (default) · `false` | Sorotan hover baris. Matikan bila barisnya tidak bisa diklik dan hanya tombol di dalamnya yang interaktif. |
 | `caption` | teks | Judul tabel untuk pembaca layar (tidak tampil). Selalu isi. |
 | `stickyHeader` / `maxHeight` | `false` · angka/teks | Header menempel di atas saat isi menggulir; atur `maxHeight` untuk tabel panjang. |
-| `stacked` | `false` · `true` | Di bawah 768px baris jadi kartu bertumpuk; wajib isi `label` pada tiap `TableCell`. |
+| `stacked` | `false` · `true` | Di bawah 768px baris jadi kartu bertumpuk; label tiap sel otomatis dari header kolom (atau `label` pada `TableCell`). |
 
 Tabel otomatis bisa digulir horizontal bila lebih lebar dari wadahnya. `TableHeaderCell` memakai `scope="col"` secara bawaan.
 
@@ -64,7 +64,7 @@ Tabel otomatis bisa digulir horizontal bila lebih lebar dari wadahnya. `TableHea
 
 ## Jenis dan responsif (panduan Seragam)
 - **Plain vs Stripes**: *Plain* bila ada interaksi yang mengubah tampilan karena data dinamis (mis. dengan kotak centang); *Stripes* (`striped`) bila tidak ada interaksi dan datanya banyak serta statis.
-- **Fit vs Scrollable** (mobile/app): *Fit* menampilkan semua isi tanpa gulir (data ringkas; tidak cocok untuk banyak kolom karena teks jadi terlalu kecil; ukuran Small/Medium/Large = `sm`/`md`/`lg`). *Scrollable* menggulir horizontal (ukuran tetap proporsional; butuh penanda atau kolom lengket agar konteks tidak hilang). Komponen ini otomatis scrollable bila lebih lebar dari wadah, dengan **bayangan di tepi yang masih bisa digeser** (indikator gulir). Untuk tabel yang kolomnya terlalu banyak di mobile, pakai `stacked`: di bawah 768px tiap baris menjadi kartu dan tiap sel menampilkan labelnya (isi `label` pada `TableCell`).
+- **Fit vs Scrollable** (mobile/app): *Fit* menampilkan semua isi tanpa gulir (data ringkas; tidak cocok untuk banyak kolom karena teks jadi terlalu kecil; ukuran Small/Medium/Large = `sm`/`md`/`lg`). *Scrollable* menggulir horizontal (ukuran tetap proporsional; butuh penanda atau kolom lengket agar konteks tidak hilang). Komponen ini otomatis scrollable bila lebih lebar dari wadah, dengan **bayangan di tepi yang masih bisa digeser** (indikator gulir). Untuk tabel yang kolomnya terlalu banyak di mobile, pakai `stacked`: di bawah 768px tiap baris menjadi kartu dan tiap sel menampilkan labelnya, **diambil otomatis dari teks header kolomnya** (isi `label` pada `TableCell` hanya untuk menimpa).
 - **Teks di sel**: maksimal 2 baris di desktop, 3 baris di mobile; lebihnya truncate (desktop: dengan [Tooltip](tooltip.md)) atau tabel scrollable (hanya mobile).
 - **Kolom aksi** di desktop tetap di ujung kanan, sejajar dengan konten.
 

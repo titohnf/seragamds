@@ -28,7 +28,7 @@ function Item({ it, on, block = false, onPick }: { it: NavItem; on: boolean; blo
 /**
  * Navigation Bar Seragam ("Navbar", panduan seragam.belajar.id/navigation-bar): item Action semibold, padding 8x12, radius 4; hover/tekan #F1F1F1; aktif teks blue-70 dengan garis bawah 4px selebar teks
  * (di Figma 44px = lebar label "Menu" 68px dikurangi padding 12; jangan 44px tetap); fokus ring blue-50.
- * Tanpa `logo` dan `actions` hanya menu (`<nav>`). Dengan `logo` atau `actions` menjadi **navbar utuh** (Navbar Desktop Figma: tinggi 64, putih, Elevation 03, logo kiri bisa diklik ke beranda, menu, aksi kanan):
+ * Tanpa `logo` dan `actions` hanya menu (`<nav>`). Dengan `logo` atau `actions` menjadi **navbar utuh** (Navbar Desktop Figma: tinggi 64, putih, Elevation 01, logo kiri bisa diklik ke beranda, menu, aksi kanan):
  * varian lewat kelengkapan props: Default (logo+menu+aksi) · tanpa aksi (tanpa `actions`) · tanpa menu (`items` kosong; admin/dashboard, pasangkan dengan VerticalNavigation) · hanya logo.
  * `sticky` (bawaan true pada navbar utuh): menempel di atas. Perilaku responsif: **overflow** menu yang tak muat (jarak ke logo/aksi < 24px) dipindah ke menu "Lainnya"; di bawah `collapseBelow` (bawaan 769px) menu dan aksi dilipat ke ikon hamburger.
  * Halaman anak tetap menyalakan menu induknya (`active` = key induk).
@@ -104,7 +104,7 @@ export function NavigationBar({ items, active, logo, actions, collapseBelow = 76
     );
   }
   return (
-    <header className={`${sticky ? 'sticky top-0 z-40' : 'relative'} bg-white shadow-sd-03 ${className}`}>
+    <header className={`${sticky ? 'sticky top-0 z-40' : 'relative'} bg-white shadow-sd-01 ${className}`}>
       <div className="mx-auto flex h-[64px] max-w-[1440px] items-center gap-[24px] px-[16px] md:px-[24px] lg:px-[80px]">
         {logo && <div className="flex shrink-0 items-center">{logo}</div>}
         {!compact && <div className="flex min-w-0 flex-1 items-center">{menu || <span className="flex-1" />}</div>}

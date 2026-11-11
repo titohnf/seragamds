@@ -9,7 +9,7 @@ Menampilkan dan mengorganisir kelompok informasi serupa dalam satu halaman tanpa
 
 ## Jenis
 - **Fixed Tabs** (`fill`): semua tab tampil dalam satu layar dengan lebar tetap. Pakai bila semua tab muat.
-- **Scrollable Tabs** (tanpa `fill`): tidak berlebar tetap, sebagian bisa terpotong dan digeser. **Pakai bila jumlah/lebar tab melebihi lebar layar.** Tepi yang masih bisa digeser **memudar** (indikator overflow) dan hilang saat sampai di ujung.
+- **Scrollable Tabs** (tanpa `fill`): tidak berlebar tetap, sebagian bisa terpotong dan digeser. **Pakai bila jumlah/lebar tab melebihi lebar layar.** Tepi yang masih bisa digeser **memudar** (indikator overflow) dan hilang saat sampai di ujung. Di tepi yang meluber juga muncul **tombol panah gulir** (kiri/kanan, tidak masuk urutan Tab karena pengguna keyboard memakai `←`/`→`).
 
 ## State
 Default, Focused (keyboard), Hovered, Pressed (tab terpilih = halaman yang sedang dilihat), Disabled (`{ label, disabled: true }`: tidak bisa dipilih, teks `text-disabled`, dilewati panah keyboard).

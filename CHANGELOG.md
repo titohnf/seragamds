@@ -3,8 +3,12 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.14.0
+npm i github:titohnf/seragamds#v0.14.1
 ```
+
+## 0.14.1 · 2026-11-11
+- `Tabs`: tombol panah gulir di tepi yang meluber. `Table stacked`: label sel otomatis dari header kolom.
+- Perbaikan: bayangan `NavigationBar` utuh = Elevation 01 sesuai Figma Navbar Desktop (sebelumnya 03). Panduan Navigation Bar memuat spesifikasi Figma Desktop dan Mobile.
 
 ## 0.14.0 · 2026-11-11
 - Melengkapi komponen yang audit 0.13.0 catat "belum ada di kode": `NavigationBar` navbar utuh (`logo`, `actions`, `sticky`; varian tanpa aksi/tanpa menu/hanya logo; overflow ke "Lainnya"; hamburger < 769px); baru `CustomSelect` (Custom Select dan Custom List Menu); `Accordion variant="custom"`; `Tabs` indikator overflow dan `disabled` per tab; `Table` `stickyHeader`/`maxHeight`/`stacked` dan bayangan gulir; `Breadcrumb maxItems="auto"`; `SearchBar` `error`/`helper`; `TextArea` `autoGrow`/`maxRows`.
