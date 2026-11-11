@@ -11,6 +11,7 @@ export * from './components/TextField';
 export * from './components/Modal';
 export * from './components/Toast';
 export * from './components/Select';
+export * from './components/CustomSelect';
 export * from './components/Tooltip';
 export * from './components/Breadcrumb';
 export * from './components/Pagination';

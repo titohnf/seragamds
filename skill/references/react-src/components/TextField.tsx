@@ -37,13 +37,25 @@ export const TextField = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLIn
 );
 TextField.displayName = 'TextField';
 
-/** Text Area Seragam: tinggi awal 102, padding 12x16. */
-export const TextArea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement> & Common>(
-  ({ label, helper, error, className = '', ...rest }, ref) => (
+/**
+ * Text Area Seragam: tinggi awal ±3 baris (Mobile 102 / Desktop 108), padding 12x16, bisa di-resize (`resize-y`).
+ * `autoGrow`: tinggi mengikuti isi (disarankan di mobile) sampai `maxRows` baris (bawaan 8), lalu menggulir; resize manual dimatikan.
+ */
+export const TextArea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement> & Common & { autoGrow?: boolean; maxRows?: number }>(
+  ({ label, helper, error, className = '', autoGrow = false, maxRows = 8, onInput, ...rest }, ref) => {
+    const fit = (el: HTMLTextAreaElement) => {
+      if (!autoGrow) return;
+      const cs = getComputedStyle(el); const line = parseFloat(cs.lineHeight) || 22; const pad = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+      el.style.height = 'auto'; el.style.height = `${Math.min(el.scrollHeight + (parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth)), line * maxRows + pad)}px`;
+      el.style.overflowY = el.scrollHeight > line * maxRows + pad ? 'auto' : 'hidden';
+    };
+    return (
     <Wrap label={label} helper={helper} error={error}>
-      <textarea ref={ref} aria-invalid={!!error || undefined} {...rest} style={TEXT}
-        className={`${BASE} ${error ? ERROR : STATE} min-h-[calc(var(--sd-text-body-line)_*_3_+_36px)] resize-y px-[16px] py-[12px] ${className}`} />
+      <textarea ref={(el) => { if (el && autoGrow) fit(el); if (typeof ref === 'function') ref(el); else if (ref) ref.current = el; }} aria-invalid={!!error || undefined} {...rest}
+        onInput={(e) => { fit(e.currentTarget); onInput?.(e); }} style={TEXT}
+        className={`${BASE} ${error ? ERROR : STATE} min-h-[calc(var(--sd-text-body-line)_*_3_+_36px)] ${autoGrow ? 'resize-none' : 'resize-y'} px-[16px] py-[12px] ${className}`} />
     </Wrap>
-  ),
+    );
+  },
 );
 TextArea.displayName = 'TextArea';

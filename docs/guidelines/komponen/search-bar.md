@@ -5,10 +5,10 @@
 
 > **Status: dari panduan Seragam** (seragam.belajar.id/search, diaudit 2026-11-11 terhadap seluruh halaman situs), disesuaikan ke props komponen di repo ini.
 
-Membantu pengguna mencari dengan mengetik kata atau kalimat kunci. Props: atribut `<input>` biasa dan `onSearch` (juga dipicu `Enter`). Terdiri dari kolom isian dan tombol cari.
+Membantu pengguna mencari dengan mengetik kata atau kalimat kunci. Props: atribut `<input>` biasa, `onSearch` (juga dipicu `Enter`), `error`, `helper`. Terdiri dari kolom isian dan tombol cari.
 
 ## State
-Default, Hovered, Focused, **Filled**, **Error** (situs). Contoh visual tersedia untuk **Search Bar** dan **Search Icon**. Di kode: default, fokus (border 2px biru), nonaktif; Error/Filled mengikuti atribut input (belum ada prop `error`).
+Default, Hovered, Focused, **Filled**, **Error** (situs). Contoh visual tersedia untuk **Search Bar** dan **Search Icon**. Di kode: default, fokus (border 2px biru), nonaktif; `error` (galat dari pengguna) membuat border dan teks bantu merah, `aria-invalid` dan `aria-describedby`; Filled terlihat dari teks gelap pada isian.
 
 ## Perilaku
 | Mode | Kapan dipakai |
