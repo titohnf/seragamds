@@ -1,12 +1,21 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { typo } from '../tokens';
+import { useDialogBehavior } from '../hooks';
 
 const WIDTH = { sm: 432, md: 660, lg: 888 } as const;
 
-/** Modal Seragam: radius 8, header gray #F5F5F5 (16x20, judul 17/22 semibold) dengan border bawah, isi 24/20/32, footer border atas (20x24). Overlay hitam 70%. Elevation 06. */
-export function Modal({ open, onClose, title, size = 'md', footer, children }: {
-  open: boolean; onClose: () => void; title: ReactNode; size?: keyof typeof WIDTH; footer?: ReactNode; children: ReactNode;
+/**
+ * Modal Seragam: radius 8, header gray #F5F5F5 (16x20, judul Heading Small semibold) dengan border bawah, isi 24/20/32, footer border atas (20x24). Overlay hitam 70%. Elevation 06.
+ * Perilaku (panduan seragam.belajar.id/modal-): Esc menutup; `dismissOnOverlay` (bawaan true) = klik area luar menutup, SET false untuk aksi kritis
+ * (hapus data) dan formulir yang isiannya bisa hilang; fokus pindah ke dalam dialog, Tab terkurung, fokus kembali ke pemicu saat ditutup, gulir halaman terkunci.
+ * Judul wajib. Satu Modal aktif sekali waktu; jangan menumpuk. Isi yang panjang: gulir di dalam Modal (Scrollable) atau pindah ke halaman penuh.
+ */
+export function Modal({ open, onClose, title, size = 'md', footer, dismissOnOverlay = true, children }: {
+  open: boolean; onClose: () => void; title: ReactNode; size?: keyof typeof WIDTH; footer?: ReactNode; dismissOnOverlay?: boolean; children: ReactNode;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const titleId = useId();
+  useDialogBehavior(open, ref);
   useEffect(() => {
     if (!open) return;
     const h = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
@@ -15,10 +24,10 @@ export function Modal({ open, onClose, title, size = 'md', footer, children }: {
   }, [open, onClose]);
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-[16px]" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div role="dialog" aria-modal="true" className="flex max-h-full w-full flex-col overflow-hidden rounded-[8px] bg-white shadow-sd-06" style={{ maxWidth: WIDTH[size] }}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-[16px]" onMouseDown={(e) => dismissOnOverlay && e.target === e.currentTarget && onClose()}>
+      <div ref={ref} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby={titleId} className="flex max-h-full w-full flex-col overflow-hidden rounded-[8px] bg-white shadow-sd-06 outline-none" style={{ maxWidth: WIDTH[size] }}>
         <div className="flex items-center justify-between gap-[16px] border-b border-sd-modal-border bg-sd-modal-header px-[20px] py-[16px]">
-          <h2 className="text-sd-gray-90" style={{ ...typo.headingSmall }}>{title}</h2>
+          <h2 id={titleId} className="text-sd-gray-90" style={{ ...typo.headingSmall }}>{title}</h2>
           <button aria-label="Tutup" onClick={onClose} className="text-sd-gray-60 hover:text-sd-gray-90">
             <svg viewBox="0 0 24 24" className="size-[20px]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>
