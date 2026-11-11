@@ -405,20 +405,20 @@ test.describe('Process Steps', () => {
 
   test('horizontal terang: garis di antara lingkaran dan tetap terlihat saat hover', async ({ page }) => {
     const demo = await openDemo(page, 'process-steps');
-    await cekGaris(page, demo.locator('ol').nth(0));
+    await cekGaris(page, demo.getByRole('list', { name: 'Rel horizontal', exact: true }));
   });
 
   test('horizontal inverse: garis tidak masuk ke dalam lingkaran berikutnya', async ({ page }) => {
     const demo = await openDemo(page, 'process-steps');
-    await cekGaris(page, demo.locator('ol').nth(2));
+    await cekGaris(page, demo.getByRole('list', { name: 'Rel inverse', exact: true }));
   });
 });
 
 test.describe('Process Steps: hover dan interaktivitas', () => {
   test('hover tanpa mengubah warna latar: label bergaris bawah, tepi lingkaran belum menguat, kursor tangan', async ({ page }) => {
     const demo = await openDemo(page, 'process-steps');
-    for (const idx of [0, 2]) {
-      const li = demo.locator('ol').nth(idx).locator('> li');
+    for (const nama of ['Rel horizontal', 'Rel inverse']) {
+      const li = demo.getByRole('list', { name: nama, exact: true }).locator('> li');
       const btn = li.nth(2).locator('button'); // langkah "belum"
       const circle = btn.locator('span').first();
       const label = btn.locator('span').nth(1);
@@ -434,7 +434,7 @@ test.describe('Process Steps: hover dan interaktivitas', () => {
 
   test('bawaan: semua langkah dapat dilompati (tidak ada yang nonaktif)', async ({ page }) => {
     const demo = await openDemo(page, 'process-steps');
-    const buttons = demo.locator('ol').nth(0).locator('> li button');
+    const buttons = demo.getByRole('list', { name: 'Rel horizontal', exact: true }).locator('> li button');
     await expect(buttons).toHaveCount(3);
     for (let i = 0; i < 3; i++) await expect(buttons.nth(i)).toBeEnabled();
   });
@@ -472,8 +472,10 @@ test.describe('Process Steps: hover dan interaktivitas', () => {
 
   test('disabled eksplisit pada langkah menimpa aturan (tanpa sequential)', async ({ page }) => {
     const demo = await openDemo(page, 'process-steps');
-    const btn = demo.getByRole('list', { name: 'Langkah dengan disabled eksplisit', exact: true }).locator('> li').nth(0).locator('button');
-    await expect(btn).toBeDisabled();
+    const lis = demo.getByRole('list', { name: 'Langkah dengan disabled eksplisit', exact: true }).locator('> li');
+    await expect(lis.nth(2).locator('button')).toBeDisabled();
+    await expect(lis.nth(1).locator('button')).toBeEnabled(); // tanpa sequential, langkah lain tetap aktif
+    expect(await lis.nth(2).locator('button span').nth(1).evaluate((e) => getComputedStyle(e).color), 'langkah nonaktif redup').toBe('rgb(130, 130, 130)');
   });
 
   test('tanpa onSelect: statis (tanpa tombol, tanpa hover) tetapi tetap menandai langkah saat ini', async ({ page }) => {

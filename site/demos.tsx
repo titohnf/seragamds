@@ -105,16 +105,44 @@ const STEPS_SEQ: S.ProcessStep[] = [
   { key: 'c', label: 'Melaksanakan', caption: 'Berjalan', state: 'active' },
   { key: 'd', label: 'Melaporkan', caption: 'Belum', state: 'todo' },
 ];
+/** Kelompok contoh pada halaman demo: judul kategori + penjelasan singkat, lalu isinya. */
+const Group = ({ id, title, note, children }: { id: string; title: string; note: string; children: ReactNode }) => (
+  <section aria-labelledby={id} className="rounded-[8px] border border-sd-gray-10 bg-white p-[20px]">
+    <h2 id={id} className="text-sd-gray-90" style={{ fontSize: 17, lineHeight: '22px', fontWeight: 600 }}>{title}</h2>
+    <p className="mb-[16px] mt-[2px] text-sd-gray-60" style={{ fontSize: 13, lineHeight: '20px' }}>{note}</p>
+    <div className="flex flex-col gap-[24px]">{children}</div>
+  </section>
+);
+/** Satu contoh di dalam kelompok; `dark` menaruhnya di latar Surface/Dark Blue untuk varian inverse. */
+const Item = ({ title, note, dark = false, children }: { title: string; note?: string; dark?: boolean; children: ReactNode }) => (
+  <div className={dark ? 'rounded-[8px] bg-sd-surface-dark-blue p-[16px]' : ''}>
+    <h3 className={dark ? 'text-white' : 'text-sd-gray-90'} style={{ fontSize: 14, lineHeight: '20px', fontWeight: 600 }}>{title}</h3>
+    {note && <p className={`mb-[12px] ${dark ? 'text-sd-text-inverse-subdued' : 'text-sd-gray-60'}`} style={{ fontSize: 12, lineHeight: '16px' }}>{note}</p>}
+    {!note && <div className="mb-[12px]" />}
+    {children}
+  </div>
+);
+
 function ProcessStepsDemo() {
   const [cur, setCur] = useState('b');
+  const detail = STEPS.map((s) => (s.key === 'b' ? { ...s, detail: <span className="text-sd-gray-90">Bagian yang perlu diisi</span> } : s));
   return <div className="flex w-full flex-col gap-[24px]">
-    <Row label="Horizontal"><div className="w-full"><S.ProcessSteps steps={STEPS} current={cur} onSelect={setCur} /></div></Row>
-    <Row label="Vertical dengan detail"><div className="w-[300px]"><S.ProcessSteps orientation="vertical" current={cur} onSelect={setCur} steps={STEPS.map((s) => (s.key === 'b' ? { ...s, detail: <span className="text-sd-gray-90">Bagian yang perlu diisi</span> } : s))} /></div></Row>
-    <div className="rounded-[8px] bg-sd-surface-dark-blue p-[16px]"><Row onDark label="inverse"><div className="w-full"><S.ProcessSteps inverse steps={STEPS} current={cur} onSelect={setCur} /></div></Row></div>
-    <Row label="Berurutan (sequential): langkah berikutnya nonaktif sampai langkah sebelumnya selesai"><div className="flex w-full flex-col gap-[16px]"><S.ProcessSteps sequential aria-label="Langkah berurutan" steps={STEPS_SEQ} current={cur} onSelect={setCur} /><div className="w-[300px]"><S.ProcessSteps sequential orientation="vertical" aria-label="Langkah berurutan (vertikal)" steps={STEPS_SEQ} current={cur} onSelect={setCur} /></div></div></Row>
-    <div className="rounded-[8px] bg-sd-surface-dark-blue p-[16px]"><Row onDark label="inverse + sequential"><div className="w-full"><S.ProcessSteps inverse sequential aria-label="Langkah berurutan (inverse)" steps={STEPS_SEQ} current={cur} onSelect={setCur} /></div></Row></div>
-    <Row label="disabled eksplisit pada satu langkah (tanpa sequential)"><div className="w-full"><S.ProcessSteps aria-label="Langkah dengan disabled eksplisit" steps={STEPS.map((s) => (s.key === 'a' ? { ...s, disabled: true } : s))} current={cur} onSelect={setCur} /></div></Row>
-    <Row label="Statis (tanpa onSelect: hanya penanda posisi, tidak bisa diklik)"><div className="w-full"><S.ProcessSteps aria-label="Posisi langkah (statis)" steps={STEPS} current="b" /></div></Row>
+    <Group id="ps-orientasi" title="Orientasi" note="Horizontal untuk badan halaman; vertikal untuk sidebar, dengan slot detail di bawah langkah.">
+      <Item title="Horizontal" note="Selebar minimum 720px dan menggulir sendiri di layar sempit."><S.ProcessSteps aria-label="Rel horizontal" steps={STEPS} current={cur} onSelect={setCur} /></Item>
+      <Item title="Vertikal dengan detail" note="Detail hanya untuk orientasi vertikal."><div className="w-[300px] max-w-full"><S.ProcessSteps aria-label="Rel vertikal" orientation="vertical" current={cur} onSelect={setCur} steps={detail} /></div></Item>
+    </Group>
+    <Group id="ps-inverse" title="Latar gelap (inverse)" note="Untuk hero atau sidebar berlatar gelap; lingkaran belum/berjalan transparan, garis hanya di antara lingkaran.">
+      <Item dark title="Horizontal inverse"><S.ProcessSteps inverse aria-label="Rel inverse" steps={STEPS} current={cur} onSelect={setCur} /></Item>
+      <Item dark title="Vertikal inverse"><div className="w-[300px] max-w-full"><S.ProcessSteps inverse aria-label="Rel vertikal inverse" orientation="vertical" steps={STEPS} current={cur} onSelect={setCur} /></div></Item>
+    </Group>
+    <Group id="ps-interaksi" title="Interaksi dan langkah nonaktif" note="Bawaan: semua langkah dapat diklik dan dilompati (contoh di atas). Hover hanya menggarisbawahi label dan menguatkan tepi lingkaran, tanpa mengubah latar.">
+      <Item title="Berurutan (sequential)" note="Langkah berikutnya nonaktif sampai langkah sebelumnya selesai. Di sini langkah 4 nonaktif karena langkah 3 belum selesai.">
+        <div className="flex flex-col gap-[16px]"><S.ProcessSteps sequential aria-label="Langkah berurutan" steps={STEPS_SEQ} current={cur} onSelect={setCur} /><p className="text-sd-gray-60" style={{ fontSize: 12, lineHeight: '16px' }}>Orientasi vertikal:</p><div className="w-[300px] max-w-full"><S.ProcessSteps sequential orientation="vertical" aria-label="Langkah berurutan (vertikal)" steps={STEPS_SEQ} current={cur} onSelect={setCur} /></div></div>
+      </Item>
+      <Item dark title="Berurutan di latar gelap"><S.ProcessSteps inverse sequential aria-label="Langkah berurutan (inverse)" steps={STEPS_SEQ} current={cur} onSelect={setCur} /></Item>
+      <Item title="Nonaktif eksplisit (disabled)" note="disabled: true pada langkah 3, tanpa sequential; menimpa aturan berurutan."><S.ProcessSteps aria-label="Langkah dengan disabled eksplisit" steps={STEPS.map((s) => (s.key === 'c' ? { ...s, disabled: true } : s))} current={cur} onSelect={setCur} /></Item>
+      <Item title="Statis (tanpa onSelect)" note="Hanya penanda posisi: bukan tombol, tanpa hover, fokus, atau kursor tangan."><S.ProcessSteps aria-label="Posisi langkah (statis)" steps={STEPS} current="b" /></Item>
+    </Group>
   </div>;
 }
 
