@@ -1,4 +1,11 @@
-import { useEffect, type RefObject } from 'react';
+import { useEffect, useSyncExternalStore, type RefObject } from 'react';
+
+// Safari tidak memfokuskan tombol saat diklik, sehingga document.activeElement saat dialog dibuka bukan pemicunya.
+// Catat elemen yang terakhir ditekan sebagai cadangan agar fokus tetap kembali ke pemicu.
+let lastPressed: HTMLElement | null = null;
+if (typeof document !== 'undefined') {
+  document.addEventListener('pointerdown', (e) => { lastPressed = (e.target as HTMLElement | null)?.closest?.('button, a[href], input, select, textarea, summary, [tabindex]') as HTMLElement | null; }, true);
+}
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -9,7 +16,8 @@ const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), selec
 export function useDialogBehavior(open: boolean, ref: RefObject<HTMLElement | null>) {
   useEffect(() => {
     if (!open) return;
-    const prev = document.activeElement as HTMLElement | null;
+    const active = document.activeElement as HTMLElement | null;
+    const prev = active && active !== document.body ? active : lastPressed;
     const overflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const el = ref.current;
@@ -25,4 +33,18 @@ export function useDialogBehavior(open: boolean, ref: RefObject<HTMLElement | nu
     document.addEventListener('keydown', onKey);
     return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = overflow; prev?.focus?.(); };
   }, [open, ref]);
+}
+
+/**
+ * Media query yang aman untuk render di server dan hidrasi: di server dan saat hidrasi bernilai `false`, lalu mengikuti peramban.
+ * Memakai useSyncExternalStore sehingga tidak ada beda HTML server/klien (tanpa peringatan hidrasi).
+ */
+export function useMediaQuery(query: string): boolean {
+  const subscribe = (cb: () => void) => {
+    if (typeof window === 'undefined' || !window.matchMedia) return () => {};
+    const mq = window.matchMedia(query); mq.addEventListener('change', cb);
+    return () => mq.removeEventListener('change', cb);
+  };
+  const get = () => typeof window !== 'undefined' && !!window.matchMedia && window.matchMedia(query).matches;
+  return useSyncExternalStore(subscribe, get, () => false);
 }

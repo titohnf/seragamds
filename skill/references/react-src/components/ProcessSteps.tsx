@@ -60,6 +60,7 @@ export function ProcessSteps({ steps, current, onSelect, inverse = false, orient
     );
   }
   return (
+    <div className="max-w-full overflow-x-auto">
     <ol aria-label={ariaLabel} className={`flex min-w-[720px] items-start ${className}`}>
       {steps.map((s, i) => {
         const on = current === s.key;
@@ -81,5 +82,6 @@ export function ProcessSteps({ steps, current, onSelect, inverse = false, orient
         );
       })}
     </ol>
+    </div>
   );
 }

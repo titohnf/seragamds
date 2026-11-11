@@ -22,7 +22,7 @@ export function Toast({ children, action, onAction, tone = 'default', duration, 
   }, [duration, onClose, children]);
   let startY: number | null = null;
   return (
-    <div role="status" className="flex min-w-[328px] max-w-[480px] items-center justify-between gap-[12px] rounded-[4px] bg-sd-gray-90 px-[16px] py-[12px] text-white shadow-[0_2px_10px_rgba(0,0,0,0.1),0_0_2px_rgba(0,0,0,0.2)]" style={{ ...typo.body }}
+    <div role="status" className="flex min-w-[min(328px,100%)] max-w-[480px] items-center justify-between gap-[12px] rounded-[4px] bg-sd-gray-90 px-[16px] py-[12px] text-white shadow-[0_2px_10px_rgba(0,0,0,0.1),0_0_2px_rgba(0,0,0,0.2)]" style={{ ...typo.body }}
       onTouchStart={(e) => { startY = e.touches[0].clientY; }}
       onTouchEnd={(e) => { if (startY !== null && startY - e.changedTouches[0].clientY > 30) onClose?.(); startY = null; }}>
       <span className="flex items-center gap-[8px]">

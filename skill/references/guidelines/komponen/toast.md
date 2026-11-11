@@ -15,6 +15,7 @@ Notifikasi singkat dan sementara tanpa mengganggu pengguna. Props: `children`, `
 | **Success** (`tone="success"`) | Aksi berhasil; ikon centang memperkuat kesan berhasil |
 
 ## Perilaku
+- Lebar minimum 328px tetapi **menyesuaikan layar yang lebih sempit** (tidak melebihi lebar wadah).
 - **Tampil minimal 4 detik** (`duration` dipaksa ≥ 4000ms bersama `onClose`).
 - Hilang sendiri setelah durasi; di mobile pengguna bisa menutup dengan **geser ke atas**.
 - **Toast baru menggantikan yang sebelumnya**: render satu Toast pada satu waktu.

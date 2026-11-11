@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { Check } from 'lucide-react';
 import { typo } from '../tokens';
 import { Modal } from './Modal';
+import { useFixedPopup } from '../popup';
 
 export type SelectOption = { value: string; label: ReactNode; description?: ReactNode; disabled?: boolean };
 
@@ -20,19 +21,23 @@ export function CustomSelect({ options, value, onChange, label, helper, error, p
   const [hi, setHi] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
   const id = useId();
+  const pop = useFixedPopup(open && mode === 'dropdown', btnRef, listRef, { matchWidth: true, constrainHeight: true });
   const sel = options.find((o) => o.value === value);
   const enabled = options.map((o, i) => (o.disabled ? -1 : i)).filter((i) => i >= 0);
 
-  const openList = () => { if (disabled) return; setHi(Math.max(0, options.findIndex((o) => o.value === value))); setOpen(true); };
+  // Safari tidak memberi fokus pada tombol yang diklik: fokuskan pemicu agar keyboard (panah, Enter, Esc) langsung bekerja setelah dibuka dengan mouse.
+  const openList = () => { if (disabled) return; setHi(Math.max(0, options.findIndex((o) => o.value === value))); setOpen(true); if (mode === 'dropdown') btnRef.current?.focus(); };
   const close = () => { setOpen(false); btnRef.current?.focus(); };
   const pick = (i: number) => { const o = options[i]; if (!o || o.disabled) return; onChange(o.value); close(); };
 
   useEffect(() => {
     if (!open || mode !== 'dropdown') return;
     const down = (e: MouseEvent) => !rootRef.current?.contains(e.target as Node) && setOpen(false);
-    document.addEventListener('mousedown', down);
-    return () => document.removeEventListener('mousedown', down);
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(false); btnRef.current?.focus(); } };
+    document.addEventListener('mousedown', down); document.addEventListener('keydown', esc);
+    return () => { document.removeEventListener('mousedown', down); document.removeEventListener('keydown', esc); };
   }, [open, mode]);
 
   const onKey = (e: React.KeyboardEvent) => {
@@ -72,7 +77,7 @@ export function CustomSelect({ options, value, onChange, label, helper, error, p
         <svg aria-hidden viewBox="0 0 24 24" className="pointer-events-none absolute right-[12px] top-1/2 size-[24px] -translate-y-1/2 text-sd-gray-70" fill="currentColor"><path d="M7 10l5 5 5-5z" /></svg>
       </button>
       {open && mode === 'dropdown' && (
-        <ul id={`${id}-lb`} role="listbox" aria-labelledby={label ? `${id}-l` : undefined} className="absolute left-0 right-0 top-full z-50 mt-[4px] max-h-[280px] overflow-y-auto rounded-[8px] bg-white p-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.1),0_0_2px_rgba(0,0,0,0.2)]">
+        <ul ref={listRef} id={`${id}-lb`} role="listbox" aria-labelledby={label ? `${id}-l` : undefined} style={pop.style} className="z-50 max-h-[280px] overflow-y-auto rounded-[8px] bg-white p-[4px] shadow-[0_2px_10px_rgba(0,0,0,0.1),0_0_2px_rgba(0,0,0,0.2)]">
           {options.map((o, i) => optionRow(o, i, i === hi))}
         </ul>
       )}

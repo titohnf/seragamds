@@ -3,8 +3,14 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.18.0
+npm i github:titohnf/seragamds#v0.19.0
 ```
+
+## 0.19.0 · 2026-11-11
+- **Popup tahan tepi layar** (`useFixedPopup`): Popover, CustomSelect, DatePicker, menu "Lainnya" Navbar, dan Tooltip membalik sisi bila tak muat, tetap di dalam layar, tidak terpotong wadah `overflow-hidden`, dan mengikuti gulir. `Tooltip` kini memberi `aria-describedby` pada pemicu dan bisa ditutup dengan `Esc`.
+- **Perbaikan:** `NavigationBar` dan `Carousel` tidak lagi membaca `matchMedia` saat render (ketidakcocokan hidrasi di Next.js); halaman dengan `Toast` dan `ProcessSteps` horizontal tidak lagi melebar di layar 360px.
+- **Perbaikan khusus Safari:** `Esc` menutup `CustomSelect` setelah dibuka dengan mouse; fokus kembali ke pemicu setelah `Modal`/`BottomSheet` ditutup.
+- **Pengujian:** Playwright lintas peramban (Chromium, Firefox, WebKit) dan perangkat sentuh (Pixel 7, iPhone 14); tes popup dan seluler; `npm run smoke:hydration` (render server lalu hidrasi).
 
 ## 0.18.0 · 2026-11-11
 - **Paket siap pakai**: `npm run build:lib` (JS ESM + tipe TypeScript + `style.css` jadi) dan `npm run pack:release` (tarball). Tag `vX.Y.Z` kini memicu workflow **Rilis** yang melampirkan `seragam-design-system-X.Y.Z.tgz` ke GitHub Release. Pemasangan dari git/sumber tidak berubah. Tanpa Tailwind cukup `import 'seragam-design-system/styles.css'`.

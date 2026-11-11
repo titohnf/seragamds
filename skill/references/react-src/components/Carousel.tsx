@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { useMediaQuery } from '../hooks';
 
 /**
  * Carousel Seragam (Figma "Carousel updated"; panduan seragam.belajar.id/carousel).
@@ -28,7 +29,7 @@ export function Carousel({ slides, label, autoplay, pagination = true, arrows = 
   const [paused, setPaused] = useState(false);   // dipicu hover/fokus
   const [stopped, setStopped] = useState(false); // dipicu tombol jeda atau navigasi manual
   const touchX = useRef<number | null>(null);
-  const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const reduced = useMediaQuery('(prefers-reduced-motion: reduce)');
   const auto = !!autoplay && !reduced;
   const running = auto && !paused && !stopped;
 

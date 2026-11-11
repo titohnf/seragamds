@@ -2,6 +2,9 @@
 
 Catatan perubahan yang bisa memengaruhi proyek pemakai, per versi (masih 0.x, jadi minor boleh mengubah tampilan atau perilaku). Rincian lengkap: [CHANGELOG](../CHANGELOG.md) dan [DECISIONS](DECISIONS.md). Kunci proyek ke tag, bukan `main`.
 
+## Dari 0.18 ke 0.19
+- `Tooltip`: pemicu (bila satu elemen) otomatis mendapat `aria-describedby`; tooltip tidak lagi dirender dengan kelas `group-hover` (tes yang memeriksa visibilitas lewat CSS hover perlu memicu hover sungguhan). Popup (Popover, Custom Select, Date Picker) kini `position: fixed`: selektor yang mengandalkan posisi `absolute` di dalam pembungkus perlu disesuaikan. Tidak ada perubahan prop.
+
 ## Dari 0.15 ke 0.18
 - **0.16.0**: angka halaman tidak aktif di `Pagination` dan placeholder `TextField` memakai `gray-60` (sebelumnya `gray-50`), demi kontras AA. `ProgressBar` kini punya nama aksesibel (`aria-label`, atau dari `label`). `Table` yang meluber menjadi `role="region"` dan bisa difokuskan keyboard. **Slider dan Stepper wajib diberi `aria-label`** (atau label terlihat) di kode Anda.
 - **0.17.0 dan 0.18.0**: hanya penambahan (`DatePicker`, `Calendar`, `FormField`, `FieldGroup`; paket siap pakai). Tidak ada yang perlu diubah.

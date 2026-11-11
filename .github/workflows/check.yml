@@ -23,7 +23,8 @@ jobs:
       - run: npm run build:lib
       - run: npm run smoke:lib
       # tes perilaku, aksesibilitas (axe), dan ukuran komponen terhadap galeri situs
-      - run: npx playwright install --with-deps chromium
+      - run: npm run smoke:hydration
+      - run: npx playwright install --with-deps chromium firefox webkit
       - run: npx playwright test
       - uses: actions/upload-artifact@v4
         if: failure()
