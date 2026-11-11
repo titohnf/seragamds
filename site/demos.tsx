@@ -99,12 +99,50 @@ const STEPS: S.ProcessStep[] = [
   { key: 'b', label: 'Merencanakan', caption: 'Berjalan', state: 'active' },
   { key: 'c', label: 'Melaksanakan', caption: 'Belum', state: 'todo' },
 ];
+const STEPS_SEQ: S.ProcessStep[] = [
+  { key: 'a', label: 'Mengumpulkan data', caption: 'Selesai', state: 'done' },
+  { key: 'b', label: 'Merencanakan', caption: 'Selesai', state: 'done' },
+  { key: 'c', label: 'Melaksanakan', caption: 'Berjalan', state: 'active' },
+  { key: 'd', label: 'Melaporkan', caption: 'Belum', state: 'todo' },
+];
+/** Kelompok contoh pada halaman demo: judul kategori + penjelasan singkat, lalu isinya. */
+const Group = ({ id, title, note, children }: { id: string; title: string; note: string; children: ReactNode }) => (
+  <section aria-labelledby={id} className="rounded-[8px] border border-sd-gray-10 bg-white p-[20px]">
+    <h2 id={id} className="text-sd-gray-90" style={{ fontSize: 17, lineHeight: '22px', fontWeight: 600 }}>{title}</h2>
+    <p className="mb-[16px] mt-[2px] text-sd-gray-60" style={{ fontSize: 13, lineHeight: '20px' }}>{note}</p>
+    <div className="flex flex-col gap-[24px]">{children}</div>
+  </section>
+);
+/** Satu contoh di dalam kelompok; `dark` menaruhnya di latar Surface/Dark Blue untuk varian inverse. */
+const Item = ({ title, note, dark = false, children }: { title: string; note?: string; dark?: boolean; children: ReactNode }) => (
+  <div className={dark ? 'rounded-[8px] bg-sd-surface-dark-blue p-[16px]' : ''}>
+    <h3 className={dark ? 'text-white' : 'text-sd-gray-90'} style={{ fontSize: 14, lineHeight: '20px', fontWeight: 600 }}>{title}</h3>
+    {note && <p className={`mb-[12px] ${dark ? 'text-sd-text-inverse-subdued' : 'text-sd-gray-60'}`} style={{ fontSize: 12, lineHeight: '16px' }}>{note}</p>}
+    {!note && <div className="mb-[12px]" />}
+    {children}
+  </div>
+);
+
 function ProcessStepsDemo() {
   const [cur, setCur] = useState('b');
+  const detail = STEPS.map((s) => (s.key === 'b' ? { ...s, detail: <span className="text-sd-gray-90">Bagian yang perlu diisi</span> } : s));
   return <div className="flex w-full flex-col gap-[24px]">
-    <Row label="Horizontal"><div className="w-full"><S.ProcessSteps steps={STEPS} current={cur} onSelect={setCur} /></div></Row>
-    <Row label="Vertical dengan detail"><div className="w-[300px]"><S.ProcessSteps orientation="vertical" current={cur} onSelect={setCur} steps={STEPS.map((s) => (s.key === 'b' ? { ...s, detail: <span className="text-sd-gray-90">Bagian yang perlu diisi</span> } : s))} /></div></Row>
-    <div className="rounded-[8px] bg-sd-surface-dark-blue p-[16px]"><Row onDark label="inverse"><div className="w-full"><S.ProcessSteps inverse steps={STEPS} current={cur} onSelect={setCur} /></div></Row></div>
+    <Group id="ps-orientasi" title="Orientasi" note="Horizontal untuk badan halaman; vertikal untuk sidebar, dengan slot detail di bawah langkah.">
+      <Item title="Horizontal" note="Selebar minimum 720px dan menggulir sendiri di layar sempit."><S.ProcessSteps aria-label="Rel horizontal" steps={STEPS} current={cur} onSelect={setCur} /></Item>
+      <Item title="Vertikal dengan detail" note="Detail hanya untuk orientasi vertikal."><div className="w-[300px] max-w-full"><S.ProcessSteps aria-label="Rel vertikal" orientation="vertical" current={cur} onSelect={setCur} steps={detail} /></div></Item>
+    </Group>
+    <Group id="ps-inverse" title="Latar gelap (inverse)" note="Untuk hero atau sidebar berlatar gelap; lingkaran belum/berjalan transparan, garis hanya di antara lingkaran.">
+      <Item dark title="Horizontal inverse"><S.ProcessSteps inverse aria-label="Rel inverse" steps={STEPS} current={cur} onSelect={setCur} /></Item>
+      <Item dark title="Vertikal inverse"><div className="w-[300px] max-w-full"><S.ProcessSteps inverse aria-label="Rel vertikal inverse" orientation="vertical" steps={STEPS} current={cur} onSelect={setCur} /></div></Item>
+    </Group>
+    <Group id="ps-interaksi" title="Interaksi dan langkah nonaktif" note="Bawaan: semua langkah dapat diklik dan dilompati (contoh di atas). Hover hanya menggarisbawahi label dan menguatkan tepi lingkaran, tanpa mengubah latar.">
+      <Item title="Berurutan (sequential)" note="Langkah berikutnya nonaktif sampai langkah sebelumnya selesai. Di sini langkah 4 nonaktif karena langkah 3 belum selesai.">
+        <div className="flex flex-col gap-[16px]"><S.ProcessSteps sequential aria-label="Langkah berurutan" steps={STEPS_SEQ} current={cur} onSelect={setCur} /><p className="text-sd-gray-60" style={{ fontSize: 12, lineHeight: '16px' }}>Orientasi vertikal:</p><div className="w-[300px] max-w-full"><S.ProcessSteps sequential orientation="vertical" aria-label="Langkah berurutan (vertikal)" steps={STEPS_SEQ} current={cur} onSelect={setCur} /></div></div>
+      </Item>
+      <Item dark title="Berurutan di latar gelap"><S.ProcessSteps inverse sequential aria-label="Langkah berurutan (inverse)" steps={STEPS_SEQ} current={cur} onSelect={setCur} /></Item>
+      <Item title="Nonaktif eksplisit (disabled)" note="disabled: true pada langkah 3, tanpa sequential; menimpa aturan berurutan."><S.ProcessSteps aria-label="Langkah dengan disabled eksplisit" steps={STEPS.map((s) => (s.key === 'c' ? { ...s, disabled: true } : s))} current={cur} onSelect={setCur} /></Item>
+      <Item title="Statis (tanpa onSelect)" note="Hanya penanda posisi: bukan tombol, tanpa hover, fokus, atau kursor tangan."><S.ProcessSteps aria-label="Posisi langkah (statis)" steps={STEPS} current="b" /></Item>
+    </Group>
   </div>;
 }
 
@@ -157,8 +195,11 @@ export const demos: Record<string, () => ReactNode> = {
   list: () => <Box><S.List><S.ListItem label="Budi Santoso" description="Kelas 5A" artwork={<S.Avatar name="Budi" />} /><S.ListItem label="Sari Dewi" description="Kelas 5B" artwork={<S.Avatar name="Sari" />} end={<S.Badge tone="green">Hadir</S.Badge>} /></S.List></Box>,
   breadcrumb: () => <div className="flex flex-col gap-[12px]">{(() => <div className="flex flex-col gap-[12px]"><S.Breadcrumb items={[{ label: 'Beranda', href: '#' }, { label: 'Kepegawaian', href: '#' }, { label: 'Detail' }]} /><S.Breadcrumb maxItems={3} items={[{ label: 'Beranda', href: '#' }, { label: 'Kepegawaian', href: '#' }, { label: 'Unit kerja', href: '#' }, { label: 'Pegawai', href: '#' }, { label: 'Detail' }]} /></div>)()}<div style={{ width: 360 }} className="max-w-full"><S.Breadcrumb maxItems="auto" items={['Beranda', 'Kepegawaian', 'Unit kerja', 'Pegawai', 'Riwayat jabatan', 'Detail'].map((label, i, a) => i < a.length - 1 ? { label, href: '#' } : { label })} /></div></div>,
   pagination: () => <PaginationDemo />,
-  popover: () => <S.Popover trigger={({ toggle }) => <S.Button variant="secondary" onClick={toggle}>Menu</S.Button>} items={[{ label: 'Ubah', onSelect: () => {} }, { label: 'Duplikat', onSelect: () => {} }, { label: 'Hapus', onSelect: () => {}, disabled: true }]} />,
-  tooltip: () => <div className="flex gap-[16px] pt-[40px]"><S.Tooltip text="Teks tooltip di atas"><S.Button variant="secondary">Hover saya</S.Button></S.Tooltip><S.Tooltip text="Di bawah" side="bottom"><S.Button variant="secondary">Bawah</S.Button></S.Tooltip></div>,
+  popover: () => <div className="flex flex-col gap-[24px]">
+    <S.Popover trigger={({ toggle }) => <S.Button variant="secondary" onClick={toggle}>Menu</S.Button>} items={[{ label: 'Ubah', onSelect: () => {} }, { label: 'Duplikat', onSelect: () => {} }, { label: 'Hapus', onSelect: () => {}, disabled: true }]} />
+    <div className="h-[64px] overflow-hidden rounded-[8px] border border-sd-gray-10 bg-white p-[12px]"><S.Popover trigger={({ toggle }) => <S.Button variant="secondary" size="md" onClick={toggle}>Menu dalam wadah overflow-hidden</S.Button>} items={[{ label: 'Ubah', onSelect: () => {} }, { label: 'Duplikat', onSelect: () => {} }, { label: 'Arsipkan', onSelect: () => {} }, { label: 'Hapus', onSelect: () => {} }]} /></div>
+  </div>,
+  tooltip: () => <div className="flex flex-wrap gap-[16px] pt-[40px]"><S.Tooltip text="Teks tooltip di atas"><S.Button variant="secondary">Hover saya</S.Button></S.Tooltip><S.Tooltip text="Di bawah" side="bottom"><S.Button variant="secondary">Bawah</S.Button></S.Tooltip><S.Tooltip text="Di kanan" side="right"><S.Button variant="secondary">Kanan</S.Button></S.Tooltip><S.Tooltip text="Di kiri" side="left"><S.Button variant="secondary">Kiri</S.Button></S.Tooltip></div>,
   'navigation-bar': () => <NavbarDemo />,
   stepper: () => <StepperDemo />,
   avatar: () => <Row><S.Avatar name="Budi" size={20} /><S.Avatar name="Budi" size={36} /><S.Avatar name="Budi" size={64} /><S.Avatar name="Komunitas" shape="square" size={48} /></Row>,

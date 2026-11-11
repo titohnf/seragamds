@@ -19,6 +19,7 @@ Default, Focused, Disabled, Error ("saat terjadi kesalahan input, mis. memilih o
 
 ## Perilaku `CustomSelect`
 - Pemicu bertampilan sama dengan `Select`. `Enter`/`Space`/`↓` membuka; `↑`/`↓`/`Home`/`End` memindah sorotan (opsi nonaktif dilewati); `Enter` memilih; `Esc` menutup dan fokus kembali ke pemicu; ketik huruf untuk melompat; klik di luar menutup.
+- Daftar `dropdown` selebar pemicu, **membalik ke atas** bila ruang bawah sempit dan tingginya dibatasi ruang yang ada; tidak terpotong wadah `overflow-hidden`.
 - Semantik: pemicu `role="combobox"`, daftar `role="listbox"` dengan `aria-activedescendant`; opsi terpilih bertanda centang. Mode `list-menu` membuka Modal berukuran `sm` yang memuat daftar yang sama.
 - Pakai `Select` bawaan bila daftar sederhana (lebih ringan, memakai picker native di mobile); `CustomSelect` bila perlu deskripsi per opsi, gaya khusus, atau konteks tambahan.
 

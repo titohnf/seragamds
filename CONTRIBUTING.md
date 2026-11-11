@@ -20,7 +20,8 @@ Daftar periksa (semuanya otomatis diperiksa `npm run check`, kecuali yang bertan
 - [ ] Halaman panduan `docs/guidelines/komponen/<nama>.md`: baris `- Kode:`, status, props (setiap prop publik disebut), perilaku (keyboard, state), responsif, penulisan; ekstensi wajib punya `## Spesifikasi` dan tautan ke `extensions.md`.
 - [ ] Baris di `docs/guidelines/pemetaan-nama.md` dan `docs/README.md`; ringkasan di `docs/extensions.md` bila ekstensi.
 - [ ] Demo di `site/demos.tsx` (otomatis kena tes aksesibilitas Mobile dan Desktop).
-- [ ] Tes perilaku di `tests/e2e/behavior.spec.ts` untuk setiap interaksi (keyboard, Esc, fokus).
+- [ ] Tes perilaku di `tests/e2e/behavior.spec.ts` untuk setiap interaksi (keyboard, Esc, fokus); popup memakai `useFixedPopup` (`src/popup.ts`) dan punya tes di `popup.spec.ts`.
+- [ ] Tidak membaca `window`/`matchMedia` saat render (pakai `useMediaQuery` di `src/hooks.ts`); `npm run smoke:hydration` menangkap pelanggarannya.
 - [ ] Pasangan warna baru terdaftar di `tools/contrast.py` (teks biasa ≥ 4,5:1).
 - [ ] *Manual:* diperiksa di browser pada lebar mobile (≈360) dan desktop (≈1440), dan dengan keyboard saja.
 

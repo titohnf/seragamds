@@ -33,7 +33,7 @@ test.describe('Tabs', () => {
 });
 
 test.describe('Modal', () => {
-  test('fokus masuk, Tab terkurung, Esc menutup dan fokus kembali, gulir terkunci', async ({ page }) => {
+  test('fokus masuk, Tab terkurung, Esc menutup dan fokus kembali, gulir terkunci', async ({ page, browserName }) => {
     const demo = await openDemo(page, 'modal');
     const trigger = demo.getByRole('button', { name: 'Buka modal' });
     await trigger.focus(); await trigger.click();
@@ -41,7 +41,8 @@ test.describe('Modal', () => {
     await expect(dialog).toBeVisible();
     await expect(dialog).toHaveAttribute('aria-labelledby', /.+/);
     expect(await page.evaluate(() => document.body.style.overflow)).toBe('hidden');
-    for (let i = 0; i < 6; i++) { await page.keyboard.press('Tab'); expect(await dialog.evaluate((d) => d.contains(document.activeElement))).toBe(true); }
+    // Safari secara bawaan tidak memasukkan tombol ke urutan Tab, jadi urutan Tab hanya diuji di Chromium dan Firefox.
+    if (browserName !== 'webkit') for (let i = 0; i < 6; i++) { await page.keyboard.press('Tab'); expect(await dialog.evaluate((d) => d.contains(document.activeElement))).toBe(true); }
     await page.keyboard.press('Escape');
     await expect(dialog).toHaveCount(0);
     await expect(trigger).toBeFocused();
@@ -74,7 +75,7 @@ test.describe('Bottom Sheet', () => {
 test.describe('Popover', () => {
   test('fokus ke item pertama, panah dan End berpindah (nonaktif dilewati), Esc mengembalikan fokus', async ({ page }) => {
     const demo = await openDemo(page, 'popover');
-    const trigger = demo.getByRole('button', { name: 'Menu' });
+    const trigger = demo.getByRole('button', { name: 'Menu', exact: true });
     await trigger.click();
     const items = page.getByRole('menuitem');
     await expect(items.first()).toBeFocused();
@@ -376,5 +377,114 @@ test.describe('Form Field dan Field Group', () => {
     await expect(cb).toContainText('Pilih minimal satu jenjang.');
     await cb.getByRole('checkbox', { name: 'SMA' }).check();
     await expect(cb).not.toContainText('Pilih minimal satu jenjang.');
+  });
+});
+
+test.describe('Process Steps', () => {
+  /** Garis penghubung rel horizontal: hanya di antara tepi lingkaran, sejajar tengah, dan tidak tertutup latar hover. */
+  async function cekGaris(page: import('@playwright/test').Page, ol: import('@playwright/test').Locator) {
+    const lis = ol.locator('> li');
+    await expect(lis).toHaveCount(3);
+    for (let i = 1; i < 3; i++) {
+      const line = lis.nth(i).locator('[data-connector]');
+      const prev = (await lis.nth(i - 1).locator('button > span').first().boundingBox())!;
+      const cur = (await lis.nth(i).locator('button > span').first().boundingBox())!;
+      const l = (await line.boundingBox())!;
+      expect(l.x, 'garis mulai setelah tepi kanan lingkaran sebelumnya').toBeGreaterThanOrEqual(prev.x + prev.width + 2);
+      expect(l.x + l.width, 'garis berakhir sebelum tepi kiri lingkaran ini').toBeLessThanOrEqual(cur.x - 2);
+      expect(Math.abs(l.y + l.height / 2 - (cur.y + cur.height / 2)), 'garis di tengah vertikal lingkaran').toBeLessThanOrEqual(1);
+      for (const btn of [lis.nth(i - 1).locator('button'), lis.nth(i).locator('button')]) {
+        await btn.hover();
+        // garis harus berada DI ATAS tombol dalam urutan tumpukan (jaga-jaga bila tombol mendapat latar)
+        const z = await line.evaluate((el, b) => { const g = (n: Element) => Number(getComputedStyle(n).zIndex); return { garis: g(el), tombol: g(b as Element), posisi: getComputedStyle(el).position, hoverBg: getComputedStyle(b as Element).backgroundColor }; }, await btn.elementHandle());
+        expect(z.posisi).toBe('absolute');
+        expect(z.garis, 'garis di atas tombol saat hover').toBeGreaterThan(z.tombol);
+      }
+    }
+  }
+
+  test('horizontal terang: garis di antara lingkaran dan tetap terlihat saat hover', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    await cekGaris(page, demo.getByRole('list', { name: 'Rel horizontal', exact: true }));
+  });
+
+  test('horizontal inverse: garis tidak masuk ke dalam lingkaran berikutnya', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    await cekGaris(page, demo.getByRole('list', { name: 'Rel inverse', exact: true }));
+  });
+});
+
+test.describe('Process Steps: hover dan interaktivitas', () => {
+  test('hover tanpa mengubah warna latar: label bergaris bawah, tepi lingkaran belum menguat, kursor tangan', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    for (const nama of ['Rel horizontal', 'Rel inverse']) {
+      const li = demo.getByRole('list', { name: nama, exact: true }).locator('> li');
+      const btn = li.nth(2).locator('button'); // langkah "belum"
+      const circle = btn.locator('span').first();
+      const label = btn.locator('span').nth(1);
+      const sebelum = await circle.evaluate((e) => getComputedStyle(e).borderColor);
+      expect(await label.evaluate((e) => getComputedStyle(e).textDecorationLine)).not.toContain('underline');
+      await btn.hover();
+      expect(await btn.evaluate((b) => getComputedStyle(b).backgroundColor), 'latar tidak berubah saat hover').toBe('rgba(0, 0, 0, 0)');
+      expect(await btn.evaluate((b) => getComputedStyle(b).cursor)).toBe('pointer');
+      expect(await label.evaluate((e) => getComputedStyle(e).textDecorationLine), 'label bergaris bawah saat hover (bukan hanya warna)').toContain('underline');
+      expect(await circle.evaluate((e) => getComputedStyle(e).borderColor), 'tepi lingkaran "belum" menguat').not.toBe(sebelum);
+    }
+  });
+
+  test('bawaan: semua langkah dapat dilompati (tidak ada yang nonaktif)', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    const buttons = demo.getByRole('list', { name: 'Rel horizontal', exact: true }).locator('> li button');
+    await expect(buttons).toHaveCount(3);
+    for (let i = 0; i < 3; i++) await expect(buttons.nth(i)).toBeEnabled();
+  });
+
+  test('sequential: langkah berikutnya nonaktif sampai langkah sebelumnya selesai (horizontal dan vertikal)', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    for (const nama of ['Langkah berurutan', 'Langkah berurutan (vertikal)']) {
+      const lis = demo.getByRole('list', { name: nama, exact: true }).locator('> li');
+      await expect(lis).toHaveCount(4);
+      const aktif = [true, true, true, false]; // [selesai, selesai, berjalan, belum]: ke-3 aktif (sebelumnya selesai), ke-4 nonaktif (sebelumnya belum selesai)
+      for (let i = 0; i < 4; i++) {
+        const b = lis.nth(i).locator('button');
+        if (aktif[i]) await expect(b, `langkah ${i + 1} aktif`).toBeEnabled(); else await expect(b, `langkah ${i + 1} nonaktif`).toBeDisabled();
+      }
+    }
+  });
+
+  test('langkah nonaktif: redup, kursor not-allowed, tanpa hover, tidak bisa diklik, dilewati Tab', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    const lis = demo.getByRole('list', { name: 'Langkah berurutan', exact: true }).locator('> li');
+    const off = lis.nth(3).locator('button');
+    const label = off.locator('span').nth(1);
+    expect(await off.evaluate((b) => getComputedStyle(b).cursor)).toBe('not-allowed');
+    expect(await label.evaluate((e) => getComputedStyle(e).color), 'label redup (gray-50)').toBe('rgb(130, 130, 130)');
+    await off.hover({ force: true });
+    expect(await label.evaluate((e) => getComputedStyle(e).textDecorationLine), 'tanpa garis bawah saat hover').not.toContain('underline');
+    const saatIni = await demo.locator('[aria-current=step]').first().getAttribute('aria-current');
+    await off.click({ force: true }).catch(() => {});
+    await expect(off).not.toHaveAttribute('aria-current', 'step'); // klik tidak memilih langkah nonaktif
+    expect(saatIni).toBe('step');
+    await lis.nth(2).locator('button').focus();
+    await page.keyboard.press('Tab');
+    await expect(off, 'Tab melewati langkah nonaktif').not.toBeFocused();
+  });
+
+  test('disabled eksplisit pada langkah menimpa aturan (tanpa sequential)', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    const lis = demo.getByRole('list', { name: 'Langkah dengan disabled eksplisit', exact: true }).locator('> li');
+    await expect(lis.nth(2).locator('button')).toBeDisabled();
+    await expect(lis.nth(1).locator('button')).toBeEnabled(); // tanpa sequential, langkah lain tetap aktif
+    expect(await lis.nth(2).locator('button span').nth(1).evaluate((e) => getComputedStyle(e).color), 'langkah nonaktif redup').toBe('rgb(130, 130, 130)');
+  });
+
+  test('tanpa onSelect: statis (tanpa tombol, tanpa hover) tetapi tetap menandai langkah saat ini', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    const ol = demo.getByRole('list', { name: 'Posisi langkah (statis)' });
+    await expect(ol.getByRole('button')).toHaveCount(0);
+    await expect(ol.locator('[aria-current=step]')).toHaveCount(1);
+    const li = ol.locator('> li').nth(1);
+    await li.hover();
+    expect(await li.locator('[aria-current=step]').evaluate((e) => ({ bg: getComputedStyle(e).backgroundColor, cursor: getComputedStyle(e).cursor }))).toEqual({ bg: 'rgba(0, 0, 0, 0)', cursor: 'auto' });
   });
 });

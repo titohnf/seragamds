@@ -3,6 +3,7 @@ import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
 import { typo } from '../tokens';
 import { Button } from './Button';
 import { TextField } from './TextField';
+import { useFixedPopup } from '../popup';
 
 // ---------- tanggal (ISO "YYYY-MM-DD", tanpa zona waktu) ----------
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -103,11 +104,12 @@ export function DatePicker({ value, onChange, min, max, label, helper, error, op
   const [text, setText] = useState(formatDate(value));
   const [open, setOpen] = useState(false);
   const [bad, setBad] = useState<string | null>(null);
-  const [top, setTop] = useState<number | undefined>();
   const wrap = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLInputElement>(null);
   const btn = useRef<HTMLButtonElement>(null);
   const dialogId = useId();
+  const panel = useRef<HTMLDivElement>(null);
+  const pop = useFixedPopup(open, input, panel, { align: 'start' });
   useEffect(() => { setText(formatDate(value)); }, [value]);
   useEffect(() => {
     if (!open) return;
@@ -126,7 +128,6 @@ export function DatePicker({ value, onChange, min, max, label, helper, error, op
   };
   const toggle = () => {
     if (disabled) return;
-    if (!open && wrap.current && input.current) setTop(input.current.getBoundingClientRect().bottom - wrap.current.getBoundingClientRect().top + 4);
     setOpen((o) => !o);
   };
   return (
@@ -138,7 +139,7 @@ export function DatePicker({ value, onChange, min, max, label, helper, error, op
         rightIcon={<button ref={btn} type="button" aria-label="Pilih tanggal" aria-haspopup="dialog" aria-expanded={open} aria-controls={open ? dialogId : undefined} disabled={disabled} onClick={toggle}
           className="grid size-[32px] place-items-center rounded-[4px] text-sd-gray-60 hover:bg-sd-gray-5 hover:text-sd-gray-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sd-blue-50 disabled:text-sd-gray-50"><CalendarDays aria-hidden className="size-[20px]" /></button>} />
       {open && (
-        <div id={dialogId} role="dialog" aria-label="Pilih tanggal" className="absolute left-0 z-50 rounded-[8px] bg-white p-[16px] shadow-sd-03" style={{ top }}>
+        <div ref={panel} id={dialogId} role="dialog" aria-label="Pilih tanggal" className="z-50 rounded-[8px] bg-white p-[16px] shadow-sd-03" style={pop.style}>
           <Calendar value={value} min={min} max={max} onChange={(iso) => { onChange(iso); setText(formatDate(iso)); setBad(null); setOpen(false); input.current?.focus(); }} />
           <div className="mt-[8px] flex justify-between border-t border-sd-modal-footer-border pt-[8px]">
             <Button variant="quiet" size="sm" onClick={() => { const t = todayISO(); if ((min && t < min) || (max && t > max)) return; onChange(t); setText(formatDate(t)); setBad(null); setOpen(false); input.current?.focus(); }}>Hari ini</Button>

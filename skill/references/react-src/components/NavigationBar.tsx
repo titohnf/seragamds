@@ -1,19 +1,12 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { Menu, X } from 'lucide-react';
 import { typo } from '../tokens';
+import { useMediaQuery } from '../hooks';
+import { useFixedPopup } from '../popup';
 
 export type NavItem = { key: string; label: ReactNode; href?: string; onClick?: () => void };
 
-const useBelow = (px: number) => {
-  const q = `(max-width: ${px - 1}px)`;
-  const [m, setM] = useState(() => (typeof window !== 'undefined' && window.matchMedia ? window.matchMedia(q).matches : false));
-  useEffect(() => {
-    if (!window.matchMedia) return;
-    const mq = window.matchMedia(q); const on = () => setM(mq.matches); on();
-    mq.addEventListener('change', on); return () => mq.removeEventListener('change', on);
-  }, [q]);
-  return m;
-};
+const useBelow = (px: number) => useMediaQuery(`(max-width: ${px - 1}px)`);
 
 function Item({ it, on, block = false, onPick }: { it: NavItem; on: boolean; block?: boolean; onPick?: () => void }) {
   const Tag = it.href ? 'a' : 'button';
@@ -44,6 +37,9 @@ export function NavigationBar({ items, active, logo, actions, collapseBelow = 76
   const wrapRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
+  const moreRef = useRef<HTMLDivElement>(null);
+  const moreMenu = useRef<HTMLUListElement>(null);
+  const morePos = useFixedPopup(more, moreRef, moreMenu, { align: 'end', constrainHeight: true });
 
   // Overflow: hitung berapa item muat di wadah menu dengan sisa jarak >= 24px; sisanya ke "Lainnya".
   useLayoutEffect(() => {
@@ -75,13 +71,13 @@ export function NavigationBar({ items, active, logo, actions, collapseBelow = 76
       <nav aria-label={ariaLabel} className="flex items-end gap-[4px]">
         {shown.map((it) => <Item key={it.key} it={it} on={it.key === active} />)}
         {hidden.length > 0 && (
-          <div className="relative">
+          <div ref={moreRef} className="relative">
             <button type="button" aria-haspopup="menu" aria-expanded={more} onClick={() => setMore((o) => !o)} className="relative flex h-[64px] items-center">
               <span className={`rounded-[4px] px-[12px] py-[8px] hover:bg-sd-gray-5 ${hidden.some((h) => h.key === active) ? 'text-sd-blue-70' : 'text-sd-gray-90'}`} style={{ ...typo.action }}>{moreLabel}</span>
               {hidden.some((h) => h.key === active) && <span className="absolute bottom-0 left-[12px] right-[12px] h-[4px] rounded-t-[4px] bg-sd-blue-70" />}
             </button>
             {more && (
-              <ul role="menu" className="absolute right-0 top-full z-50 min-w-[200px] rounded-[8px] bg-white px-[8px] py-[4px] shadow-sd-03">
+              <ul ref={moreMenu} role="menu" style={morePos.style} className="z-50 min-w-[200px] overflow-y-auto rounded-[8px] bg-white px-[8px] py-[4px] shadow-sd-03">
                 {hidden.map((it) => <li key={it.key} role="none"><Item it={it} on={it.key === active} block onPick={() => setMore(false)} /></li>)}
               </ul>
             )}

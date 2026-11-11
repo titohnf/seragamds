@@ -26,6 +26,7 @@ Isian tanggal yang bisa **diketik** (`hh/bb/tttt`) atau **dipilih** dari Calenda
 - **Memilih**: ikon kalender (atau `Alt`+`↓`) membuka Calendar; fokus pindah ke tanggal terpilih (atau hari ini). Memilih tanggal menutup panel dan mengembalikan fokus ke isian. `Esc` atau klik di luar menutup (fokus kembali ke tombol ikon).
 - **Keyboard di Calendar**: `←`/`→` ±1 hari, `↑`/`↓` ±1 minggu, `Home`/`End` awal/akhir minggu, `PageUp`/`PageDown` ±1 bulan (`Shift`: ±1 tahun), `Enter`/`Space` memilih. Hanya satu sel masuk urutan `Tab`.
 - **Aksesibilitas**: tiap sel `aria-label` tanggal lengkap ("Rabu, 12 November 2025"), hari ini `aria-current="date"`, terpilih `aria-selected`, judul bulan `aria-live`; panel `role="dialog"`.
+- **Posisi**: panel membalik ke atas bila ruang bawah sempit, tetap di dalam layar, dan tidak terpotong wadah `overflow-hidden`.
 - **Belum ada**: rentang (dari–sampai), pemilih tahun cepat, tampilan bottom sheet di mobile (panel tetap dialog di bawah isian).
 
 ## Panduan

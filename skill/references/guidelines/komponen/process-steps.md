@@ -7,9 +7,19 @@
 Rel horizontal untuk alur berurutan yang boleh dilompati, mis. siklus 6M. Setiap langkah bisa diklik.
 
 ## Spesifikasi dan props
-`steps` (`{ key, label, caption?, state: 'done' | 'active' | 'todo', detail? }`; `detail` hanya untuk vertikal), `current` (key halaman yang dibuka), `onSelect`, `inverse`, `orientation` (`horizontal` bawaan, atau `vertical`), `aria-label`.
+`steps` (`{ key, label, caption?, state: 'done' | 'active' | 'todo', detail?, disabled? }`; `detail` hanya untuk vertikal; `disabled` menonaktifkan langkah itu), `current` (key halaman yang dibuka), `onSelect` (ada = langkah dapat diklik), `sequential` (langkah berikutnya nonaktif sampai langkah sebelumnya `done`), `inverse`, `orientation` (`horizontal` bawaan, atau `vertical`), `aria-label`.
+
+## Interaktivitas, hover, dan langkah nonaktif (keputusan UX)
+Langkah **hanya dapat diklik bila `onSelect` ada**. Tanpa `onSelect` rel hanya penanda posisi: elemen statis (bukan tombol), tanpa hover, fokus, dan kursor tangan, supaya tidak menjanjikan interaksi yang tidak ada; `aria-current="step"` tetap menandai langkah saat ini.
+- **Hover terlihat tanpa mengubah warna latar** (keputusan Tito): label **bergaris bawah**, tepi lingkaran langkah "belum" menguat, dan kursor tangan. Sinyal tidak hanya soal warna (WCAG 1.4.1). Latar tidak berubah.
+- **Fokus keyboard** terlihat (cincin), urutan Tab mengikuti urutan langkah, `Enter`/`Space` memilih. Seluruh kolom langkah (lingkaran, label, keterangan) satu tombol sehingga target sentuhnya besar.
+- **Langkah nonaktif**: langkah yang belum boleh dibuka. Dua cara: (1) `sequential` (alur linear): langkah pertama selalu aktif, **langkah berikutnya nonaktif sampai langkah sebelumnya berstatus `done`**; (2) `disabled: true` pada langkah tertentu (menimpa aturan `sequential`). Langkah nonaktif adalah tombol `disabled` (tidak bisa diklik, dilewati `Tab`, tanpa hover), lingkaran dan labelnya redup (`gray-50`, di `inverse` `gray-40`) dan kursor `not-allowed`.
+- Tanpa `sequential`, semua langkah dapat dilompati (bawaan; cocok untuk alur yang boleh dikerjakan tidak berurutan).
+- Hover tidak menutupi garis penghubung (garis di atas langkah).
 
 ## Perilaku
+- **Garis penghubung (horizontal)**: hanya di antara tepi dua lingkaran (celah 6px), tepat di tengah vertikal lingkaran, dan **di atas** latar hover langkah, jadi tidak hilang saat hover dan, pada `inverse` (lingkaran todo/berjalan transparan), tidak tampak masuk ke dalam lingkaran berikutnya. Hijau bila langkah sebelumnya selesai, selain itu abu.
+- Rel **horizontal** selebar minimum 720px dan **menggulir sendiri** (wadah `overflow-x-auto`) di layar yang lebih sempit, sehingga halaman tidak ikut melebar (360px).
 - Tiga status, semuanya menampilkan nomor: `todo` = outline abu, `active` (berjalan) = outline biru, `done` = hijau terisi. Tanpa tanda centang.
 - `current` memberi cincin fokus agar terlihat posisi pengguna, terpisah dari status.
 - Garis penghubung hijau di antara langkah selesai dan langkah sesudahnya, selain itu abu.

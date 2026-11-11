@@ -10,7 +10,7 @@ Muncul di lapisan paling atas halaman, memuat teks dan elemen interaktif singkat
 ## Perilaku
 - **Hanya satu Popover tampil sekali waktu**: membuka yang lain menutup yang ini.
 - Muncul/tertutup saat pemicu (Button) diklik; klik di luar atau `Esc` menutup dan fokus kembali ke pemicu. (Situs menyebut juga hover; komponen memakai klik agar bisa dipakai di layar sentuh.)
-- Lokasi: di atas, samping kiri/kanan, atau bawah pemicu (`side`), sesuai kebutuhan desain.
+- Lokasi: di atas, samping kiri/kanan, atau bawah pemicu (`side`), sesuai kebutuhan desain. Posisi **tahan tepi layar**: membalik sisi bila tak muat, bergeser agar tetap di dalam layar, tingginya dibatasi ruang yang ada (menu bergulir), mengikuti pemicu saat halaman menggulir, dan tidak terpotong wadah `overflow-hidden` (`position: fixed`).
 - Keyboard: fokus pindah ke item pertama saat dibuka; `↓`/`↑` berpindah item, `Home`/`End`, `Enter` memilih.
 - State item: Default, Hover, Focused, Pressed (juga Disabled). Variasi: beberapa menu dalam satu kontainer.
 

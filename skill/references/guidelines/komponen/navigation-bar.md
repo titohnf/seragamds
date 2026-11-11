@@ -35,7 +35,7 @@ Default, Focused (fokus keyboard), Hovered, Pressed, **Active** (item terpilih: 
 
 ## Panduan
 - Tidak ada aturan baku jumlah menu. Jangan buat menu satu item.
-- **Overflow (otomatis)**: item yang membuat jarak antara menu dan logo/aksi < **24px** dipindah ke menu **"Lainnya"** (dropdown; bertanda aktif bila item aktif ada di dalamnya).
+- **Overflow (otomatis)**: item yang membuat jarak antara menu dan logo/aksi < **24px** dipindah ke menu **"Lainnya"** (dropdown; bertanda aktif bila item aktif ada di dalamnya; tetap di dalam layar).
 - **Logo harus jelas terlihat**; jangan pakai pictorial mark/simbol untuk brand yang belum dikenal luas.
 - Logo sebagai tautan beranda cukup untuk pengguna melek digital; untuk audiens umum **tambahkan menu "Beranda"** dan tetap jadikan logo bisa diklik.
 - **Layar < 769px (otomatis, `collapseBelow`)**: menu dan aksi dilipat ke **ikon hamburger** (`aria-expanded`, `aria-controls`; `Esc` atau klik di luar menutup; memilih item menutup). Navbar tanpa menu tidak punya hamburger: aksinya tetap tampil.
