@@ -19,7 +19,7 @@ Elemen yang bisa diklik untuk memicu aksi atau memulai proses.
 
 Bentuk lain (props): **`inverse`** untuk latar gelap (Figma Assets/Button Color=Inverse; di kode hanya `secondary` dan `quiet`, ekstensi); **`floating`** (Figma *Floating Button*: `ultimate`/`primary`/`secondary`, pill + Elevation 04) untuk navigasi yang mudah dijangkau, mis. "Kembali ke atas"; **`iconOnly`** (Figma *Icon Button*) persegi sebesar tingginya dan **wajib `aria-label`**.
 
-Ukuran: `lg` (padding 12×20; tinggi Mobile 46 / Desktop 48), `md` (8×16; 38/40), `sm` (4×8; 28). Props lain: `fullWidth`, `loading`, `disabled`, `leadingIcon`, `trailingIcon`.
+Ukuran (`size`): `lg` (padding 12×20; tinggi Mobile 46 / Desktop 48), `md` (8×16; 38/40), `sm` (4×8; 28). Props lain: `fullWidth`, `loading`, `disabled`, `leadingIcon`, `trailingIcon`.
 
 ## State
 Default, Hover, Focused (cincin 2px putih + 4px biru), Pressed, Disabled; plus `loading`. Harus memberi umpan balik visual yang cepat saat diklik (perubahan warna/animasi sederhana).

@@ -75,7 +75,7 @@ function ComponentPage({ slug, tab }: { slug: string; tab: string }) {
       {active === 'demo' && demo && (
         <>
           <h1 className="mb-[16px] text-sd-gray-90" style={{ fontSize: 28, lineHeight: '36px', fontWeight: 600 }}>{titleOf(guide)}</h1>
-          <div className="rounded-[8px] border border-sd-gray-10 bg-sd-gray-0 p-[24px]"><div className="flex flex-col gap-[16px]">{demo()}</div></div>
+          <div data-testid="demo" className="rounded-[8px] border border-sd-gray-10 bg-sd-gray-0 p-[24px]"><div className="flex flex-col gap-[16px]">{demo()}</div></div>
           <p className="mt-[12px] text-sd-gray-60" style={{ fontSize: 13, lineHeight: '20px' }}>Demo hidup memakai komponen dari <code>src/</code>. Props lengkap ada di tab Panduan.</p>
         </>
       )}

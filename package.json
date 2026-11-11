@@ -1,6 +1,6 @@
 {
   "name": "seragam-design-system",
-  "version": "0.15.1",
+  "version": "0.16.0",
   "description": "Token, komponen React, dokumentasi spesifikasi, dan Claude Skill untuk Design System Seragam (Kemendikdasmen)",
   "private": true,
   "type": "module",
@@ -31,7 +31,9 @@
     "build:foundations": "python3 tools/build_foundations.py",
     "check": "python3 tools/check.py",
     "typecheck": "tsc -p .",
-    "verify": "npm run check && npm run typecheck && vite build"
+    "verify": "npm run check && npm run typecheck && vite build && playwright test",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "peerDependencies": {
     "lucide-react": ">=0.400",
@@ -39,6 +41,8 @@
     "tailwindcss": ">=4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.0",
     "@tailwindcss/vite": "^4.3.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

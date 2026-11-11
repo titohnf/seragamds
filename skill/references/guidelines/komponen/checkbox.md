@@ -5,7 +5,7 @@
 
 > **Status: dari panduan Seragam** (seragam.belajar.id/checkbox, diaudit 2026-11-11 terhadap seluruh halaman situs), disesuaikan ke props komponen di repo ini.
 
-Memilih satu atau beberapa item dari daftar, atau mengaktifkan/menonaktifkan. Props: `label`, `indeterminate`, atribut `<input>`.
+Memilih satu atau beberapa item dari daftar, atau mengaktifkan/menonaktifkan. Props: `label`, `indeterminate`, `disabled`, atribut `<input>`.
 
 ## Jenis
 **Checked** (terpilih), **Unchecked** (belum), **Undetermined** (`indeterminate`: sebagian sub-pilihan terpilih).

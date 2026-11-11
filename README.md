@@ -52,7 +52,16 @@ npm run install:skill     # merakit skill/ lalu menautkannya ke ~/.claude/skills
 ## Menjaga konsistensi
 `npm run check` (Python 3, tanpa dependensi) gagal bila ada yang menyimpang: CSS tidak sama dengan token; kelas/variabel token yang dipakai kode atau dokumen tidak ada; `docs/foundations` tidak sama dengan hasil generate token; komponen yang diekspor tidak punya panduan (atau sebaliknya); tautan dokumen rusak; `skill/references` tidak sinkron. `npm run verify` menambah typecheck dan build. GitHub Action `.github/workflows/check.yml` menjalankannya di setiap push dan PR.
 
+### Tes otomatis
+`npm run test:e2e` (Playwright, lokal memakai Google Chrome yang terpasang; CI memakai Chromium bawaan) menjalankan tiga kelompok tes di `tests/e2e/` terhadap galeri situs:
+- `a11y.spec.ts`: axe (WCAG 2.1 A/AA) pada demo **setiap** komponen, dalam skala Mobile dan Desktop. Komponen baru otomatis ikut bila punya demo di `site/demos.tsx`.
+- `behavior.spec.ts`: perilaku sesuai panduan dengan keyboard dan mouse sungguhan (Tabs, Modal, Bottom Sheet, Popover, Toast, Breadcrumb, Accordion, Chip, Banner, Button, Custom Select, Table, TextArea, SearchBar, Navigation Bar, Vertical Navigation).
+- `platform.spec.ts`: satu komponen dua skala huruf (Mobile 15/22 dan tinggi 46; Desktop 16/24 dan tinggi 48; mode Otomatis mengikuti lebar layar).
+
+`npm run check` juga memeriksa **kontras warna** pasangan teks/latar yang dipakai komponen (`tools/contrast.py`; teks gray-50/40 hanya untuk keadaan nonaktif) dan **sinkron props** antara kode dan panduan (`tools/props_sync.py`: setiap prop publik harus disebut di panduannya dan sebaliknya).
+Saat menambah komponen: tambahkan demo di `site/demos.tsx` (otomatis kena tes aksesibilitas), tes perilaku di `behavior.spec.ts` bila ada interaksi, dan pasangan warna baru di `tools/contrast.py`.
+
 Alur mengubah sesuatu:
 1. Token: `build_tokens.py` → `npm run build:foundations` → `npm run build:skill`.
 2. Komponen/panduan: ubah `src/` dan `docs/guidelines/komponen/`, catat keputusan di `docs/DECISIONS.md`, lalu `npm run build:skill`.
-3. `npm run verify` harus lulus sebelum commit.
+3. `npm run verify` (check, typecheck, build, dan tes e2e) harus lulus sebelum commit.

@@ -11,14 +11,14 @@ function range(page: number, total: number): (number | '…')[] {
   return out;
 }
 
-/** Pagination Seragam: sel 32x32 radius 4, angka 15/22 semibold (aktif gray-90 + latar #EFEFEF, lainnya gray-50), gap 16. Halaman mulai dari 1. */
+/** Pagination Seragam: sel 32x32 radius 4, angka 15/22 semibold (aktif gray-90 + latar #EFEFEF, lainnya gray-60; Figma memakai gray-50 yang kontrasnya ±3,9:1 < AA, jadi dinaikkan ke gray-60), gap 16. Halaman mulai dari 1. */
 export function Pagination({ page, pageCount, onPageChange }: { page: number; pageCount: number; onPageChange: (p: number) => void }) {
   return (
     <nav aria-label="Pagination" className="flex items-center gap-[16px]">
       <button aria-label="Sebelumnya" disabled={page <= 1} onClick={() => onPageChange(page - 1)} className={`${BTN} text-sd-gray-90 hover:bg-sd-badge-neutral disabled:text-sd-gray-20 disabled:hover:bg-transparent`}><Chev d="M15 6l-6 6 6 6" /></button>
       {range(page, pageCount).map((n, i) => n === '…'
-        ? <span key={`e${i}`} className="text-sd-gray-50" style={{ ...typo.body }}>…</span>
-        : <button key={n} aria-current={n === page ? 'page' : undefined} onClick={() => onPageChange(n)} className={`${BTN} ${n === page ? 'bg-sd-badge-neutral text-sd-gray-90' : 'text-sd-gray-50 hover:bg-sd-badge-neutral'}`} style={{ ...typo.action }}>{n}</button>)}
+        ? <span key={`e${i}`} className="text-sd-gray-60" style={{ ...typo.body }}>…</span>
+        : <button key={n} aria-current={n === page ? 'page' : undefined} onClick={() => onPageChange(n)} className={`${BTN} ${n === page ? 'bg-sd-badge-neutral text-sd-gray-90' : 'text-sd-gray-60 hover:bg-sd-badge-neutral'}`} style={{ ...typo.action }}>{n}</button>)}
       <button aria-label="Berikutnya" disabled={page >= pageCount} onClick={() => onPageChange(page + 1)} className={`${BTN} text-sd-gray-90 hover:bg-sd-badge-neutral disabled:text-sd-gray-20 disabled:hover:bg-transparent`}><Chev d="M9 6l6 6-6 6" /></button>
     </nav>
   );
