@@ -99,12 +99,21 @@ const STEPS: S.ProcessStep[] = [
   { key: 'b', label: 'Merencanakan', caption: 'Berjalan', state: 'active' },
   { key: 'c', label: 'Melaksanakan', caption: 'Belum', state: 'todo' },
 ];
+const STEPS_SEQ: S.ProcessStep[] = [
+  { key: 'a', label: 'Mengumpulkan data', caption: 'Selesai', state: 'done' },
+  { key: 'b', label: 'Merencanakan', caption: 'Selesai', state: 'done' },
+  { key: 'c', label: 'Melaksanakan', caption: 'Berjalan', state: 'active' },
+  { key: 'd', label: 'Melaporkan', caption: 'Belum', state: 'todo' },
+];
 function ProcessStepsDemo() {
   const [cur, setCur] = useState('b');
   return <div className="flex w-full flex-col gap-[24px]">
     <Row label="Horizontal"><div className="w-full"><S.ProcessSteps steps={STEPS} current={cur} onSelect={setCur} /></div></Row>
     <Row label="Vertical dengan detail"><div className="w-[300px]"><S.ProcessSteps orientation="vertical" current={cur} onSelect={setCur} steps={STEPS.map((s) => (s.key === 'b' ? { ...s, detail: <span className="text-sd-gray-90">Bagian yang perlu diisi</span> } : s))} /></div></Row>
     <div className="rounded-[8px] bg-sd-surface-dark-blue p-[16px]"><Row onDark label="inverse"><div className="w-full"><S.ProcessSteps inverse steps={STEPS} current={cur} onSelect={setCur} /></div></Row></div>
+    <Row label="Berurutan (sequential): langkah berikutnya nonaktif sampai langkah sebelumnya selesai"><div className="flex w-full flex-col gap-[16px]"><S.ProcessSteps sequential aria-label="Langkah berurutan" steps={STEPS_SEQ} current={cur} onSelect={setCur} /><div className="w-[300px]"><S.ProcessSteps sequential orientation="vertical" aria-label="Langkah berurutan (vertikal)" steps={STEPS_SEQ} current={cur} onSelect={setCur} /></div></div></Row>
+    <div className="rounded-[8px] bg-sd-surface-dark-blue p-[16px]"><Row onDark label="inverse + sequential"><div className="w-full"><S.ProcessSteps inverse sequential aria-label="Langkah berurutan (inverse)" steps={STEPS_SEQ} current={cur} onSelect={setCur} /></div></Row></div>
+    <Row label="disabled eksplisit pada satu langkah (tanpa sequential)"><div className="w-full"><S.ProcessSteps aria-label="Langkah dengan disabled eksplisit" steps={STEPS.map((s) => (s.key === 'a' ? { ...s, disabled: true } : s))} current={cur} onSelect={setCur} /></div></Row>
     <Row label="Statis (tanpa onSelect: hanya penanda posisi, tidak bisa diklik)"><div className="w-full"><S.ProcessSteps aria-label="Posisi langkah (statis)" steps={STEPS} current="b" /></div></Row>
   </div>;
 }

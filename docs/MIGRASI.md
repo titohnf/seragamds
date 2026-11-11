@@ -3,7 +3,7 @@
 Catatan perubahan yang bisa memengaruhi proyek pemakai, per versi (masih 0.x, jadi minor boleh mengubah tampilan atau perilaku). Rincian lengkap: [CHANGELOG](../CHANGELOG.md) dan [DECISIONS](DECISIONS.md). Kunci proyek ke tag, bukan `main`.
 
 ## Dari 0.18 ke 0.19
-- `ProcessSteps` **tanpa `onSelect` kini statis** (elemen `div`, bukan tombol; tanpa hover/fokus). Berikan `onSelect` bila langkah harus bisa diklik. Hover langkah yang dapat diklik kini lebih jelas (latar `gray-5`, label bergaris bawah).
+- `ProcessSteps` **tanpa `onSelect` kini statis** (elemen `div`, bukan tombol; tanpa hover/fokus). Berikan `onSelect` bila langkah harus bisa diklik. Hover langkah yang dapat diklik: label bergaris bawah dan tepi lingkaran "belum" menguat (tanpa mengubah latar). Baru: `sequential` (langkah berikutnya nonaktif sampai langkah sebelumnya selesai; opt-in) dan `disabled` per langkah.
 - `Tooltip`: pemicu (bila satu elemen) otomatis mendapat `aria-describedby`; tooltip tidak lagi dirender dengan kelas `group-hover` (tes yang memeriksa visibilitas lewat CSS hover perlu memicu hover sungguhan). Popup (Popover, Custom Select, Date Picker) kini `position: fixed`: selektor yang mengandalkan posisi `absolute` di dalam pembungkus perlu disesuaikan. Tidak ada perubahan prop.
 
 ## Dari 0.15 ke 0.18

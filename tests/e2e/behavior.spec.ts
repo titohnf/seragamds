@@ -395,10 +395,9 @@ test.describe('Process Steps', () => {
       expect(Math.abs(l.y + l.height / 2 - (cur.y + cur.height / 2)), 'garis di tengah vertikal lingkaran').toBeLessThanOrEqual(1);
       for (const btn of [lis.nth(i - 1).locator('button'), lis.nth(i).locator('button')]) {
         await btn.hover();
-        // latar hover tombol bersifat solid; garis harus berada DI ATAS tombol dalam urutan tumpukan agar tidak tertutup
+        // garis harus berada DI ATAS tombol dalam urutan tumpukan (jaga-jaga bila tombol mendapat latar)
         const z = await line.evaluate((el, b) => { const g = (n: Element) => Number(getComputedStyle(n).zIndex); return { garis: g(el), tombol: g(b as Element), posisi: getComputedStyle(el).position, hoverBg: getComputedStyle(b as Element).backgroundColor }; }, await btn.elementHandle());
         expect(z.posisi).toBe('absolute');
-        expect(z.hoverBg, 'latar hover memang solid').not.toBe('rgba(0, 0, 0, 0)');
         expect(z.garis, 'garis di atas tombol saat hover').toBeGreaterThan(z.tombol);
       }
     }
@@ -416,24 +415,65 @@ test.describe('Process Steps', () => {
 });
 
 test.describe('Process Steps: hover dan interaktivitas', () => {
-  test('hover terlihat jelas: latar berbeda dari halaman, label bergaris bawah, kursor tangan', async ({ page }) => {
+  test('hover tanpa mengubah warna latar: label bergaris bawah, tepi lingkaran belum menguat, kursor tangan', async ({ page }) => {
     const demo = await openDemo(page, 'process-steps');
     for (const idx of [0, 2]) {
-      const btn = demo.locator('ol').nth(idx).locator('> li').nth(1).locator('button');
+      const li = demo.locator('ol').nth(idx).locator('> li');
+      const btn = li.nth(2).locator('button'); // langkah "belum"
+      const circle = btn.locator('span').first();
       const label = btn.locator('span').nth(1);
+      const sebelum = await circle.evaluate((e) => getComputedStyle(e).borderColor);
+      expect(await label.evaluate((e) => getComputedStyle(e).textDecorationLine)).not.toContain('underline');
       await btn.hover();
-      const s = await btn.evaluate((b) => {
-        const bg = (el: Element) => getComputedStyle(el).backgroundColor;
-        let p: Element | null = b.parentElement; let behind = 'rgba(0, 0, 0, 0)';
-        while (p && (bg(p) === 'rgba(0, 0, 0, 0)' || bg(p) === 'transparent')) p = p.parentElement;
-        if (p) behind = bg(p);
-        return { bg: bg(b), behind, cursor: getComputedStyle(b).cursor };
-      });
-      expect(s.bg, 'latar hover solid/terlihat').not.toBe('rgba(0, 0, 0, 0)');
-      expect(s.bg, 'latar hover berbeda dari latar di belakangnya (halaman)').not.toBe(s.behind);
-      expect(s.cursor).toBe('pointer');
+      expect(await btn.evaluate((b) => getComputedStyle(b).backgroundColor), 'latar tidak berubah saat hover').toBe('rgba(0, 0, 0, 0)');
+      expect(await btn.evaluate((b) => getComputedStyle(b).cursor)).toBe('pointer');
       expect(await label.evaluate((e) => getComputedStyle(e).textDecorationLine), 'label bergaris bawah saat hover (bukan hanya warna)').toContain('underline');
+      expect(await circle.evaluate((e) => getComputedStyle(e).borderColor), 'tepi lingkaran "belum" menguat').not.toBe(sebelum);
     }
+  });
+
+  test('bawaan: semua langkah dapat dilompati (tidak ada yang nonaktif)', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    const buttons = demo.locator('ol').nth(0).locator('> li button');
+    await expect(buttons).toHaveCount(3);
+    for (let i = 0; i < 3; i++) await expect(buttons.nth(i)).toBeEnabled();
+  });
+
+  test('sequential: langkah berikutnya nonaktif sampai langkah sebelumnya selesai (horizontal dan vertikal)', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    for (const nama of ['Langkah berurutan', 'Langkah berurutan (vertikal)']) {
+      const lis = demo.getByRole('list', { name: nama, exact: true }).locator('> li');
+      await expect(lis).toHaveCount(4);
+      const aktif = [true, true, true, false]; // [selesai, selesai, berjalan, belum]: ke-3 aktif (sebelumnya selesai), ke-4 nonaktif (sebelumnya belum selesai)
+      for (let i = 0; i < 4; i++) {
+        const b = lis.nth(i).locator('button');
+        if (aktif[i]) await expect(b, `langkah ${i + 1} aktif`).toBeEnabled(); else await expect(b, `langkah ${i + 1} nonaktif`).toBeDisabled();
+      }
+    }
+  });
+
+  test('langkah nonaktif: redup, kursor not-allowed, tanpa hover, tidak bisa diklik, dilewati Tab', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    const lis = demo.getByRole('list', { name: 'Langkah berurutan', exact: true }).locator('> li');
+    const off = lis.nth(3).locator('button');
+    const label = off.locator('span').nth(1);
+    expect(await off.evaluate((b) => getComputedStyle(b).cursor)).toBe('not-allowed');
+    expect(await label.evaluate((e) => getComputedStyle(e).color), 'label redup (gray-50)').toBe('rgb(130, 130, 130)');
+    await off.hover({ force: true });
+    expect(await label.evaluate((e) => getComputedStyle(e).textDecorationLine), 'tanpa garis bawah saat hover').not.toContain('underline');
+    const saatIni = await demo.locator('[aria-current=step]').first().getAttribute('aria-current');
+    await off.click({ force: true }).catch(() => {});
+    await expect(off).not.toHaveAttribute('aria-current', 'step'); // klik tidak memilih langkah nonaktif
+    expect(saatIni).toBe('step');
+    await lis.nth(2).locator('button').focus();
+    await page.keyboard.press('Tab');
+    await expect(off, 'Tab melewati langkah nonaktif').not.toBeFocused();
+  });
+
+  test('disabled eksplisit pada langkah menimpa aturan (tanpa sequential)', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    const btn = demo.getByRole('list', { name: 'Langkah dengan disabled eksplisit', exact: true }).locator('> li').nth(0).locator('button');
+    await expect(btn).toBeDisabled();
   });
 
   test('tanpa onSelect: statis (tanpa tombol, tanpa hover) tetapi tetap menandai langkah saat ini', async ({ page }) => {
