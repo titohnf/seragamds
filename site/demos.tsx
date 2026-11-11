@@ -105,6 +105,7 @@ function ProcessStepsDemo() {
     <Row label="Horizontal"><div className="w-full"><S.ProcessSteps steps={STEPS} current={cur} onSelect={setCur} /></div></Row>
     <Row label="Vertical dengan detail"><div className="w-[300px]"><S.ProcessSteps orientation="vertical" current={cur} onSelect={setCur} steps={STEPS.map((s) => (s.key === 'b' ? { ...s, detail: <span className="text-sd-gray-90">Bagian yang perlu diisi</span> } : s))} /></div></Row>
     <div className="rounded-[8px] bg-sd-surface-dark-blue p-[16px]"><Row onDark label="inverse"><div className="w-full"><S.ProcessSteps inverse steps={STEPS} current={cur} onSelect={setCur} /></div></Row></div>
+    <Row label="Statis (tanpa onSelect: hanya penanda posisi, tidak bisa diklik)"><div className="w-full"><S.ProcessSteps aria-label="Posisi langkah (statis)" steps={STEPS} current="b" /></div></Row>
   </div>;
 }
 

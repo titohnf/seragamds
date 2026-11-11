@@ -9,6 +9,15 @@ Rel horizontal untuk alur berurutan yang boleh dilompati, mis. siklus 6M. Setiap
 ## Spesifikasi dan props
 `steps` (`{ key, label, caption?, state: 'done' | 'active' | 'todo', detail? }`; `detail` hanya untuk vertikal), `current` (key halaman yang dibuka), `onSelect`, `inverse`, `orientation` (`horizontal` bawaan, atau `vertical`), `aria-label`.
 
+## Interaktivitas dan hover (keputusan UX)
+Langkah **hanya dapat diklik bila `onSelect` ada**. Tanpa `onSelect` rel hanya penanda posisi: elemen statis (bukan tombol), tanpa hover, fokus, dan kursor tangan, supaya tidak menjanjikan interaksi yang tidak ada; `aria-current="step"` tetap menandai langkah saat ini.
+Bila dapat diklik, praktik yang dipakai untuk indikator langkah interaktif:
+- **Hover terlihat jelas dan tidak hanya soal warna**: latar tint (`gray-5`, terlihat di atas halaman `gray-0` maupun putih; `inverse`: putih 10%), **label bergaris bawah**, dan tepi lingkaran langkah "belum" menguat; kursor tangan. Latar `gray-0` (sama dengan halaman) tidak dipakai karena tak terlihat.
+- **Fokus keyboard** terlihat (cincin), urutan Tab mengikuti urutan langkah, `Enter`/`Space` memilih.
+- **Target sentuh** besar: seluruh kolom langkah (lingkaran, label, keterangan) satu tombol.
+- **Alur linear**: bila langkah di depan belum boleh dibuka, jangan beri `onSelect` untuk langkah itu (komponen belum punya status nonaktif per langkah); pakai rel statis atau batasi di pemanggil.
+- Hover tidak boleh menutupi garis penghubung (garis di atas latar hover).
+
 ## Perilaku
 - **Garis penghubung (horizontal)**: hanya di antara tepi dua lingkaran (celah 6px), tepat di tengah vertikal lingkaran, dan **di atas** latar hover langkah, jadi tidak hilang saat hover dan, pada `inverse` (lingkaran todo/berjalan transparan), tidak tampak masuk ke dalam lingkaran berikutnya. Hijau bila langkah sebelumnya selesai, selain itu abu.
 - Rel **horizontal** selebar minimum 720px dan **menggulir sendiri** (wadah `overflow-x-auto`) di layar yang lebih sempit, sehingga halaman tidak ikut melebar (360px).

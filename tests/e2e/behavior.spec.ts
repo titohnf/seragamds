@@ -414,3 +414,35 @@ test.describe('Process Steps', () => {
     await cekGaris(page, demo.locator('ol').nth(2));
   });
 });
+
+test.describe('Process Steps: hover dan interaktivitas', () => {
+  test('hover terlihat jelas: latar berbeda dari halaman, label bergaris bawah, kursor tangan', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    for (const idx of [0, 2]) {
+      const btn = demo.locator('ol').nth(idx).locator('> li').nth(1).locator('button');
+      const label = btn.locator('span').nth(1);
+      await btn.hover();
+      const s = await btn.evaluate((b) => {
+        const bg = (el: Element) => getComputedStyle(el).backgroundColor;
+        let p: Element | null = b.parentElement; let behind = 'rgba(0, 0, 0, 0)';
+        while (p && (bg(p) === 'rgba(0, 0, 0, 0)' || bg(p) === 'transparent')) p = p.parentElement;
+        if (p) behind = bg(p);
+        return { bg: bg(b), behind, cursor: getComputedStyle(b).cursor };
+      });
+      expect(s.bg, 'latar hover solid/terlihat').not.toBe('rgba(0, 0, 0, 0)');
+      expect(s.bg, 'latar hover berbeda dari latar di belakangnya (halaman)').not.toBe(s.behind);
+      expect(s.cursor).toBe('pointer');
+      expect(await label.evaluate((e) => getComputedStyle(e).textDecorationLine), 'label bergaris bawah saat hover (bukan hanya warna)').toContain('underline');
+    }
+  });
+
+  test('tanpa onSelect: statis (tanpa tombol, tanpa hover) tetapi tetap menandai langkah saat ini', async ({ page }) => {
+    const demo = await openDemo(page, 'process-steps');
+    const ol = demo.getByRole('list', { name: 'Posisi langkah (statis)' });
+    await expect(ol.getByRole('button')).toHaveCount(0);
+    await expect(ol.locator('[aria-current=step]')).toHaveCount(1);
+    const li = ol.locator('> li').nth(1);
+    await li.hover();
+    expect(await li.locator('[aria-current=step]').evaluate((e) => ({ bg: getComputedStyle(e).backgroundColor, cursor: getComputedStyle(e).cursor }))).toEqual({ bg: 'rgba(0, 0, 0, 0)', cursor: 'auto' });
+  });
+});
