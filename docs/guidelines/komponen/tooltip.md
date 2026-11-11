@@ -12,6 +12,7 @@ Empat arah panah: panah kanan (tooltip di kiri elemen), panah kiri (di kanan), p
 
 ## Perilaku
 - **Posisi**: `side` adalah sisi pilihan; tooltip **membalik** sendiri (atas ↔ bawah, kiri ↔ kanan) bila tidak muat dan **bergeser** agar tetap di dalam layar; tidak terpotong wadah `overflow-hidden` (`position: fixed`, lihat `src/popup.ts`).
+- **Sentuhan**: ketuk pada pemicu menampilkan tooltip (ditangani eksplisit lewat `pointerdown` bertipe sentuh); ketukan atau klik di luar menutupnya.
 - **Aksesibilitas**: pemicu (bila satu elemen) otomatis diberi `aria-describedby` ke tooltip, jadi pembaca layar membacakannya; `Esc` menutup tanpa memindahkan fokus (WCAG 1.4.13).
 - Muncul **hanya setelah ada aksi** pada elemen: hover, fokus, atau ketuk. Tidak muncul sendiri.
 - **Harus dipasangkan** dengan elemen pemicu; tidak berdiri sendiri.
