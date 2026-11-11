@@ -13,6 +13,7 @@ Daftar nilai dan perilaku yang **kita tetapkan sendiri** karena tidak ada di Fig
 | 7 | **Icon Button Desktop** | 46×46 (ukuran `lg` Mobile) | Navbar Desktop Figma memakai 46×46 | `Button iconOnly` |
 | 8 | Judul kolom **Table**: Title Case (situs) atau sentence case dan tampil KAPITAL (kode) | sentence case tampil KAPITAL | Keputusan 2026-11-10 | `Table` |
 | 9 | **Ekstensi** yang kita usulkan masuk Seragam | `Panel`, `DescriptionList`, `PageHeader`, `ProcessSteps`, `Platform` (skala Mobile/Desktop), `DatePicker`/`Calendar`, `FormField`/`FieldGroup`, `Button destructive-secondary`/`inverse`, `ChipGroup` pilihan banyak, `AccordionGroup`, Navbar utuh | Dibutuhkan produk, tidak ada padanan | Status "ekstensi" menjadi komponen resmi |
+| 11 | **Lisensi dan penerbitan ke npm** | paket bertanda `UNLICENSED`; belum diterbitkan ke npm; rilis hanya lewat tarball GitHub Release | Repo belum punya berkas lisensi; ini keputusan hukum Kemendikdasmen, bukan teknis | Setelah lisensi ditetapkan: ganti `license` di `tools/make-package.mjs`, tambah `LICENSE`, isi rahasia `NPM_TOKEN` agar workflow Rilis menerbitkan ke npm |
 | 10 | **Skala huruf Desktop** untuk semua komponen | satu komponen, dua skala (`data-sd-platform`) | Figma hanya punya komponen mobile | Semua komponen |
 
 ## Untuk tim situs seragam.belajar.id

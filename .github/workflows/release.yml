@@ -1,0 +1,39 @@
+name: Rilis
+
+# Tag vX.Y.Z → memeriksa, membangun paket siap pakai (lib/ + tipe + style.css), mengujinya, lalu melampirkan *.tgz ke GitHub Release.
+# Terbit ke npm hanya bila rahasia NPM_TOKEN diisi (belum; lisensi paket masih UNLICENSED, lihat docs/PERLU-KEPUTUSAN-DESAIN.md).
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  paket:
+    runs-on: ubuntu-24.04
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm run check
+      - run: npm run pack:release
+      - name: Uji asap paket hasil rakitan
+        run: node tools/smoke-package.mjs pkg/lib
+      - name: Catatan rilis dari CHANGELOG
+        run: python3 tools/release_notes.py "$GITHUB_REF_NAME" > notes.md
+      - name: Buat GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" seragam-design-system-*.tgz --title "$GITHUB_REF_NAME" --notes-file notes.md
+      - name: Terbitkan ke npm (hanya bila NPM_TOKEN ada)
+        if: env.NPM_TOKEN != ''
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish ./pkg --access public

@@ -21,7 +21,7 @@ const Md = ({ path }: { path: string }) => {
 };
 
 const NAV: { heading: string; items: { to: string; label: string }[] }[] = [
-  { heading: 'Mulai', items: [{ to: '/', label: 'Beranda' }, { to: '/d/DECISIONS.md', label: 'Catatan keputusan' }, { to: '/d/extensions.md', label: 'Ekstensi di luar Figma' }, { to: '/d/PERLU-KEPUTUSAN-DESAIN.md', label: 'Perlu keputusan desain' }] },
+  { heading: 'Mulai', items: [{ to: '/', label: 'Beranda' }, { to: '/d/DECISIONS.md', label: 'Catatan keputusan' }, { to: '/d/extensions.md', label: 'Ekstensi di luar Figma' }, { to: '/d/PERLU-KEPUTUSAN-DESAIN.md', label: 'Perlu keputusan desain' }, { to: '/d/MIGRASI.md', label: 'Panduan migrasi' }] },
   { heading: 'Fondasi', items: ['warna', 'tipografi', 'elevasi-radius', 'spacing', 'container', 'token', 'palet-ilustrasi'].map((s) => ({ to: `/d/foundations/${s}.md`, label: titleOf(`foundations/${s}.md`) })) },
   { heading: 'Panduan', items: [{ to: '/d/guidelines/penulisan.md', label: 'Penulisan' }, { to: '/d/guidelines/prinsip-desain.md', label: 'Prinsip desain' }, { to: '/d/guidelines/keputusan-ux.md', label: 'Keputusan UX' }, { to: '/d/guidelines/ilustrasi.md', label: 'Ilustrasi' }, { to: '/d/guidelines/pemetaan-nama.md', label: 'Pemetaan nama' }, { to: '/d/guidelines/README.md', label: 'Penggunaan komponen' }] },
   { heading: 'Komponen', items: componentSlugs.map((s) => ({ to: `/c/${s}`, label: titleOf(`guidelines/komponen/${s}.md`) })) },

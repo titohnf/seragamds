@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "noEmit": false, "declaration": true, "emitDeclarationOnly": true, "outDir": "lib/types", "rootDir": "src", "allowImportingTsExtensions": false },
+  "include": ["src"],
+  "exclude": ["src/pkg-entry.ts", "src/package.css"]
+}

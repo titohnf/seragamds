@@ -18,9 +18,28 @@ Token dan komponen React dari Figma **Seragam Dasar** (fondasi) dan **Dokumentas
 | `examples/Gallery.tsx` | Galeri semua komponen untuk cek visual (pasang di rute mana pun) |
 | `skill/SKILL.md` | Claude Skill agar proyek lain otomatis mengikuti Seragam |
 | `skill-illustration/` | Claude Skill `seragam-illustration`: membuat ilustrasi SVG (Spot, Empty State, Hero) sesuai panduan ilustrasi, dengan palet terkunci, contoh, validator, dan pratinjau. Mandiri; tidak dirakit oleh `build:skill` |
-| `tools/` | `extract.py`, `render_docs.py`, `build_tokens.py` (ekstraksi dari Figma); `build_foundations.py` (fondasi dari token); `build_skill.sh` (rakit skill); `check.py` (pemeriksaan konsistensi) |
+| `lib/`, `pkg/` | Hasil `npm run build:lib` dan `npm run pack:release` (tidak di-commit): paket siap pakai dan tarball rilis |
+| `tools/` | `make-package.mjs` (rakit paket), `smoke-package.mjs` (uji asap paket), `release_notes.py`; `extract.py`, `render_docs.py`, `build_tokens.py` (ekstraksi dari Figma); `build_foundations.py` (fondasi dari token); `build_skill.sh` (rakit skill); `check.py` (pemeriksaan konsistensi) |
 
-## Pasang lewat git (disarankan)
+## Pasang paket siap pakai (disarankan untuk proyek baru)
+Setiap tag `vX.Y.Z` melampirkan `seragam-design-system-X.Y.Z.tgz` di [GitHub Releases](https://github.com/titohnf/seragamds/releases): JS (ESM, React dan lucide-react sebagai peer), tipe TypeScript, dan CSS jadi.
+```bash
+npm i https://github.com/titohnf/seragamds/releases/download/v0.18.0/seragam-design-system-0.18.0.tgz react lucide-react
+```
+**Tanpa Tailwind** (cukup satu impor; memuat reset, utilitas yang dipakai komponen, dan token):
+```ts
+import 'seragam-design-system/styles.css';
+import { Button, TextField } from 'seragam-design-system';
+```
+**Dengan Tailwind v4** (token saja; kelas komponen dipindai dari paket):
+```css
+@import "tailwindcss";
+@import "seragam-design-system/css";
+@source "../node_modules/seragam-design-system/lib";
+```
+Atur skala huruf dengan `data-sd-platform="auto|mobile|desktop"` di `<html>` (lihat [Platform](docs/guidelines/komponen/platform.md)). Pindah antarversi: [docs/MIGRASI.md](docs/MIGRASI.md). Belum terbit di npm (lisensi belum ditetapkan).
+
+## Pasang lewat git (dari sumber)
 ```bash
 npm i github:titohnf/seragamds   # atau: pnpm add / yarn add
 ```

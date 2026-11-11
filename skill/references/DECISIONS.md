@@ -2,6 +2,15 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-11 · Distribusi paket siap pakai (v0.18.0)
+- **Keputusan:** menyediakan paket hasil build tanpa mengubah cara pemasangan dari GitHub yang sudah dipakai proyek lain. `package.json` repo tetap menunjuk ke sumber (`src/`); paket yang diterbitkan dirakit terpisah oleh `tools/make-package.mjs` ke `pkg/` dengan `package.json` sendiri yang menunjuk ke `lib/`. Dengan begitu pemakai `github:titohnf/seragamds#vX` tidak terputus.
+- **Isi paket:** `lib/index.js` (ESM, 75 ekspor, React dan lucide-react sebagai peer), `lib/types/` (tipe TypeScript), `lib/style.css` (reset + utilitas Tailwind yang dipakai komponen + token; proyek tanpa Tailwind cukup satu impor), `tokens/` (`./css` untuk pemakai Tailwind), `docs/`. Pemakai Tailwind memindai `lib/` (kelas ada sebagai string di JS).
+- **Rilis:** tag `vX.Y.Z` memicu workflow **Rilis** (`.github/workflows/release.yml`): check, rakit, uji asap, lalu `gh release create` melampirkan `seragam-design-system-X.Y.Z.tgz` dengan catatan dari CHANGELOG (`tools/release_notes.py`). Penerbitan ke npm hanya bila rahasia `NPM_TOKEN` diisi (belum).
+- **Uji:** `tools/smoke-package.mjs` (impor ESM, render server komponen, tipe dan CSS) di CI dan `npm run verify`; sekali manual memasang tarball ke proyek kosong, mengimpor, dan memeriksa tipe dengan `skipLibCheck: false`, termasuk galat tipe yang diharapkan.
+- **Batas:** ESM hasil bundel tunggal (tree-shaking per komponen mengandalkan bundler pemakai; `sideEffects: false`); CSS jadi memuat reset Tailwind (preflight) sehingga proyek ber-Tailwind sebaiknya memakai `./css` + `@source`, bukan `styles.css`.
+- **Terbuka:** lisensi (paket bertanda `UNLICENSED` sampai Kemendikdasmen menetapkan) dan penerbitan ke npm: `docs/PERLU-KEPUTUSAN-DESAIN.md` butir 11. Figma Code Connect belum dikerjakan.
+- **Panduan migrasi:** `docs/MIGRASI.md` merangkum perubahan yang bisa memengaruhi pemakai dari 0.10 sampai 0.18.
+
 ## 2026-11-11 · Date Picker, Form Field, dan tata kelola kontribusi (v0.17.0)
 - **Date Picker dan Calendar (ekstensi):** isian tanggal `hh/bb/tttt` yang bisa diketik atau dipilih dari Calendar; nilai ISO `YYYY-MM-DD` tanpa zona waktu; minggu mulai Senin dan bahasa Indonesia (`Intl id-ID`); keyboard grid WAI-ARIA (←/→/↑/↓/Home/End/PageUp/PageDown, Shift untuk tahun); `min`/`max`; validasi saat keluar isian dengan galat berbahasa solusi. Dibangun di atas `TextField` agar tampilannya sama. **Belum:** rentang dari–sampai, pemilih tahun cepat, bottom sheet di mobile.
 - **Form Field dan Field Group (ekstensi):** `FormField` memberi label/bantu/galat untuk kontrol buatan sendiri lewat render-prop (label terhubung `htmlFor`); `FieldGroup` = `fieldset`+`legend` untuk Radio/Checkbox, menegakkan panduan Radio "label sebelum daftar pilihan". Seragam menandai isian yang opsional ("(opsional)"), bukan yang wajib; `required` hanya `aria-required`.

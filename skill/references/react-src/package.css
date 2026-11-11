@@ -1,0 +1,6 @@
+/* Gaya paket siap pakai: reset + utilitas Tailwind yang dipakai komponen + token Seragam.
+   Dibangun oleh `npm run build:lib` menjadi lib/style.css; proyek tanpa Tailwind cukup mengimpornya. */
+@import "tailwindcss";
+@import "../tokens/seragam.css";
+@source "./components";
+html { font-family: Inter, system-ui, sans-serif; }
