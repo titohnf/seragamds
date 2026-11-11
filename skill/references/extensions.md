@@ -30,6 +30,9 @@ Kartu berbagian dengan header berjudul (ikon opsional, aksi opsional) dan garis 
 ## Description List
 Pasangan label di atas nilai dalam 1–3 kolom (berdasarkan lebar wadah). Label 13/20 `gray-60`, nilai 15/22 semibold `gray-90`, jarak 4/16. Ditemukan berulang di halaman data profil, detail usulan, dan formulir hanya-baca. Spesifikasi lengkap di [description-list.md](guidelines/komponen/description-list.md).
 
+## Date Picker, Calendar, Form Field, Field Group
+Dibuat karena produk pendidikan hampir selalu butuh tanggal dan kelompok pilihan berlabel, sedangkan Figma dan situs Seragam tidak punya padanannya. `DatePicker` = TextField yang bisa diketik (`hh/bb/tttt`) plus Calendar (minggu mulai Senin, bahasa Indonesia, keyboard WAI-ARIA grid); `FormField` memberi label/bantu/galat untuk kontrol mana pun; `FieldGroup` = `fieldset` + `legend` untuk Radio atau Checkbox. Spesifikasi lengkap di [date-picker.md](guidelines/komponen/date-picker.md) dan [form-field.md](guidelines/komponen/form-field.md). Usulkan ke tim desain Seragam.
+
 ## Perilaku dan varian tambahan dari audit panduan
 Dari audit seragam.belajar.id (2026-11-11) kode menambah hal yang situs jelaskan tetapi Figma tidak punya sebagai props: `Button inverse` untuk `secondary` dan `quiet` (Figma hanya menggambar teks putih pada Assets/Button); `ChipGroup` pilihan banyak dan `onRemove`; `AccordionGroup` (single/multiple); `Toast duration` dan geser-tutup; `Breadcrumb maxItems`; `Modal`/`BottomSheet dismissOnOverlay`. Lihat panduan masing-masing di `guidelines/komponen/`.
 

@@ -65,3 +65,5 @@ Alur mengubah sesuatu:
 1. Token: `build_tokens.py` → `npm run build:foundations` → `npm run build:skill`.
 2. Komponen/panduan: ubah `src/` dan `docs/guidelines/komponen/`, catat keputusan di `docs/DECISIONS.md`, lalu `npm run build:skill`.
 3. `npm run verify` (check, typecheck, build, dan tes e2e) harus lulus sebelum commit.
+
+Panduan kontribusi lengkap (komponen baru, versi, deprecation): [CONTRIBUTING.md](CONTRIBUTING.md). Butir yang menunggu tim desain: [docs/PERLU-KEPUTUSAN-DESAIN.md](docs/PERLU-KEPUTUSAN-DESAIN.md).

@@ -289,3 +289,92 @@ test.describe('Vertical Navigation', () => {
     expect(Math.round((await nav.boundingBox())!.width)).toBe(Math.round(parent.width));
   });
 });
+
+test.describe('Date Picker', () => {
+  test('mengetik: format salah memberi galat, format sah diterima dan dinormalkan', async ({ page }) => {
+    const demo = await openDemo(page, 'date-picker');
+    const field = demo.getByLabel('Tanggal berakhir (opsional)');
+    await field.fill('32/13/2025'); await field.blur();
+    await expect(demo.getByText(/Format tanggal salah/)).toBeVisible();
+    await expect(field).toHaveAttribute('aria-invalid', 'true');
+    await field.fill('1-2-2020'); await field.blur();
+    await expect(field).toHaveValue('01/02/2020');
+    await expect(demo.getByText(/Format tanggal salah/)).toHaveCount(0);
+    await field.fill(''); await field.blur();
+    await expect(field).toHaveValue('');
+  });
+
+  test('Calendar: keyboard grid, memilih menutup dan mengembalikan fokus ke isian', async ({ page }) => {
+    const demo = await openDemo(page, 'date-picker');
+    const field = demo.getByLabel('Tanggal lahir');
+    await demo.getByRole('button', { name: 'Pilih tanggal' }).first().click();
+    const dialog = page.getByRole('dialog', { name: 'Pilih tanggal' });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole('grid')).toHaveAttribute('aria-label', 'Mei 1990');
+    const day = (label: string) => dialog.getByRole('button', { name: label });
+    await expect(day('Kamis, 17 Mei 1990')).toBeFocused();
+    await expect(day('Kamis, 17 Mei 1990')).toHaveAttribute('tabindex', '0');
+    await page.keyboard.press('ArrowRight');
+    await expect(day('Jumat, 18 Mei 1990')).toBeFocused();
+    await page.keyboard.press('PageDown');
+    await expect(dialog.getByRole('grid')).toHaveAttribute('aria-label', 'Juni 1990');
+    await expect(day('Senin, 18 Juni 1990')).toBeFocused();
+    await page.keyboard.press('ArrowDown');
+    await expect(day('Senin, 25 Juni 1990')).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(dialog).toHaveCount(0);
+    await expect(field).toHaveValue('25/06/1990');
+    await expect(field).toBeFocused();
+  });
+
+  test('Esc menutup dan fokus kembali ke tombol kalender', async ({ page }) => {
+    const demo = await openDemo(page, 'date-picker');
+    const btn = demo.getByRole('button', { name: 'Pilih tanggal' }).first();
+    await btn.click();
+    await expect(page.getByRole('dialog', { name: 'Pilih tanggal' })).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    await expect(btn).toBeFocused();
+  });
+
+  test('min/max: hari di luar rentang nonaktif, navigasi bulan dibatasi, ketikan di luar rentang ditolak', async ({ page }) => {
+    const demo = await openDemo(page, 'date-picker');
+    await demo.getByRole('button', { name: 'Pilih tanggal' }).nth(1).click();
+    const dialog = page.getByRole('dialog', { name: 'Pilih tanggal' });
+    await expect(dialog.getByRole('button', { name: 'Selasa, 4 November 2025' })).toBeDisabled();
+    await expect(dialog.getByRole('button', { name: 'Rabu, 5 November 2025' })).toBeEnabled();
+    await expect(dialog.getByRole('button', { name: 'Rabu, 26 November 2025' })).toBeDisabled();
+    await expect(dialog.getByRole('button', { name: 'Bulan sebelumnya' })).toBeDisabled();
+    await expect(dialog.getByRole('button', { name: 'Bulan berikutnya' })).toBeDisabled();
+    await page.keyboard.press('Escape');
+    const field = demo.getByLabel('Tanggal pelaksanaan');
+    await field.fill('30/11/2025'); await field.blur();
+    await expect(demo.getByText(/Tanggal harus mulai 05\/11\/2025 sampai 25\/11\/2025/)).toBeVisible();
+  });
+});
+
+test.describe('Form Field dan Field Group', () => {
+  test('label terhubung ke kontrol, bantu dan galat terhubung lewat aria-describedby', async ({ page }) => {
+    const demo = await openDemo(page, 'form-field');
+    const unit = demo.getByLabel('Unit kerja (opsional)');
+    await expect(unit).toBeVisible();
+    const desc = await unit.getAttribute('aria-describedby');
+    await expect(page.locator(`[id="${desc}"]`)).toHaveText('Tulis nama unit sesuai SK');
+    const sk = demo.getByLabel('Nomor SK');
+    await expect(sk).toHaveAttribute('aria-invalid', 'true');
+    await expect(sk).toHaveAttribute('aria-required', 'true');
+    await expect(page.locator(`[id="${await sk.getAttribute('aria-describedby')}"]`)).toContainText('wajib diisi');
+  });
+
+  test('Field Group: fieldset/legend, Radio satu pilihan, galat hilang setelah memilih', async ({ page }) => {
+    const demo = await openDemo(page, 'form-field');
+    const radios = demo.getByRole('group', { name: 'Jenjang pendidikan' });
+    await expect(radios.getByRole('radio')).toHaveCount(3);
+    await radios.getByRole('radio', { name: 'SMP' }).check();
+    await expect(radios.getByRole('radio', { name: 'SD' })).not.toBeChecked();
+    const cb = demo.getByRole('group', { name: 'Jenjang yang diajar (opsional)' });
+    await expect(cb).toContainText('Pilih minimal satu jenjang.');
+    await cb.getByRole('checkbox', { name: 'SMA' }).check();
+    await expect(cb).not.toContainText('Pilih minimal satu jenjang.');
+  });
+});

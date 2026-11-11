@@ -3,8 +3,12 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.16.0
+npm i github:titohnf/seragamds#v0.17.0
 ```
+
+## 0.17.0 · 2026-11-11
+- Baru (ekstensi): `DatePicker` dan `Calendar` (isian tanggal `hh/bb/tttt` yang bisa diketik atau dipilih; minggu mulai Senin; bahasa Indonesia; keyboard grid; `min`/`max`), `FormField` dan `FieldGroup` (label/bantu/galat untuk kontrol mana pun; fieldset+legend untuk Radio/Checkbox). Panduan, demo, tes perilaku dan aksesibilitas ikut.
+- Tata kelola: `CONTRIBUTING.md`, templat PR dan issue, `docs/PERLU-KEPUTUSAN-DESAIN.md`.
 
 ## 0.16.0 · 2026-11-11
 - **Tes otomatis (Playwright)** di `tests/e2e/`: axe WCAG 2.1 A/AA pada demo setiap komponen (Mobile dan Desktop), tes perilaku dengan keyboard dan mouse sungguhan, dan tes skala huruf. Jalan di CI dan di `npm run verify`; `npm run test:e2e` untuk lokal.
