@@ -12,4 +12,6 @@ Lima prinsip desain INA Digital Edu:
 | **Balance Utility and Delight** | Padukan kemudahan pakai dengan elemen yang menyenangkan | [Ilustrasi](ilustrasi.md) pada empty state, pesan perayaan keberhasilan |
 | **Consistent and Familiar, over Novel Experiences** | Konsistensi menurunkan kurva belajar | Pakai komponen dan token DS; jangan membuat pola baru bila sudah ada |
 
+Peta komponen, urutan keadaan, dan aturan alur untuk menerapkan kelima prinsip ini ada di [keputusan UX](keputusan-ux.md).
+
 Saat dua pilihan tampak sama baik, pilih yang lebih konsisten dan familier. Penyimpangan dicatat di [DECISIONS](../DECISIONS.md).

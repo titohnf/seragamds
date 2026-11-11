@@ -99,6 +99,14 @@ Singkat, maksimal 1–2 kalimat. Untuk konfirmasi aksi yang selesai. Jangan dipa
 | Data berhasil disimpan | Success: Data saved successfully! |
 | Laporan telah dikirim | Your report has been submitted |
 
+## Konsistensi dan tanda template (keputusan UX)
+- **Kata kerja yang sama sepanjang alur.** Tombol "Kirim laporan" → judul Modal "Kirim laporan?" → Toast "Berhasil mengirim laporan!". Jangan ganti nama aksi di tengah alur; kosakata antarmuka adalah penunjuk jalan.
+- **Galat tidak meminta maaf dan tidak samar.** Sebut apa yang salah dan cara memperbaikinya, dengan suara antarmuka, bukan suara seseorang. ❌ "Maaf, terjadi kesalahan." ✅ "Laporan belum terkirim. Periksa sambungan internet lalu coba lagi."
+- **Kosong adalah ajakan bertindak**, bukan suasana hati.
+- **Hindari tanda template di teks UI:** panah "→" di akhir tombol atau tautan, label berformat "KATA — fragmen", dan rangkaian titik tengah ("A · B · C"). Tulis kalimat atau label biasa.
+- **Nama menurut pemahaman pengguna**, bukan cara sistem dibangun: pengguna mengelola "notifikasi", bukan "konfigurasi webhook".
+- Lihat juga [keputusan UX](keputusan-ux.md).
+
 ## Inklusivitas
 
 ### Pilihan kata

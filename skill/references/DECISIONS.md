@@ -2,6 +2,13 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-11 · Keputusan UX dan adopsi sebagian skill frontend-design (v0.15.1)
+- **Keputusan (Tito):** mengadopsi dari skill `frontend-design` hanya yang selaras dengan tujuan Seragam; hasilnya halaman baru `guidelines/keputusan-ux.md` dan aturan 14 di skill `seragam`.
+- **Diadopsi:** kosakata aksi yang sama sepanjang alur; galat tidak meminta maaf dan tidak samar; struktur (nomor, eyebrow, garis) hanya bila informatif; gerak hanya menjawab aksi dan menghormati reduced motion; baris < ±80 karakter; satu elemen yang diingat; proses rencanakan–bangun–kritik dengan pemeriksaan di browser pada lebar mobile dan desktop; tanpa "→", "KATA — fragmen", titik tengah di teks UI.
+- **Tidak diadopsi:** huruf, palet, dan layout "khas" per proyek (token dan komponen Seragam menetapkannya; konsisten mengalahkan baru, prinsip 5); larangan huruf kapital semua untuk label (header tabel dan subheading Seragam kapital menurut token); gerak masuk terorkestrasi dan hero eksperimental di halaman kerja; menghindari kartu bersudut seragam (Seragam punya hierarki radius dan elevasi).
+- **Isi baru:** peta keputusan komponen per kebutuhan, lima keadaan halaman data, aturan umpan balik dan konfirmasi (Toast "Urungkan" untuk aksi yang bisa dibalik; Modal tanpa `dismissOnOverlay` untuk aksi destruktif), formulir, gerak, tipografi halaman, dan langkah pemeriksaan hasil. Penulisan mendapat bagian "Konsistensi dan tanda template".
+- **Batas:** status halaman ini "ekstensi (rangkuman keputusan tim)", bukan panduan resmi Seragam; aturan komponen tetap menang di halamannya.
+
 ## 2026-11-11 · Sidebar Menu diadopsi; Identitas Visual Platform terbukti tautan mati (v0.15.0)
 - **Sidebar Menu:** halaman situs gagal dirender (`next-mdx-remote`: teks `<800px` di Behaviors terbaca MDX sebagai tag). Isi dokumennya tetap tersedia di data halaman (`__NEXT_DATA__`, Contentful) dan dibaca dari sana; isinya hanya deskripsi, dua jenis (Main Menu; Main Menu + Additional), responsif (<800px penuh; ≥800px minimum 300px), dan penulisan (maks. 25 karakter per menu; kelompokkan dalam parent; Additional untuk Pengaturan/Bantuan). Anatomi berupa gambar. Laporan ke tim situs: perbaiki `<800px` menjadi `&lt;800px`.
 - **Kode:** `VerticalNavigation` `additional` (menu tambahan terpisah garis, menempel di dasar), lebar penuh di bawah 800px dan minimum 300px mulai 800px. Panduan naik dari draf ke "dari panduan Seragam".

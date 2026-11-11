@@ -3,8 +3,11 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.15.0
+npm i github:titohnf/seragamds#v0.15.1
 ```
+
+## 0.15.1 · 2026-11-11
+- Baru: `guidelines/keputusan-ux.md` (peta komponen per kebutuhan, lima keadaan, umpan balik, formulir, gerak, tipografi halaman, cara memeriksa hasil, serta catatan adopsi skill `frontend-design`). `penulisan.md`: kosakata sama sepanjang alur, galat tidak meminta maaf, tanpa tanda template. Skill `seragam`: aturan 14 (rencanakan, bangun, kritik hasil di browser).
 
 ## 0.15.0 · 2026-11-11
 - `VerticalNavigation`: prop `additional` (Main Menu + Additional: menu tambahan di dasar, mis. Pengaturan dan Bantuan) dan lebar responsif (penuh di bawah 800px, minimum 300px mulai 800px). Panduan Vertical Navigation naik dari draf ke "dari panduan Seragam" setelah isi halaman Sidebar Menu dipulihkan dari data situs.
