@@ -12,6 +12,7 @@ Yang diperiksa:
 """
 import json, os, re, sys, filecmp
 from build_foundations import build as build_foundations
+import contrast as contrast_audit, props_sync
 from build_responsive_type import section as responsive_type_section, names as type_names, START as RT_START, END as RT_END
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
@@ -104,6 +105,13 @@ for f in sorted(os.listdir(P('src', 'components'))):
         if re_fs.search(line) and 'sd-allow-fontsize' not in line:
             err(f'src/components/{f}:{i}: ukuran huruf literal; pakai type.* (src/tokens.ts) atau kelas sd-t-<nama> (atau beri komentar sd-allow-fontsize bila disengaja)')
 
+# Teks berkontras rendah (gray-50/40) hanya untuk keadaan nonaktif; placeholder dan teks biasa memakai gray-60 ke atas.
+re_low = re.compile(r"(?<![\w-])(?:[a-z-]+:)*(?:placeholder:)?text-sd-gray-(?:50|40)(?![\w-])")
+for f in sorted(os.listdir(P('src', 'components'))):
+    for i, line in enumerate(read('src', 'components', f).splitlines(), 1):
+        if re_low.search(line) and 'isabled' not in line and 'sd-allow-lowcontrast' not in line:
+            err(f'src/components/{f}:{i}: teks gray-50/gray-40 hanya untuk keadaan nonaktif (kontras < 4,5:1); pakai gray-60 ke atas')
+
 # ---------- 3. Fondasi hasil generate ----------
 for name, text in build_foundations().items():
     fp = P('docs', 'foundations', name)
@@ -167,6 +175,16 @@ for src, dst in (('tokens/seragam.tokens.json', 'seragam.tokens.json'), ('tokens
                  ('src', 'react-src'), ('docs/foundations', 'foundations'), ('docs/guidelines', 'guidelines'),
                  ('docs/extensions.md', 'extensions.md'), ('docs/DECISIONS.md', 'DECISIONS.md')):
     same(P(src), P('skill', 'references', dst), dst)
+
+# ---------- 8. Kontras warna ----------
+contrast_audit.check(tokens, err)
+
+# ---------- 9. Props kode <-> panduan ----------
+code_props = props_sync.load_code_props(ROOT)
+for f in sorted(os.listdir(guide_dir)):
+    text = open(os.path.join(guide_dir, f), encoding='utf-8').read()
+    m = re.search(r'^- Kode: `([^`]+)`', text, re.M)
+    if m: props_sync.check_page(text, [x.strip() for x in m.group(1).split(',')], code_props, err, f'guidelines/komponen/{f}')
 
 # ---------- hasil ----------
 if errors:

@@ -67,7 +67,7 @@ export function CustomSelect({ options, value, onChange, label, helper, error, p
         onClick={() => (open ? setOpen(false) : openList())} onKeyDown={onKey} style={{ ...typo.body }}
         className={`relative h-[calc(var(--sd-text-body-line)_+_24px)] w-full rounded-[4px] border py-[12px] pl-[16px] pr-[40px] text-left outline-none transition-shadow
           ${error ? 'border-sd-critical-border bg-sd-surface-critical-subdued focus-visible:shadow-[0_0_0_2px_var(--sd-critical-border)]' : 'border-sd-gray-50 bg-white focus-visible:border-sd-blue-50 focus-visible:shadow-[0_0_0_2px_var(--sd-interactive-focused)]'}
-          disabled:border-sd-modal-footer-border disabled:bg-sd-badge-neutral disabled:text-sd-gray-50 ${sel ? 'text-sd-gray-90' : 'text-sd-gray-60'}`}>
+          disabled:border-sd-modal-footer-border disabled:bg-sd-badge-neutral disabled:text-sd-gray-50 ${sel ? 'text-sd-gray-90' : error ? 'text-sd-gray-70' : 'text-sd-gray-60'}`}>
         <span className="block truncate">{sel ? sel.label : placeholder}</span>
         <svg aria-hidden viewBox="0 0 24 24" className="pointer-events-none absolute right-[12px] top-1/2 size-[24px] -translate-y-1/2 text-sd-gray-70" fill="currentColor"><path d="M7 10l5 5 5-5z" /></svg>
       </button>

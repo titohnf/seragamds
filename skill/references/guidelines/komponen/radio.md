@@ -5,7 +5,7 @@
 
 > **Status: dari panduan Seragam** (seragam.belajar.id/radio, diaudit 2026-11-11 terhadap seluruh halaman situs), disesuaikan ke props komponen di repo ini.
 
-Memilih **satu** opsi dari sekelompok pilihan. Props: `label` dan atribut `<input type="radio">`.
+Memilih **satu** opsi dari sekelompok pilihan. Props: `label`, `disabled`, dan atribut `<input type="radio">`.
 
 ## Jenis
 **Radio** (atom, fleksibel) dan **Radio with label** (umumnya di formulir, memberi konteks).

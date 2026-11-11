@@ -2,9 +2,9 @@ import { useState, type ReactNode } from 'react';
 import * as S from '../src';
 import { User, Building2, House, Users, FolderOpen, Palette, Image, LayoutGrid, Search, Settings, CircleHelp } from 'lucide-react';
 
-const Row = ({ children, label }: { children: ReactNode; label?: string }) => (
+const Row = ({ children, label, onDark = false }: { children: ReactNode; label?: string; onDark?: boolean }) => (
   <div className="flex flex-col gap-[8px]">
-    {label && <div className="text-sd-gray-60" style={{ fontSize: 12, lineHeight: '16px', fontWeight: 600 }}>{label}</div>}
+    {label && <div className={onDark ? 'text-white' : 'text-sd-gray-60'} style={{ fontSize: 12, lineHeight: '16px', fontWeight: 600 }}>{label}</div>}
     <div className="flex flex-wrap items-center gap-[12px]">{children}</div>
   </div>
 );
@@ -18,8 +18,8 @@ function TabsDemo() {
     <Row label="Scrollable (tepi memudar bila meluber)"><div className="w-[360px] max-w-full"><S.Tabs items={['Modul ajar', 'Aksi nyata', 'Video pembelajaran', 'Bank soal', 'Asesmen', 'Perangkat ajar', 'Komunitas']} active={d} onChange={setD} /></div></Row></>;
 }
 function ChipDemo() { const [a, setA] = useState(0); return <S.ChipGroup items={['Semua', 'Aktif', 'Selesai', 'Ditunda']} active={a} onChange={setA} />; }
-function StepperDemo() { const [n, setN] = useState(2); return <Row><S.Stepper value={n} onChange={setN} min={0} max={10} /><S.Stepper value={0} onChange={() => {}} disabled /><S.Stepper value={11} onChange={() => {}} error /></Row>; }
-function SliderDemo() { const [v, setV] = useState(40); return <Box><S.Slider value={v} onChange={setV} showRange /></Box>; }
+function StepperDemo() { const [n, setN] = useState(2); return <Row><S.Stepper aria-label="Jumlah pensil" value={n} onChange={setN} min={0} max={10} /><S.Stepper aria-label="Jumlah (nonaktif)" value={0} onChange={() => {}} disabled /><S.Stepper aria-label="Jumlah (galat)" value={11} onChange={() => {}} error /></Row>; }
+function SliderDemo() { const [v, setV] = useState(40); return <Box><S.Slider aria-label="Volume" value={v} onChange={setV} showRange /></Box>; }
 function RatingDemo() { const [v, setV] = useState(3); return <Row><S.Rating value={v} onChange={setV} /><S.Rating value={4.5} /></Row>; }
 function PaginationDemo() { const [p, setP] = useState(3); return <S.Pagination page={p} pageCount={10} onPageChange={setP} />; }
 function ExpanderDemo() { const [e, setE] = useState(false); return <Box><p className="text-sd-gray-90" style={{ fontSize: 15, lineHeight: '22px' }}>Ringkasan laporan semester ganjil.{e && ' Isi lengkap laporan tampil di sini setelah dibuka.'}</p><S.Expander expanded={e} onToggle={() => setE(!e)} /></Box>; }
@@ -94,11 +94,28 @@ function TableStickyDemo() {
   </div>;
 }
 
+const STEPS: S.ProcessStep[] = [
+  { key: 'a', label: 'Mengumpulkan data', caption: 'Selesai', state: 'done' },
+  { key: 'b', label: 'Merencanakan', caption: 'Berjalan', state: 'active' },
+  { key: 'c', label: 'Melaksanakan', caption: 'Belum', state: 'todo' },
+];
+function ProcessStepsDemo() {
+  const [cur, setCur] = useState('b');
+  return <div className="flex w-full flex-col gap-[24px]">
+    <Row label="Horizontal"><div className="w-full"><S.ProcessSteps steps={STEPS} current={cur} onSelect={setCur} /></div></Row>
+    <Row label="Vertical dengan detail"><div className="w-[300px]"><S.ProcessSteps orientation="vertical" current={cur} onSelect={setCur} steps={STEPS.map((s) => (s.key === 'b' ? { ...s, detail: <span className="text-sd-gray-90">Bagian yang perlu diisi</span> } : s))} /></div></Row>
+    <div className="rounded-[8px] bg-sd-surface-dark-blue p-[16px]"><Row onDark label="inverse"><div className="w-full"><S.ProcessSteps inverse steps={STEPS} current={cur} onSelect={setCur} /></div></Row></div>
+  </div>;
+}
+
 export const demos: Record<string, () => ReactNode> = {
+  'page-header': () => <div className="flex w-full flex-col gap-[16px]">{(['blue', 'dark', 'light'] as const).map((tone) => <S.PageHeader key={tone} tone={tone} breadcrumb={<S.Breadcrumb inverse={tone !== 'light'} items={[{ label: 'Beranda', href: '#' }, { label: 'Kepegawaian' }]} />} title="Data kepegawaian" description="Kelola data pegawai dan unit kerja di satu tempat." />)}</div>,
+  'process-steps': () => <ProcessStepsDemo />,
+  platform: () => <div className="flex w-full flex-col gap-[16px]">{(['mobile', 'desktop'] as const).map((p) => <S.Platform key={p} platform={p}><div className="rounded-[8px] border border-sd-gray-10 bg-white p-[16px]"><p className="mb-[8px] text-sd-gray-60 sd-t-bodysmall">Platform {p}</p><S.TextField label="Nama lengkap" placeholder="cth. Budi Santoso" /><div className="mt-[12px]"><S.Button>Simpan perubahan</S.Button></div></div></S.Platform>)}</div>,
   carousel: () => <CarouselDemo />,
   footer: () => <div className="w-full overflow-hidden rounded-[8px]"><S.Footer logo={<span style={{ fontSize: 18, fontWeight: 600 }}>Nama Aplikasi</span>} sections={[{ title: 'Layanan', links: [{ label: 'Beranda', href: '#' }, { label: 'Bantuan', href: '#' }] }, { title: 'Tautan', links: [{ label: 'Kemendikdasmen', href: '#', external: true }] }]} copyright="Hak Cipta 2021 oleh Kementerian Pendidikan Dasar dan Menengah Republik Indonesia" language="ID" /></div>,
   loading: () => <div className="flex flex-col gap-[16px]"><Row label="Spinner"><S.Spinner size="sm" /><S.Spinner /><S.Spinner size="lg" /></Row><Row label="Skeleton"><Box w={328}><div className="flex flex-col gap-[8px]"><S.Skeleton shape="circle" /><S.Skeleton width="60%" /><S.Skeleton /><S.Skeleton shape="block" height={80} /></div></Box></Row></div>,
-  button: () => <div className="flex flex-col gap-[16px]">{(['ultimate', 'primary', 'secondary', 'quiet', 'destructive', 'destructive-secondary'] as const).map((v) => <Row key={v} label={v}><S.Button variant={v}>Simpan</S.Button><S.Button variant={v} size="md">Medium</S.Button><S.Button variant={v} size="sm">Small</S.Button><S.Button variant={v} loading>Memuat</S.Button><S.Button variant={v} disabled>Nonaktif</S.Button></Row>)}<Row label="iconOnly"><S.Button iconOnly aria-label="Cari"><Search /></S.Button><S.Button iconOnly size="md" variant="secondary" aria-label="Cari"><Search /></S.Button><S.Button iconOnly size="sm" variant="quiet" aria-label="Cari"><Search /></S.Button></Row><Row label="floating"><S.Button floating>Kembali ke atas</S.Button><S.Button floating variant="primary" size="md">Tambah</S.Button><S.Button floating variant="secondary" size="sm">Filter</S.Button></Row><div className="rounded-[8px] bg-sd-gray-90 p-[16px]"><Row label="inverse (latar gelap)"><S.Button variant="secondary" inverse>Secondary</S.Button><S.Button variant="quiet" inverse>Quiet</S.Button></Row></div></div>,
+  button: () => <div className="flex flex-col gap-[16px]">{(['ultimate', 'primary', 'secondary', 'quiet', 'destructive', 'destructive-secondary'] as const).map((v) => <Row key={v} label={v}><S.Button variant={v}>Simpan</S.Button><S.Button variant={v} size="md">Medium</S.Button><S.Button variant={v} size="sm">Small</S.Button><S.Button variant={v} loading>Memuat</S.Button><S.Button variant={v} disabled>Nonaktif</S.Button></Row>)}<Row label="iconOnly"><S.Button iconOnly aria-label="Cari"><Search /></S.Button><S.Button iconOnly size="md" variant="secondary" aria-label="Cari"><Search /></S.Button><S.Button iconOnly size="sm" variant="quiet" aria-label="Cari"><Search /></S.Button></Row><Row label="floating"><S.Button floating>Kembali ke atas</S.Button><S.Button floating variant="primary" size="md">Tambah</S.Button><S.Button floating variant="secondary" size="sm">Filter</S.Button></Row><div className="rounded-[8px] bg-sd-gray-90 p-[16px]"><Row onDark label="inverse (latar gelap)"><S.Button variant="secondary" inverse>Secondary</S.Button><S.Button variant="quiet" inverse>Quiet</S.Button></Row></div></div>,
   'text-field': () => <div className="flex flex-col gap-[16px]"><Box><S.TextField label="Nama lengkap" placeholder="cth. Budi Santoso" helper="Sesuai kartu identitas" /></Box><Box><S.TextField label="Email aktif" defaultValue="budi@" error="Email tidak valid. Pastikan menggunakan format nama@email.com" /></Box><Box><S.TextField label="Nonaktif" disabled defaultValue="Tidak bisa diubah" /></Box><Box><S.TextArea label="Catatan" placeholder="Tulis catatan" /></Box><Box><S.TextArea label="Catatan (autoGrow)" autoGrow placeholder="Tekan Enter beberapa kali: tinggi mengikuti isi" /></Box></div>,
   modal: () => <ModalDemo />,
   'bottom-sheet': () => <SheetDemo />,

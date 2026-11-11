@@ -5,7 +5,7 @@
 
 > **Status: dari panduan Seragam** (seragam.belajar.id/stepper, diaudit 2026-11-11 terhadap seluruh halaman situs), disesuaikan ke props komponen di repo ini.
 
-Mengatur nilai angka secara bertahap: tombol kurang dan tambah dengan angka di tengah. Props: `value`, `onChange`, `min`, `max`, `step`, `disabled`, `error`.
+Mengatur nilai angka secara bertahap: tombol kurang dan tambah dengan angka di tengah. Props: `aria-label` (**wajib** bila tidak ada label terlihat), `value`, `onChange`, `min`, `max`, `step`, `disabled`, `error`.
 
 ## State
 Default (belum berinteraksi), Filled (sudah berinteraksi), Focused (highlight/border), Disabled (tidak boleh dipakai karena ada aturan), Error (ada kesalahan yang harus dijelaskan jelas ke pengguna). Situs menyebut "5 states".

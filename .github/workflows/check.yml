@@ -19,3 +19,12 @@ jobs:
       - run: npm run check
       - run: npm run typecheck
       - run: npx vite build
+      # tes perilaku, aksesibilitas (axe), dan ukuran komponen terhadap galeri situs
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-trace
+          path: test-results/
+          retention-days: 7

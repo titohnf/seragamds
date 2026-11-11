@@ -37,6 +37,7 @@ const BORDER_ROWS = '[&_th]:border-t [&_th]:border-b [&_td]:border-b [&_th]:bord
  * Ukuran lg/md/sm = padding 16/12/8. `striped` memberi latar #FAFAFA pada baris genap. `bordered` memberi garis 1px #D9DBDD: `true` di semua sisi sel, `'rows'` (ekstensi) hanya antar baris, `false` tanpa garis.
  * Isi rata tengah vertikal; baris punya status hover (Surface/Hovered) kecuali `hoverable={false}` (tabel yang barisnya tidak bisa diklik); `TableRow selected` untuk baris terpilih (Surface Selected/Default).
  * Susun dengan TableHead, TableBody, TableRow, TableHeaderCell, TableCell. Bungkus dengan scroll horizontal otomatis; tepi yang masih bisa digeser diberi bayangan (indikator gulir).
+ * Bila isinya meluber (horizontal atau vertikal), wilayah gulir menjadi `role="region"` bernama (dari `caption`) dan bisa difokuskan keyboard (`tabIndex=0`) agar bisa digulir dengan panah.
  * `stickyHeader` (+ `maxHeight`): header menempel di atas saat tabel panjang menggulir (disarankan di mobile/tablet untuk tabel panjang).
  * `stacked`: di bawah 768px setiap baris menjadi kartu bertumpuk dan tiap sel menampilkan labelnya: diambil OTOMATIS dari teks header kolomnya, atau isi `label` pada `TableCell` untuk menimpa; alternatif gulir horizontal untuk tabel yang kolomnya terlalu banyak.
  */
@@ -46,6 +47,7 @@ export function Table({ size = 'lg', striped = false, bordered = true, hoverable
   const ref = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
   const [edge, setEdge] = useState({ left: false, right: false });
+  const [scrollable, setScrollable] = useState(false);
   // stacked: isi data-label tiap sel dari teks header kolom yang sama (kecuali sel sudah punya label)
   useEffect(() => {
     const t = tableRef.current; if (!stacked || !t) return;
@@ -58,7 +60,7 @@ export function Table({ size = 'lg', striped = false, bordered = true, hoverable
   }, [stacked]);
   useEffect(() => {
     const el = ref.current; if (!el) return;
-    const measure = () => setEdge({ left: el.scrollLeft > 1, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 1 });
+    const measure = () => { setEdge({ left: el.scrollLeft > 1, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 1 }); setScrollable(el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1); };
     measure(); el.addEventListener('scroll', measure, { passive: true });
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null; ro?.observe(el);
     return () => { el.removeEventListener('scroll', measure); ro?.disconnect(); };
@@ -66,7 +68,8 @@ export function Table({ size = 'lg', striped = false, bordered = true, hoverable
   return (
     <TableContext.Provider value={{ size, striped, bordered, hoverable, sticky: stickyHeader }}>
       <div className="relative w-full">
-      <div ref={ref} className="w-full overflow-auto" style={{ maxHeight }}>
+      <div ref={ref} className="w-full overflow-auto focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-sd-blue-50" style={{ maxHeight }}
+        {...(scrollable ? { tabIndex: 0, role: 'region', 'aria-label': typeof caption === 'string' ? caption : 'Tabel' } : {})}>
         <table
           {...rest} ref={tableRef}
           className={`w-full border-separate border-spacing-0 text-left text-sd-gray-90 ${stacked ? STACKED : ''} ${bordered === 'rows' ? BORDER_ROWS : bordered ? BORDER : ''} ${className}`}

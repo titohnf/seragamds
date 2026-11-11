@@ -3,8 +3,13 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.15.1
+npm i github:titohnf/seragamds#v0.16.0
 ```
+
+## 0.16.0 · 2026-11-11
+- **Tes otomatis (Playwright)** di `tests/e2e/`: axe WCAG 2.1 A/AA pada demo setiap komponen (Mobile dan Desktop), tes perilaku dengan keyboard dan mouse sungguhan, dan tes skala huruf. Jalan di CI dan di `npm run verify`; `npm run test:e2e` untuk lokal.
+- **Audit kontras** di `npm run check` (`tools/contrast.py`) dan larangan teks gray-50/40 di luar keadaan nonaktif. **Sinkron props** kode dan panduan (`tools/props_sync.py`).
+- Perbaikan aksesibilitas hasil axe: Pagination angka tidak aktif dan `TextField` placeholder memakai `gray-60` (kontras 4,8:1; Figma memakai `gray-50` 3,9:1); `ProgressBar` bernama (`aria-label`); `CustomSelect` placeholder saat galat lebih gelap; `Table` wilayah gulir bisa difokuskan keyboard (`role="region"`). Panduan: `ProgressBar` `aria-label`, Slider dan Stepper wajib berlabel, dan prop yang sebelumnya belum tertulis (`size`, `disabled`, dan lainnya).
 
 ## 0.15.1 · 2026-11-11
 - Baru: `guidelines/keputusan-ux.md` (peta komponen per kebutuhan, lima keadaan, umpan balik, formulir, gerak, tipografi halaman, cara memeriksa hasil, serta catatan adopsi skill `frontend-design`). `penulisan.md`: kosakata sama sepanjang alur, galat tidak meminta maaf, tanpa tanda template. Skill `seragam`: aturan 14 (rencanakan, bangun, kritik hasil di browser).
