@@ -3,7 +3,7 @@
 - Kode: `VerticalNavigation` (`src/components`)
 - Spesifikasi visual: [vertical-navigation.md](../../components/vertical-navigation.md)
 
-> **Status: draf.** Berasal dari file Figma *Seragam Web* (belum ada panduan penggunaan resmi). Ikuti sebagai saran dan tandai bila menyimpang.
+> **Status: draf.** Berasal dari file Figma *Seragam Web*. Situs seragam.belajar.id punya halaman **Sidebar Menu** ("daftar menu yang tersedia, biasanya untuk layar lebar seperti desktop/laptop"), tetapi isi halamannya gagal dimuat saat disalin (galat MDX di sisi situs), jadi belum ada panduan rinci yang bisa diadopsi. Ikuti sebagai saran dan tandai bila menyimpang.
 
 Menu samping untuk aplikasi web desktop: daftar halaman dengan ikon, bisa punya satu tingkat sub-menu (accordion).
 

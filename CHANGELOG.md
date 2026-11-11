@@ -7,6 +7,12 @@ npm i github:titohnf/seragamds#v0.10.0
 ```
 
 ## Belum dirilis
+- **Skala huruf Desktop untuk semua komponen (satu komponen, dua skala).** Ukuran huruf komponen mengikuti platform lewat `data-sd-platform` (`auto` bawaan: Desktop mulai 1024px, `desktop`, `mobile`). Baru: variabel `--sd-text-*` dan kelas `.sd-t-<nama>` (dihasilkan `tools/build_responsive_type.py`), objek `typo`/`type` di `src/tokens.ts` berbasis variabel, komponen `Platform`. Semua komponen dimigrasi; tinggi Button, TextField, Select, SearchBar, Stepper kini turunan tinggi baris (46→48 di Desktop). `check.py` menolak ukuran huruf literal. **Perubahan tampilan di layar ≥1024px**; pasang `data-sd-platform="mobile"` untuk tampilan lama. Lihat DECISIONS 2026-11-11.
+- Perubahan lokal sebelumnya (PageHeader, ProcessSteps, perbaikan Table, Tabs, Tooltip, Breadcrumb, NavigationBar, ProgressBar) dipindahkan dari `skill/references` ke `src/` dan `docs/` agar `build:skill` aman dijalankan.
+- Sinkron dengan seragam.belajar.id (dipelajari 2026-11-11). Baru: komponen `Carousel`, `Footer`, `Spinner`, dan `Skeleton` (Loading: shimmer) beserta panduan penggunaannya (30 komponen di situs; kini hanya Status Bar yang belum ada kodenya). Panduan `HeaderBar` dan `ProgressBar` naik dari draf ke "dari panduan Seragam".
+- Fondasi: `spacing.md` memakai skala resmi `space-4`…`space-48`; baru `container.md` dan `token.md`.
+- Skill kedua `skill-illustration/` (`seragam-illustration`): membuat ilustrasi SVG sesuai panduan, dengan katalog Galeri, palet terkunci, 6 contoh SVG, validator, dan pratinjau. `install:skill` menautkannya ke `~/.claude/skills/seragam-illustration`. Baru `foundations/palet-ilustrasi.md` (24 ramp, nilai disampel dari gambar resmi).
+- Panduan baru: `prinsip-desain.md` (5 prinsip), `ilustrasi.md` (prinsip, tipe, peran, palet, cara menggambar). `penulisan.md` diperluas: sosok (Rekan, Tenaga operasional, Atasan), penulisan Loading, kejelasan, dan teks alternatif.
 - `Select`: panah dropdown kini berupa segitiga isi (`arrow_drop_down`, 24px, `gray-70`) sesuai Figma Rapor Pendidikan, bukan chevron garis. Chevron garis tetap dipakai `Accordion` dan `Expander` (penanda buka/tutup).
 
 ## 0.10.0 · 2026-11-05

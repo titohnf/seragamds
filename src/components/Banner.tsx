@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { CircleAlert, CircleCheck, Info, TriangleAlert, X } from 'lucide-react';
-import { color } from '../tokens';
+import { color, typo } from '../tokens';
 
 export type BannerTone = 'info' | 'warning' | 'success' | 'critical' | 'neutral';
 
@@ -22,7 +22,7 @@ export function Banner({ tone = 'info', title, children, onClose, className = ''
   return (
     <div role="status" className={`flex items-start gap-[12px] rounded-[4px] border p-[16px] ${className}`} style={{ background: t.bg, borderColor: t.border, color: color.textDefault }}>
       <span style={{ color: t.iconColor }} className="mt-[2px]">{t.icon}</span>
-      <div className="flex-1 min-w-0" style={{ fontSize: '16px', lineHeight: '24px' }}>
+      <div className="flex-1 min-w-0" style={{ ...typo.body }}>
         {title && <p style={{ fontWeight: 600 }}>{title}</p>}
         {children}
       </div>

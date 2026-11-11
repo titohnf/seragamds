@@ -1,4 +1,5 @@
 import { forwardRef, type InputHTMLAttributes, type ReactNode } from 'react';
+import { typo } from '../tokens';
 
 /** Switch Seragam: 50x28, radius penuh, handle putih 24px. Aktif blue-70; mati gray-0 dengan border; nonaktif gray-20. */
 export const Switch = forwardRef<HTMLInputElement, Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'role'> & { label?: ReactNode }>(
@@ -11,7 +12,7 @@ export const Switch = forwardRef<HTMLInputElement, Omit<InputHTMLAttributes<HTML
           peer-focus-visible:shadow-[0_0_0_2px_#fff,0_0_0_4px_var(--sd-interactive-focused)]" />
         <span className="pointer-events-none absolute left-[2px] top-[2px] size-[24px] rounded-full bg-white shadow-[0_0_4px_rgba(0,0,0,0.15)] transition-transform peer-checked:translate-x-[22px]" />
       </span>
-      {label != null && <span className={disabled ? 'text-sd-gray-50' : 'text-sd-gray-90'} style={{ fontSize: 15, lineHeight: '22px' }}>{label}</span>}
+      {label != null && <span className={disabled ? 'text-sd-gray-50' : 'text-sd-gray-90'} style={{ ...typo.body }}>{label}</span>}
     </label>
   ),
 );

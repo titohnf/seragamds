@@ -1,4 +1,5 @@
 import type { InputHTMLAttributes } from 'react';
+import { typo } from '../tokens';
 
 /** Slider Seragam (satu handle): track 6px #D9DBDD, isi blue-70, handle putih 28px dengan titik blue-70 12px dan bayangan 0 2 4 rgba(0,0,0,.2); fokus ring blue-50 2px. Label min/maks 13/20. */
 export function Slider({ value, onChange, min = 0, max = 100, step = 1, disabled, showRange = false, ...rest }: {
@@ -14,7 +15,7 @@ export function Slider({ value, onChange, min = 0, max = 100, step = 1, disabled
           <span className={`size-[12px] rounded-full ${disabled ? 'bg-[#C8D6EE]' : 'bg-sd-blue-70'}`} />
         </span>
       </div>
-      {showRange && <div className="flex justify-between text-sd-gray-90" style={{ fontSize: 13, lineHeight: '20px' }}><span>{min}</span><span>{max}</span></div>}
+      {showRange && <div className="flex justify-between text-sd-gray-90" style={{ ...typo.bodySmall }}><span>{min}</span><span>{max}</span></div>}
     </div>
   );
 }

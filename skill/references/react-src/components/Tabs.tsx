@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react';
-import { color, typeAction } from '../tokens';
+import { color, typeAction, typo } from '../tokens';
 
 export type TabItem = string | { label: string; count?: number };
 
 /**
- * Tabs Seragam: tinggi 56px (padding atas 12px), label Desktop/Action 16/24 semibold.
- * Aktif = Action/Default dengan garis bawah 4px (lebar label + 12px); tidak aktif = Text/Subdued.
+ * Tabs Seragam: tinggi 56px (padding atas 12px), label Action semibold (Mobile 15/22, Desktop 16/24; tinggi 56 pas untuk Desktop).
+ * Aktif = Action/Default dengan garis bawah 4px (lebar label + 12px); tidak aktif = Text/Subdued. Hitungan (`count`) pada tab aktif memakai latar Action/Default dan teks putih agar terlihat (ekstensi).
  * `fill` membagi lebar sama rata (2 sampai 3 tab); tanpa `fill` tab berurutan dari kiri dan bisa di-scroll.
  */
 export function Tabs({ items, active, onChange, fill = false, className = '' }: { items: TabItem[]; active: number; onChange: (i: number) => void; fill?: boolean; className?: string }) {
@@ -26,7 +26,7 @@ export function Tabs({ items, active, onChange, fill = false, className = '' }: 
           >
             <span className="relative inline-flex items-center gap-[6px] pt-[14px] pb-[18px]" style={{ ...typeAction, color: on ? color.actionDefault : color.textSubdued }}>
               {label}
-              {count !== undefined && <span className="rounded-full px-[8px]" style={{ background: '#f0f0f0', color: color.textDefault, fontSize: '12px', lineHeight: '18px' }}>{count}</span>}
+              {count !== undefined && <span className="rounded-full px-[8px]" style={{ background: on ? color.actionDefault : '#f0f0f0', color: on ? color.textInverse : color.textDefault, ...typo.helper, lineHeight: '18px' }}>{count}</span>}
               {on && <span className="absolute bottom-0 -left-[6px] -right-[6px]" style={{ height: '4px', background: color.actionDefault }} />}
             </span>
           </button>

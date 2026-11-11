@@ -8,16 +8,16 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
  * - quiet: teks biru tanpa border (hover latar gray-0)
  * - destructive: merah (red-60; hover red-70; tekan red-80)
  * - destructive-secondary: EKSTENSI DS (tidak ada di Figma): outline merah (border dan teks red-60; hover latar red-5; tekan red-10) untuk aksi destruktif bernada rendah seperti Tolak atau Hapus.
- * Ukuran: lg 46 (padding 12x20), md 38 (8x16), sm 28 (4x8, teks 13/20). Teks 15/22 semibold, radius 4, gap 4.
+ * Ukuran: lg (padding 12x20), md (8x16), sm 28 (4x8). Teks Action semibold (Mobile 15/22, Desktop 16/24), sm = bodysmall-bold (13/20, Desktop 14/20). Tinggi lg/md = tinggi baris + padding vertikal (Mobile 46/38, Desktop 48/40); sm tetap 28. Radius 4, gap 4.
  * Nonaktif: latar gray-20, teks gray-50. Fokus: ring 2px putih + 4px blue-50. Loading: spinner 18px.
  */
 export type ButtonVariant = 'ultimate' | 'primary' | 'secondary' | 'quiet' | 'destructive' | 'destructive-secondary';
 export type ButtonSize = 'lg' | 'md' | 'sm';
 
 const SIZE: Record<ButtonSize, string> = {
-  lg: 'h-[46px] px-[20px] py-[12px] text-[15px] leading-[22px]',
-  md: 'h-[38px] px-[16px] py-[8px] text-[15px] leading-[22px]',
-  sm: 'h-[28px] px-[8px] py-[4px] text-[13px] leading-[20px]',
+  lg: 'h-[calc(var(--sd-text-action-line)_+_24px)] px-[20px] py-[12px] sd-t-action',
+  md: 'h-[calc(var(--sd-text-action-line)_+_16px)] px-[16px] py-[8px] sd-t-action',
+  sm: 'h-[28px] px-[8px] py-[4px] sd-t-bodysmall-bold',
 };
 // Kelas ditulis literal agar terdeteksi Tailwind.
 const VARIANT: Record<ButtonVariant, string> = {

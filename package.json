@@ -17,13 +17,14 @@
     "tokens",
     "docs",
     "skill",
+    "skill-illustration",
     "examples",
     "tools"
   ],
   "scripts": {
     "build:tokens": "python3 tools/build_tokens.py $FIGMA_STYLES_JSON",
     "build:skill": "sh tools/build_skill.sh",
-    "install:skill": "sh tools/build_skill.sh && mkdir -p ~/.claude/skills && ln -sfn \"$PWD/skill\" ~/.claude/skills/seragam",
+    "install:skill": "sh tools/build_skill.sh && mkdir -p ~/.claude/skills && ln -sfn \"$PWD/skill\" ~/.claude/skills/seragam && ln -sfn \"$PWD/skill-illustration\" ~/.claude/skills/seragam-illustration",
     "dev": "vite",
     "build:gallery": "vite build",
     "preview": "vite preview",

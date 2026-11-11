@@ -52,7 +52,15 @@ function VerticalNavigationDemo() {
   return <div className="flex flex-wrap gap-[24px]"><S.VerticalNavigation items={items} active={active} /><S.VerticalNavigation tone="light" items={items} active={active} /></div>;
 }
 
+function CarouselDemo() {
+  const slides = ['Pengumuman jadwal ujian', 'Pelatihan guru dibuka', 'Pembaruan aplikasi'].map((t, i) => <div key={t} className="grid h-[200px] place-items-center bg-sd-blue-5 text-sd-gray-90" style={{ fontSize: 18, lineHeight: '24px', fontWeight: 600 }}>{i + 1}. {t}</div>);
+  return <Box w={480}><S.Carousel label="Pengumuman terbaru" slides={slides} /></Box>;
+}
+
 export const demos: Record<string, () => ReactNode> = {
+  carousel: () => <CarouselDemo />,
+  footer: () => <div className="w-full overflow-hidden rounded-[8px]"><S.Footer logo={<span style={{ fontSize: 18, fontWeight: 600 }}>Nama Aplikasi</span>} sections={[{ title: 'Layanan', links: [{ label: 'Beranda', href: '#' }, { label: 'Bantuan', href: '#' }] }, { title: 'Tautan', links: [{ label: 'Kemendikdasmen', href: '#', external: true }] }]} copyright="Hak Cipta 2021 oleh Kementerian Pendidikan Dasar dan Menengah Republik Indonesia" language="ID" /></div>,
+  loading: () => <div className="flex flex-col gap-[16px]"><Row label="Spinner"><S.Spinner size="sm" /><S.Spinner /><S.Spinner size="lg" /></Row><Row label="Skeleton"><Box w={328}><div className="flex flex-col gap-[8px]"><S.Skeleton shape="circle" /><S.Skeleton width="60%" /><S.Skeleton /><S.Skeleton shape="block" height={80} /></div></Box></Row></div>,
   button: () => <div className="flex flex-col gap-[16px]">{(['ultimate', 'primary', 'secondary', 'quiet', 'destructive', 'destructive-secondary'] as const).map((v) => <Row key={v} label={v}><S.Button variant={v}>Simpan</S.Button><S.Button variant={v} size="md">Medium</S.Button><S.Button variant={v} size="sm">Small</S.Button><S.Button variant={v} loading>Memuat</S.Button><S.Button variant={v} disabled>Nonaktif</S.Button></Row>)}</div>,
   'text-field': () => <div className="flex flex-col gap-[16px]"><Box><S.TextField label="Nama lengkap" placeholder="cth. Budi Santoso" helper="Sesuai kartu identitas" /></Box><Box><S.TextField label="Email aktif" defaultValue="budi@" error="Email tidak valid. Pastikan menggunakan format nama@email.com" /></Box><Box><S.TextField label="Nonaktif" disabled defaultValue="Tidak bisa diubah" /></Box><Box><S.TextArea label="Catatan" placeholder="Tulis catatan" /></Box></div>,
   modal: () => <ModalDemo />,

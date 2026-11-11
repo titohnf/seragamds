@@ -1,3 +1,5 @@
+import { typo } from '../tokens';
+
 const BTN = 'grid size-[32px] place-items-center rounded-[4px] outline-none focus-visible:shadow-[0_0_0_2px_#fff,0_0_0_4px_var(--sd-interactive-focused)]';
 const Chev = ({ d }: { d: string }) => <svg aria-hidden viewBox="0 0 24 24" className="size-[16px]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
 
@@ -15,8 +17,8 @@ export function Pagination({ page, pageCount, onPageChange }: { page: number; pa
     <nav aria-label="Pagination" className="flex items-center gap-[16px]">
       <button aria-label="Sebelumnya" disabled={page <= 1} onClick={() => onPageChange(page - 1)} className={`${BTN} text-sd-gray-90 hover:bg-sd-badge-neutral disabled:text-sd-gray-20 disabled:hover:bg-transparent`}><Chev d="M15 6l-6 6 6 6" /></button>
       {range(page, pageCount).map((n, i) => n === '…'
-        ? <span key={`e${i}`} className="text-sd-gray-50" style={{ fontSize: 15, lineHeight: '22px' }}>…</span>
-        : <button key={n} aria-current={n === page ? 'page' : undefined} onClick={() => onPageChange(n)} className={`${BTN} ${n === page ? 'bg-sd-badge-neutral text-sd-gray-90' : 'text-sd-gray-50 hover:bg-sd-badge-neutral'}`} style={{ fontSize: 15, lineHeight: '22px', fontWeight: 600 }}>{n}</button>)}
+        ? <span key={`e${i}`} className="text-sd-gray-50" style={{ ...typo.body }}>…</span>
+        : <button key={n} aria-current={n === page ? 'page' : undefined} onClick={() => onPageChange(n)} className={`${BTN} ${n === page ? 'bg-sd-badge-neutral text-sd-gray-90' : 'text-sd-gray-50 hover:bg-sd-badge-neutral'}`} style={{ ...typo.action }}>{n}</button>)}
       <button aria-label="Berikutnya" disabled={page >= pageCount} onClick={() => onPageChange(page + 1)} className={`${BTN} text-sd-gray-90 hover:bg-sd-badge-neutral disabled:text-sd-gray-20 disabled:hover:bg-transparent`}><Chev d="M9 6l6 6-6 6" /></button>
     </nav>
   );

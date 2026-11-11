@@ -4,12 +4,26 @@ Font: **Inter**. Sumber: token `typography` (Figma *Seragam Dasar*).
 
 > Berkas ini dihasilkan oleh `tools/build_foundations.py`. Jangan sunting manual.
 
-## Keputusan: pakai skala Mobile di semua perangkat
-Komponen di Figma hanya dibuat versi mobile, jadi **skala Mobile dipakai di semua perangkat** (body 15/22, body-small 13/20, action 15/22 semibold, heading-medium 18/24). Jangan memakai skala Desktop (16/24, 14/20) dan jangan memakai ukuran di luar skala. Lihat [DECISIONS](../DECISIONS.md).
+## Keputusan: satu komponen, dua skala (Mobile dan Desktop)
+Figma hanya punya komponen mobile, sehingga di desktop huruf terlihat kecil. Komponen tetap **satu** (bentuk, warna, props sama); yang berganti menurut platform hanyalah skala huruf dan tinggi kontrol turunannya. Skala dipilih oleh atribut `data-sd-platform` (`auto` bawaan = Mobile, berganti ke Desktop mulai lebar 1024px; `desktop`; `mobile`). Lihat [Platform](../guidelines/komponen/platform.md) dan [DECISIONS](../DECISIONS.md) (2026-11-11). Ini menggantikan keputusan v0.5.0 "skala Mobile di semua perangkat".
 
-Kelas CSS: `.sd-t-mobile-<nama>` (dan `.sd-t-desktop-<nama>` bila perlu).
+**Pakai token responsif, jangan angka.** Di kode: `style={typo.body}` (`src/tokens.ts`) atau kelas `.sd-t-<nama>` (`.sd-t-body`, `.sd-t-action`, ...), yang membaca `--sd-text-<nama>-{size,line,weight}`. Kelas `.sd-t-mobile-<nama>` / `.sd-t-desktop-<nama>` mengunci satu skala secara eksplisit. Jangan memakai ukuran di luar skala; hanya berat 400 dan 600.
 
-## Skala Mobile (dipakai)
+| Peran | Mobile | Desktop |
+|---|---|---|
+| `body` | 15/22 | 16/24 |
+| `bodysmall` | 13/20 | 14/20 |
+| `action` | 15/22 | 16/24 |
+| `subheading` | 13/16 | 14/16 |
+| `headingsmall` | 16/22 | 17/22 |
+| `headingmedium` | 18/24 | 19/24 |
+| `headinglarge` | 22/28 | 22/28 |
+| `displaysmall` | 24/28 | 24/28 |
+| `helper` | 12/16 | 12/16 |
+
+Nama yang hanya ada di satu platform (`headline*`, `bodylarge` = Desktop; `eyebrow*` = Mobile) dipakai di kedua platform.
+
+## Skala Mobile
 
 | Nama | Ukuran/baris (px) | Berat | Jarak huruf | Huruf |
 |---|---|---|---|---|
@@ -31,7 +45,7 @@ Kelas CSS: `.sd-t-mobile-<nama>` (dan `.sd-t-desktop-<nama>` bila perlu).
 | `helper-bold` | 12/16 | 600 | 0 | - |
 | `helper` | 12/16 | 400 | 0 | - |
 
-## Skala Desktop (referensi, tidak dipakai)
+## Skala Desktop
 
 | Nama | Ukuran/baris (px) | Berat | Jarak huruf | Huruf |
 |---|---|---|---|---|

@@ -12,6 +12,7 @@ Yang diperiksa:
 """
 import json, os, re, sys, filecmp
 from build_foundations import build as build_foundations
+from build_responsive_type import section as responsive_type_section, names as type_names, START as RT_START, END as RT_END
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 P = lambda *a: os.path.join(ROOT, *a)
@@ -54,6 +55,12 @@ known = {f'--sd-{k}' for k in expected_vars} | {f'--sd-elevation-{k}' for k in t
 for plat, d in tokens['typography'].items():
     for k in d:
         known |= {f'--sd-type-{plat}-{k}-{s}' for s in ('size', 'line', 'weight')}
+TEXT_NAMES = set(type_names(tokens['typography']))
+for k in TEXT_NAMES:
+    known |= {f'--sd-text-{k}-{s}' for s in ('size', 'line', 'weight')}
+# lapisan tipografi responsif platform harus sama dengan hasil generate dari token
+if RT_START not in css or RT_END not in css: err('CSS: lapisan tipografi responsif tidak ada (jalankan: python3 tools/build_responsive_type.py)')
+elif css[css.index(RT_START):css.index(RT_END) + len(RT_END)] + '\n' != responsive_type_section(tokens): err('CSS: lapisan tipografi responsif tidak sama dengan token (jalankan: python3 tools/build_responsive_type.py)')
 for name in decl:
     if name not in known: err(f'CSS: {name} ada di seragam.css tetapi tidak di tokens.json (jangan sunting CSS manual)')
 
@@ -79,13 +86,23 @@ def scan(path, text):
         n = f'--sd-{m.group(1)}'
         if n not in known: err(f'{path}: var({n}) tidak ada di token')
     for m in re_type.finditer(text):
-        if m.group(2) not in tokens['typography'].get(m.group(1), {}): err(f'{path}: kelas sd-t-{m.group(1)}-{m.group(2)} tidak ada di token')
+        plat, nm = m.group(1), m.group(2)
+        if plat in tokens['typography']:
+            if nm not in tokens['typography'][plat]: err(f'{path}: kelas sd-t-{plat}-{nm} tidak ada di token')
+        elif f'{plat}-{nm}' not in TEXT_NAMES: err(f'{path}: kelas sd-t-{plat}-{nm} tidak ada di token')
 for base, exts in (('src', ('.ts', '.tsx')), ('examples', ('.ts', '.tsx')), ('site', ('.ts', '.tsx', '.css')), ('docs', ('.md',))):
     for r, _, fs in os.walk(P(base)):
         for f in fs:
             if f.endswith(exts):
                 fp = os.path.join(r, f)
                 scan(os.path.relpath(fp, ROOT), open(fp, encoding='utf-8').read())
+
+# Ukuran huruf komponen harus lewat token tipografi responsif (type.* / sd-t-*), bukan angka literal.
+re_fs = re.compile(r"fontSize:\s*['\"]?\d|(?<![\w-])text-\[\d+(?:\.\d+)?px\]|leading-\[\d+px\]")
+for f in sorted(os.listdir(P('src', 'components'))):
+    for i, line in enumerate(read('src', 'components', f).splitlines(), 1):
+        if re_fs.search(line) and 'sd-allow-fontsize' not in line:
+            err(f'src/components/{f}:{i}: ukuran huruf literal; pakai type.* (src/tokens.ts) atau kelas sd-t-<nama> (atau beri komentar sd-allow-fontsize bila disengaja)')
 
 # ---------- 3. Fondasi hasil generate ----------
 for name, text in build_foundations().items():

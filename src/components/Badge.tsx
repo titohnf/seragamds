@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { typo } from '../tokens';
 
 export type BadgeTone = 'green' | 'amber' | 'red' | 'blue' | 'gray';
 
@@ -10,7 +11,7 @@ export const BADGE_BG: Record<BadgeTone, string> = {
 /** Badge pill (Figma): padding 2px 8px, radius 20px, label 13/20 semibold. Dipakai untuk status, ASN, dan jenis kelamin. */
 export function Badge({ tone = 'gray', children, className = '' }: { tone?: BadgeTone; children: ReactNode; className?: string }) {
   return (
-    <span className={`inline-block rounded-[20px] px-[8px] py-[2px] whitespace-nowrap text-sd-gray-90 ${className}`} style={{ background: BADGE_BG[tone], fontSize: '13px', fontWeight: 600, lineHeight: '20px' }}>
+    <span className={`inline-block rounded-[20px] px-[8px] py-[2px] whitespace-nowrap text-sd-gray-90 ${className}`} style={{ background: BADGE_BG[tone], ...typo.bodySmallBold }}>
       {children}
     </span>
   );
