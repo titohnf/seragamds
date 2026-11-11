@@ -3,8 +3,12 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.13.0
+npm i github:titohnf/seragamds#v0.14.0
 ```
+
+## 0.14.0 · 2026-11-11
+- Melengkapi komponen yang audit 0.13.0 catat "belum ada di kode": `NavigationBar` navbar utuh (`logo`, `actions`, `sticky`; varian tanpa aksi/tanpa menu/hanya logo; overflow ke "Lainnya"; hamburger < 769px); baru `CustomSelect` (Custom Select dan Custom List Menu); `Accordion variant="custom"`; `Tabs` indikator overflow dan `disabled` per tab; `Table` `stickyHeader`/`maxHeight`/`stacked` dan bayangan gulir; `Breadcrumb maxItems="auto"`; `SearchBar` `error`/`helper`; `TextArea` `autoGrow`/`maxRows`.
+- Kompatibel: `NavigationBar` tanpa `logo`/`actions` tetap hanya menu. Panduan terkait diperbarui; demo galeri ditambah.
 
 ## 0.13.0 · 2026-11-11
 - **Audit panduan komponen terhadap seragam.belajar.id**: 25 halaman panduan komponen ditulis ulang dengan isi lengkap situs (jenis, state, perilaku, responsif, penulisan, angka batas) dan status kode apa adanya. Rincian dan ketidakkonsistenan situs: DECISIONS 2026-11-11.

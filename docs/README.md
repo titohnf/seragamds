@@ -46,7 +46,7 @@ Token: berkas `tokens/` menang. Teknis (props, perilaku): kode di `src/` menang.
 | [Radio](guidelines/komponen/radio.md) | `Radio` | dari panduan Seragam |
 | [Rating](guidelines/komponen/rating.md) | `Rating` | draf |
 | [Search Bar](guidelines/komponen/search-bar.md) | `SearchBar` | dari panduan Seragam |
-| [Select](guidelines/komponen/select.md) | `Select` | dari panduan Seragam |
+| [Select](guidelines/komponen/select.md) | `Select, CustomSelect` | dari panduan Seragam |
 | [Separator](guidelines/komponen/separator.md) | `Separator` | draf |
 | [Slider](guidelines/komponen/slider.md) | `Slider` | draf |
 | [Stepper](guidelines/komponen/stepper.md) | `Stepper` | dari panduan Seragam |

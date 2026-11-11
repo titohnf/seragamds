@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import type { HTMLAttributes, ReactNode, TdHTMLAttributes, ThHTMLAttributes } from 'react';
 import { typo } from '../tokens';
 
@@ -8,8 +8,8 @@ export type TableHeaderTone = 'default' | 'subtle' | 'neutral';
 /** `true` (bawaan) = garis di semua sisi sel (Figma Border=True); `'rows'` = hanya garis horizontal antar baris (ekstensi); `false` = tanpa garis. */
 export type TableBorder = boolean | 'rows';
 
-type Ctx = { size: TableSize; striped: boolean; bordered: TableBorder; hoverable: boolean };
-const TableContext = createContext<Ctx>({ size: 'lg', striped: false, bordered: true, hoverable: true });
+type Ctx = { size: TableSize; striped: boolean; bordered: TableBorder; hoverable: boolean; sticky: boolean };
+const TableContext = createContext<Ctx>({ size: 'lg', striped: false, bordered: true, hoverable: true, sticky: false });
 
 const PX: Record<TableSize, number> = { lg: 16, md: 12, sm: 8 };
 /** Di Figma garis 1px berada DI DALAM padding. Di CSS garis menambah ukuran, jadi padding dikurangi 1px di sisi yang bergaris. */
@@ -23,6 +23,12 @@ const BORDER =
   '[&_th]:border-t [&_th]:border-b [&_th]:border-r [&_th:first-child]:border-l ' +
   '[&_td]:border-b [&_td]:border-r [&_td:first-child]:border-l ' +
   '[&_th]:border-sd-modal-footer-border [&_td]:border-sd-modal-footer-border';
+// `stacked`: di bawah 768px thead disembunyikan (tetap terbaca pembaca layar), baris jadi kartu, sel menampilkan label dari `data-label`.
+const STACKED =
+  'max-md:[&_thead]:sr-only max-md:block max-md:[&_tbody]:block max-md:[&_tr]:block ' +
+  'max-md:[&_tbody_tr]:mb-[12px] max-md:[&_tbody_tr]:overflow-hidden max-md:[&_tbody_tr]:rounded-[8px] max-md:[&_tbody_tr]:border max-md:[&_tbody_tr]:border-sd-modal-footer-border ' +
+  'max-md:[&_td]:flex max-md:[&_td]:items-baseline max-md:[&_td]:justify-between max-md:[&_td]:gap-[16px] max-md:[&_td]:border-r-0 max-md:[&_td:first-child]:border-l-0 max-md:[&_td]:text-right ' +
+  'max-md:[&_td]:before:content-[attr(data-label)] max-md:[&_td]:before:text-left max-md:[&_td]:before:font-semibold max-md:[&_td]:before:text-sd-gray-60';
 // `rows`: hanya garis horizontal (atas header, bawah tiap baris), tanpa garis vertikal antar kolom.
 const BORDER_ROWS = '[&_th]:border-t [&_th]:border-b [&_td]:border-b [&_th]:border-sd-modal-footer-border [&_td]:border-sd-modal-footer-border';
 
@@ -30,22 +36,37 @@ const BORDER_ROWS = '[&_th]:border-t [&_th]:border-b [&_td]:border-b [&_th]:bord
  * Table Seragam. Header 13/16 semibold kapital (huruf renggang 0.5) gray-90 dengan bayangan tipis; sel 15/22 regular.
  * Ukuran lg/md/sm = padding 16/12/8. `striped` memberi latar #FAFAFA pada baris genap. `bordered` memberi garis 1px #D9DBDD: `true` di semua sisi sel, `'rows'` (ekstensi) hanya antar baris, `false` tanpa garis.
  * Isi rata tengah vertikal; baris punya status hover (Surface/Hovered) kecuali `hoverable={false}` (tabel yang barisnya tidak bisa diklik); `TableRow selected` untuk baris terpilih (Surface Selected/Default).
- * Susun dengan TableHead, TableBody, TableRow, TableHeaderCell, TableCell. Bungkus dengan scroll horizontal otomatis.
+ * Susun dengan TableHead, TableBody, TableRow, TableHeaderCell, TableCell. Bungkus dengan scroll horizontal otomatis; tepi yang masih bisa digeser diberi bayangan (indikator gulir).
+ * `stickyHeader` (+ `maxHeight`): header menempel di atas saat tabel panjang menggulir (disarankan di mobile/tablet untuk tabel panjang).
+ * `stacked`: di bawah 768px setiap baris menjadi kartu bertumpuk dan tiap sel menampilkan labelnya (isi `label` pada `TableCell`); alternatif gulir horizontal untuk tabel yang kolomnya terlalu banyak.
  */
-export function Table({ size = 'lg', striped = false, bordered = true, hoverable = true, headerTone = 'default', caption, className = '', children, ...rest }: {
-  size?: TableSize; striped?: boolean; bordered?: TableBorder; hoverable?: boolean; headerTone?: TableHeaderTone; caption?: ReactNode; className?: string; children: ReactNode;
+export function Table({ size = 'lg', striped = false, bordered = true, hoverable = true, headerTone = 'default', stickyHeader = false, maxHeight, stacked = false, caption, className = '', children, ...rest }: {
+  size?: TableSize; striped?: boolean; bordered?: TableBorder; hoverable?: boolean; headerTone?: TableHeaderTone; stickyHeader?: boolean; maxHeight?: number | string; stacked?: boolean; caption?: ReactNode; className?: string; children: ReactNode;
 } & Omit<HTMLAttributes<HTMLTableElement>, 'className' | 'children'>) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [edge, setEdge] = useState({ left: false, right: false });
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const measure = () => setEdge({ left: el.scrollLeft > 1, right: el.scrollLeft + el.clientWidth < el.scrollWidth - 1 });
+    measure(); el.addEventListener('scroll', measure, { passive: true });
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null; ro?.observe(el);
+    return () => { el.removeEventListener('scroll', measure); ro?.disconnect(); };
+  }, []);
   return (
-    <TableContext.Provider value={{ size, striped, bordered, hoverable }}>
-      <div className="w-full overflow-x-auto">
+    <TableContext.Provider value={{ size, striped, bordered, hoverable, sticky: stickyHeader }}>
+      <div className="relative w-full">
+      <div ref={ref} className="w-full overflow-auto" style={{ maxHeight }}>
         <table
           {...rest}
-          className={`w-full border-separate border-spacing-0 text-left text-sd-gray-90 ${bordered === 'rows' ? BORDER_ROWS : bordered ? BORDER : ''} ${className}`}
+          className={`w-full border-separate border-spacing-0 text-left text-sd-gray-90 ${stacked ? STACKED : ''} ${bordered === 'rows' ? BORDER_ROWS : bordered ? BORDER : ''} ${className}`}
           data-header-tone={headerTone}
         >
           {caption && <caption className="sr-only">{caption}</caption>}
           {children}
         </table>
+      </div>
+      {edge.left && <span aria-hidden className="pointer-events-none absolute inset-y-0 left-0 w-[16px] bg-gradient-to-r from-black/10 to-transparent" />}
+      {edge.right && <span aria-hidden className="pointer-events-none absolute inset-y-0 right-0 w-[16px] bg-gradient-to-l from-black/10 to-transparent" />}
       </div>
     </TableContext.Provider>
   );
@@ -61,18 +82,19 @@ export function TableRow({ className = '', selected = false, ...rest }: HTMLAttr
 }
 
 export function TableHeaderCell({ className = '', scope = 'col', style, ...rest }: ThHTMLAttributes<HTMLTableCellElement>) {
-  const { size, bordered } = useContext(TableContext);
+  const { size, bordered, sticky } = useContext(TableContext);
   return (
     <th
       scope={scope}
       {...rest}
-      className={`bg-white align-middle font-semibold uppercase shadow-[0_2px_1px_rgba(0,0,0,0.05)] [table[data-header-tone=subtle]_&]:bg-sd-modal-header [table[data-header-tone=neutral]_&]:bg-sd-badge-neutral ${className}`}
+      className={`${sticky ? 'sticky top-0 z-10' : ''} bg-white align-middle font-semibold uppercase shadow-[0_2px_1px_rgba(0,0,0,0.05)] [table[data-header-tone=subtle]_&]:bg-sd-modal-header [table[data-header-tone=neutral]_&]:bg-sd-badge-neutral ${className}`}
       style={{ ...typo.subHeading, ...pad(size, bordered, true), ...style }}
     />
   );
 }
 
-export function TableCell({ className = '', style, ...rest }: TdHTMLAttributes<HTMLTableCellElement>) {
+/** `label` = nama kolom, ditampilkan di samping nilai pada `Table stacked` (mobile). */
+export function TableCell({ className = '', style, label, ...rest }: TdHTMLAttributes<HTMLTableCellElement> & { label?: string }) {
   const { size, bordered } = useContext(TableContext);
-  return <td {...rest} className={`align-middle font-normal ${className}`} style={{ ...typo.body, ...pad(size, bordered, false), ...style }} />;
+  return <td {...rest} data-label={label} className={`align-middle font-normal ${className}`} style={{ ...typo.body, ...pad(size, bordered, false), ...style }} />;
 }

@@ -5,7 +5,7 @@
 
 > **Status: dari panduan Seragam** (seragam.belajar.id/text-field, diaudit 2026-11-11 terhadap seluruh halaman situs), disesuaikan ke props komponen di repo ini.
 
-Area berbentuk kotak untuk memasukkan karakter alfanumerik hingga simbol. Label, teks bantu, dan galat adalah prop: `label`, `helper`, `error`. `TextField` juga `leftIcon`, `rightIcon`, `readOnly` (ekstensi, lihat [extensions.md](../../extensions.md)).
+Area berbentuk kotak untuk memasukkan karakter alfanumerik hingga simbol. Label, teks bantu, dan galat adalah prop: `label`, `helper`, `error`. `TextField` juga `leftIcon`, `rightIcon`, `readOnly` (ekstensi, lihat [extensions.md](../../extensions.md)). `TextArea` juga `autoGrow`, `maxRows`.
 
 ## Jenis
 | Jenis | Komponen | Untuk |
@@ -22,7 +22,7 @@ Default (border abu-abu, placeholder), Focused (border biru + kursor), Disabled 
 | Tinggi Text Field | ±44–48px (komponen: 46 Mobile / 48 Desktop) | touch target minimal 44px (Apple) / 48dp (Material) |
 | Jarak | antar baris min. 24px; antar kolom ±24–32px | ditumpuk, jarak ±8–16px; margin layar 16–24px |
 | Lebar | Short 80–140px · Medium 280–400px · Long 450–600px atau penuh wadah | **100% lebar layar** untuk meminimalkan salah isi |
-| Text Area | lebar mengikuti wadah, ±40–80 karakter (300–600px); tinggi bawaan ±100–150px; mulai 4–6 baris untuk kolom panjang; **bisa di-resize** | lebar 100%; tinggi ±100–150px; **auto-grow** saat baris bertambah (belum ada di kode) |
+| Text Area | lebar mengikuti wadah, ±40–80 karakter (300–600px); tinggi bawaan ±100–150px (komponen ±3 baris: 102/108); mulai 4–6 baris untuk kolom panjang; **bisa di-resize** | lebar 100%; tinggi ±100–150px; **auto-grow** saat baris bertambah (`autoGrow`, sampai `maxRows` bawaan 8) |
 
 ## Panduan
 - Selalu isi `label`; `helper` untuk format yang diharapkan; validasi lewat `error`, bukan alert terpisah.

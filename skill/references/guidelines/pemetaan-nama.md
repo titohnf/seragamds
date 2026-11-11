@@ -36,7 +36,7 @@ Satu komponen punya tiga nama yang berbeda di tempat berbeda. Di kode repo ini, 
 | Radio | `Radio` | [radio](komponen/radio.md) | |
 | Rating | `Rating` | [rating](komponen/rating.md) | Figma menandai WIP |
 | Search | `SearchBar` | [search-bar](komponen/search-bar.md) | |
-| Select | `Select` | [select](komponen/select.md) | |
+| Select | `Select`, `CustomSelect` | [select](komponen/select.md) | |
 | Separator | `Separator` | [separator](komponen/separator.md) | |
 | Slider | `Slider` | [slider](komponen/slider.md) | |
 | Stepper | `Stepper` | [stepper](komponen/stepper.md) | |
