@@ -3,8 +3,12 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.17.0
+npm i github:titohnf/seragamds#v0.18.0
 ```
+
+## 0.18.0 · 2026-11-11
+- **Paket siap pakai**: `npm run build:lib` (JS ESM + tipe TypeScript + `style.css` jadi) dan `npm run pack:release` (tarball). Tag `vX.Y.Z` kini memicu workflow **Rilis** yang melampirkan `seragam-design-system-X.Y.Z.tgz` ke GitHub Release. Pemasangan dari git/sumber tidak berubah. Tanpa Tailwind cukup `import 'seragam-design-system/styles.css'`.
+- Uji asap paket (`npm run smoke:lib`) di CI dan `verify`. Baru `docs/MIGRASI.md`. Paket bertanda `UNLICENSED` sampai lisensi ditetapkan (PERLU-KEPUTUSAN-DESAIN butir 11).
 
 ## 0.17.0 · 2026-11-11
 - Baru (ekstensi): `DatePicker` dan `Calendar` (isian tanggal `hh/bb/tttt` yang bisa diketik atau dipilih; minggu mulai Senin; bahasa Indonesia; keyboard grid; `min`/`max`), `FormField` dan `FieldGroup` (label/bantu/galat untuk kontrol mana pun; fieldset+legend untuk Radio/Checkbox). Panduan, demo, tes perilaku dan aksesibilitas ikut.

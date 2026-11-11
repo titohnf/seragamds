@@ -19,6 +19,9 @@ jobs:
       - run: npm run check
       - run: npm run typecheck
       - run: npx vite build
+      # paket siap pakai: build lib + uji asap (impor, render server, CSS, tipe)
+      - run: npm run build:lib
+      - run: npm run smoke:lib
       # tes perilaku, aksesibilitas (axe), dan ukuran komponen terhadap galeri situs
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test

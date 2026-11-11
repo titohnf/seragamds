@@ -10,7 +10,7 @@ Seragam menetapkan token dan komponen; **konsisten dan familier mengalahkan baru
 2. Ubah sumbernya: token (`tools/build_tokens.py` → `npm run build:foundations`), komponen (`src/`), panduan (`docs/guidelines/komponen/`). **Jangan menyunting `skill/references/` atau `tokens/seragam.css` langsung**; keduanya dihasilkan (`npm run build:skill`).
 3. Catat keputusan dan alasannya di `docs/DECISIONS.md` (terbaru di atas) dan perubahan di `CHANGELOG.md`.
 4. `npm run verify` harus lulus (konsistensi, kontras, sinkron props, typecheck, build, tes e2e dan aksesibilitas).
-5. Buka PR; CI menjalankan hal yang sama. Setelah di-merge, beri tag versi (`vX.Y.Z`) pada `main`.
+5. Buka PR; CI menjalankan hal yang sama. Setelah di-merge, beri tag versi (`vX.Y.Z`) pada `main` dan push tag-nya: workflow **Rilis** membangun paket (`npm run pack:release`), mengujinya, dan melampirkan `seragam-design-system-X.Y.Z.tgz` beserta catatan dari CHANGELOG ke GitHub Release. Pastikan `package.json` dan CHANGELOG sudah memuat versi itu.
 
 ## Komponen baru
 Komponen baru diterima bila: (a) kebutuhannya nyata di lebih dari satu produk, (b) tidak ada padanan di Figma atau situs Seragam (bila ada, ikuti itu), dan (c) memakai token tanpa warna, ukuran huruf, atau radius sendiri. Statusnya **ekstensi** sampai tim desain Seragam menerimanya.

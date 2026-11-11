@@ -7,7 +7,7 @@ Satu sumber kebenaran untuk Design System Seragam di proyek Kemendikdasmen. Urut
 3. **[Panduan penggunaan komponen](guidelines/README.md)**: kapan memakai apa, ditambah do & don't (halaman di bawah).
 4. **[Spesifikasi visual](components/)**: ukuran, padding, radius, warna token tiap komponen, dari Figma.
 5. **[Pemetaan nama](guidelines/pemetaan-nama.md)**: nama Figma ↔ nama kode ↔ nama `@wartek-id`.
-6. **[Ekstensi di luar Figma](extensions.md)**, **[catatan keputusan](DECISIONS.md)**, dan **[perlu keputusan desain](PERLU-KEPUTUSAN-DESAIN.md)**.
+6. **[Ekstensi di luar Figma](extensions.md)**, **[catatan keputusan](DECISIONS.md)**, dan **[perlu keputusan desain](PERLU-KEPUTUSAN-DESAIN.md)**, dan **[panduan migrasi](MIGRASI.md)** antarversi.
 
 ## Bila ada konflik
 Token: berkas `tokens/` menang. Teknis (props, perilaku): kode di `src/` menang. Penggunaan dan penulisan: `docs/guidelines/`. Spesifikasi visual: `docs/components/`. Konflik yang ditemukan harus diperbaiki di sumbernya dan dicatat di [DECISIONS](DECISIONS.md).
