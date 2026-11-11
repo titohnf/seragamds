@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import * as S from '../src';
-import { User, Building2, House, Users, FolderOpen, Palette, Image, LayoutGrid, Search } from 'lucide-react';
+import { User, Building2, House, Users, FolderOpen, Palette, Image, LayoutGrid, Search, Settings, CircleHelp } from 'lucide-react';
 
 const Row = ({ children, label }: { children: ReactNode; label?: string }) => (
   <div className="flex flex-col gap-[8px]">
@@ -55,7 +55,7 @@ const MENU: S.VerticalNavItem[] = [
 function VerticalNavigationDemo() {
   const [active, setActive] = useState('daftar');
   const items = MENU.map((i) => ({ ...i, onClick: i.href ? () => setActive(i.key) : undefined, children: i.children?.map((c) => ({ ...c, onClick: () => setActive(c.key) })) }));
-  return <div className="flex flex-wrap gap-[24px]"><S.VerticalNavigation items={items} active={active} /><S.VerticalNavigation tone="light" items={items} active={active} /></div>;
+  return <div className="flex flex-wrap gap-[24px]"><S.VerticalNavigation items={items} active={active} additional={[{ key: 'pengaturan', label: 'Pengaturan', icon: <Settings />, href: '#' }, { key: 'bantuan', label: 'Bantuan', icon: <CircleHelp />, href: '#' }]} className="min-h-[520px]" /><S.VerticalNavigation tone="light" items={items} active={active} /></div>;
 }
 
 function CarouselDemo() {

@@ -3,8 +3,11 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.14.1
+npm i github:titohnf/seragamds#v0.15.0
 ```
+
+## 0.15.0 · 2026-11-11
+- `VerticalNavigation`: prop `additional` (Main Menu + Additional: menu tambahan di dasar, mis. Pengaturan dan Bantuan) dan lebar responsif (penuh di bawah 800px, minimum 300px mulai 800px). Panduan Vertical Navigation naik dari draf ke "dari panduan Seragam" setelah isi halaman Sidebar Menu dipulihkan dari data situs.
 
 ## 0.14.1 · 2026-11-11
 - `Tabs`: tombol panah gulir di tepi yang meluber. `Table stacked`: label sel otomatis dari header kolom.

@@ -2,6 +2,12 @@
 
 Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya. Tambahkan di atas (terbaru dulu). Bila membuat turunan (fork) dari design system ini, catat penyimpangan Anda di berkas yang sama.
 
+## 2026-11-11 · Sidebar Menu diadopsi; Identitas Visual Platform terbukti tautan mati (v0.15.0)
+- **Sidebar Menu:** halaman situs gagal dirender (`next-mdx-remote`: teks `<800px` di Behaviors terbaca MDX sebagai tag). Isi dokumennya tetap tersedia di data halaman (`__NEXT_DATA__`, Contentful) dan dibaca dari sana; isinya hanya deskripsi, dua jenis (Main Menu; Main Menu + Additional), responsif (<800px penuh; ≥800px minimum 300px), dan penulisan (maks. 25 karakter per menu; kelompokkan dalam parent; Additional untuk Pengaturan/Bantuan). Anatomi berupa gambar. Laporan ke tim situs: perbaiki `<800px` menjadi `&lt;800px`.
+- **Kode:** `VerticalNavigation` `additional` (menu tambahan terpisah garis, menempel di dasar), lebar penuh di bawah 800px dan minimum 300px mulai 800px. Panduan naik dari draf ke "dari panduan Seragam".
+- **Identitas Visual Platform:** kartu di beranda situs menautkan `/identitas-visual-platform`, yang mengembalikan 404 juga di browser (halaman 404 resmi situs). Tidak ada isi untuk diimpor; tautan mati di sisi situs, bukan masalah akses.
+- **Tidak punya halaman di situs (tetap draf):** Badge, Card, Rating, Separator, Slider, Switch, dan semua ekstensi.
+
 ## 2026-11-11 · Butir terbuka dituntaskan; bukti Figma untuk tinggi kontrol Desktop (v0.14.1)
 - **Dikerjakan:** `Tabs` tombol panah gulir di tepi yang meluber (tidak masuk urutan Tab; keyboard memakai ←/→); `Table stacked` kini mengambil label tiap sel **otomatis dari teks header kolom** (`label` pada `TableCell` hanya menimpa; diisi lewat efek + `MutationObserver` sehingga baris yang ditambah belakangan ikut).
 - **Koreksi dari Figma (spesifikasi `docs/components/navigation-bar.md`):** bayangan Navbar Desktop adalah **Elevation 01**, bukan 03 seperti yang saya pasang di v0.14.0. Navbar Mobile Figma: 360×64, padding 16, logo 52×44, hamburger bila ada menu; sesuai dengan perilaku komponen. Spesifikasi Figma dicatat di panduan.
@@ -36,7 +42,7 @@ Setiap keputusan desain/arsitektur dicatat di sini: apa, mengapa, dan dampaknya.
 ## 2026-11-11 · Sinkron dengan seragam.belajar.id: Carousel, Footer, Loading, panduan fondasi
 - **Keputusan:** menambah kode `Carousel`, `Footer`, `Spinner`, `Skeleton` dari spesifikasi Figma yang sudah ada plus panduan di situs; menyalin panduan penulisan, ilustrasi, prinsip desain, spacing, container, dan token.
 - **Nilai yang saya tetapkan sendiri (halaman sumber tidak memuatnya), perlu dikonfirmasi tim desain:** ukuran Spinner 16/24/40 dan tebal garis; kecepatan kilau Skeleton (1,6 dtk); titik pagination Carousel (8px, aktif 20×8 `blue-70`, tidak aktif `gray-30`) dan perilaku autoplay (mati bawaan, jeda saat hover/fokus/navigasi manual, tombol jeda, mati saat gerak berkurang); breakpoint Footer (md 768, lg 1024) dan lebar isi 1280; Container tidak punya angka resmi di situs.
-- **Tidak diadopsi:** Sidebar Menu (halaman situs gagal dimuat; `VerticalNavigation` dari Figma Web tetap draf), Galeri Ilustrasi (hanya gambar), Strategi Penulisan Kasus Unik (belum ada isi), Identitas Visual Platform (halaman 404).
+- **Tidak diadopsi saat itu:** Sidebar Menu (kemudian diadopsi, lihat entri v0.15.0), Galeri Ilustrasi (hanya gambar), Strategi Penulisan Kasus Unik (belum ada isi), Identitas Visual Platform (halaman 404).
 - **Catatan:** skala spacing resmi (`space-4`…`space-48`) belum dijadikan token di `tokens/` (`check.py` menuntut CSS sama dengan JSON); dicatat sebagai skala Tailwind sampai Figma Seragam Dasar mengisinya.
 
 ## 2026-11-10 · Keputusan dari penerapan di prototipe platform-spmp (v0.11.0)
