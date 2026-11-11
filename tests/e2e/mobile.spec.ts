@@ -52,7 +52,12 @@ test.describe('Sentuhan', () => {
   test('Tooltip tampil saat tap pada pemicu', async ({ page }) => {
     const demo = await openDemo(page, 'tooltip');
     await demo.getByRole('button', { name: 'Hover saya' }).tap();
-    await expect(page.getByRole('tooltip', { name: 'Teks tooltip di atas' })).toBeVisible();
+    const tip = page.locator('[role=tooltip]', { hasText: 'Teks tooltip di atas' });
+    await expect(tip).toBeVisible();
+    await page.waitForTimeout(600); // bertahan setelah peristiwa lanjutan (mouse-leave/blur sintetis)
+    await expect(tip).toBeVisible();
+    await page.mouse.click(5, 5); // ketukan di luar menutup
+    await expect(tip).toBeHidden();
   });
 });
 

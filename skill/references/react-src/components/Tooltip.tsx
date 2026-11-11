@@ -13,17 +13,19 @@ export function Tooltip({ text, side = 'top', inline = false, children }: { text
   const wrap = useRef<HTMLSpanElement>(null);
   const tip = useRef<HTMLSpanElement>(null);
   const id = useId();
+  const touched = useRef(false); // dibuka dengan sentuhan: abaikan mouse-leave/blur sintetis yang menyusul tap (terlihat di Chromium Linux)
+  const close = () => { touched.current = false; setOpen(false); };
   const pop = useFixedPopup(open, wrap, tip, { placement: side, align: 'center', gap: 6 });
   useEffect(() => {
     if (!open) return;
-    const key = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
-    const outside = (e: PointerEvent) => { if (!wrap.current?.contains(e.target as Node)) setOpen(false); };
+    const key = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
+    const outside = (e: PointerEvent) => { if (!wrap.current?.contains(e.target as Node)) close(); };
     document.addEventListener('keydown', key); document.addEventListener('pointerdown', outside);
     return () => { document.removeEventListener('keydown', key); document.removeEventListener('pointerdown', outside); };
   }, [open]);
   const trigger = isValidElement(children) ? cloneElement(children as ReactElement<{ 'aria-describedby'?: string }>, { 'aria-describedby': id }) : children;
   return (
-    <span ref={wrap} className={`${inline ? 'inline' : 'inline-flex'}`} onPointerDown={(e) => { if (e.pointerType === 'touch') setOpen(true); }} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)}>
+    <span ref={wrap} className={`${inline ? 'inline' : 'inline-flex'}`} onPointerDown={(e) => { if (e.pointerType === 'touch') { touched.current = true; setOpen(true); } }} onMouseEnter={() => setOpen(true)} onMouseLeave={() => { if (!touched.current) setOpen(false); }} onFocus={() => setOpen(true)} onBlur={() => { if (!touched.current) setOpen(false); }}>
       {trigger}
       <span ref={tip} id={id} role="tooltip" hidden={!open} style={open ? pop.style : undefined}
         className="pointer-events-none z-50 w-max max-w-[240px] rounded-[4px] bg-sd-gray-90 p-[8px] text-white" data-side={pop.placement}>
