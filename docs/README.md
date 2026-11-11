@@ -3,7 +3,7 @@
 Satu sumber kebenaran untuk Design System Seragam di proyek Kemendikdasmen. Urutan baca:
 
 1. **[Fondasi](foundations/)**: [warna](foundations/warna.md), [tipografi](foundations/tipografi.md), [elevasi dan radius](foundations/elevasi-radius.md), [spacing](foundations/spacing.md), [container](foundations/container.md), [token](foundations/token.md), [palet ilustrasi](foundations/palet-ilustrasi.md).
-2. **[Panduan penulisan](guidelines/penulisan.md)**: bahasa, nada, dan inklusivitas untuk semua teks UI. Lalu **[prinsip desain](guidelines/prinsip-desain.md)** dan **[ilustrasi](guidelines/ilustrasi.md)**.
+2. **[Panduan penulisan](guidelines/penulisan.md)**: bahasa, nada, dan inklusivitas untuk semua teks UI. Lalu **[prinsip desain](guidelines/prinsip-desain.md)**, **[keputusan UX](guidelines/keputusan-ux.md)**, dan **[ilustrasi](guidelines/ilustrasi.md)**.
 3. **[Panduan penggunaan komponen](guidelines/README.md)**: kapan memakai apa, ditambah do & don't (halaman di bawah).
 4. **[Spesifikasi visual](components/)**: ukuran, padding, radius, warna token tiap komponen, dari Figma.
 5. **[Pemetaan nama](guidelines/pemetaan-nama.md)**: nama Figma ↔ nama kode ↔ nama `@wartek-id`.
