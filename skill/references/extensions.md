@@ -30,6 +30,9 @@ Kartu berbagian dengan header berjudul (ikon opsional, aksi opsional) dan garis 
 ## Description List
 Pasangan label di atas nilai dalam 1–3 kolom (berdasarkan lebar wadah). Label 13/20 `gray-60`, nilai 15/22 semibold `gray-90`, jarak 4/16. Ditemukan berulang di halaman data profil, detail usulan, dan formulir hanya-baca. Spesifikasi lengkap di [description-list.md](guidelines/komponen/description-list.md).
 
+## Perilaku dan varian tambahan dari audit panduan
+Dari audit seragam.belajar.id (2026-11-11) kode menambah hal yang situs jelaskan tetapi Figma tidak punya sebagai props: `Button inverse` untuk `secondary` dan `quiet` (Figma hanya menggambar teks putih pada Assets/Button); `ChipGroup` pilihan banyak dan `onRemove`; `AccordionGroup` (single/multiple); `Toast duration` dan geser-tutup; `Breadcrumb maxItems`; `Modal`/`BottomSheet dismissOnOverlay`. Lihat panduan masing-masing di `guidelines/komponen/`.
+
 ## Platform dan skala huruf Desktop
 Figma hanya punya komponen mobile; di desktop hurufnya terasa kecil. Kode memakai satu komponen dengan dua skala huruf, dipilih atribut `data-sd-platform` (`auto` bawaan: Desktop mulai 1024px; `desktop`; `mobile`). Ukuran huruf semua komponen kini berupa variabel `--sd-text-*`; tinggi Button, TextField, Select, SearchBar, Stepper turunan dari tinggi baris. Padanan Mobile ↔ Desktop memakai token Figma yang sudah ada; yang tidak ada di Figma hanyalah mekanisme pemilihannya. Lihat [platform.md](guidelines/komponen/platform.md).
 

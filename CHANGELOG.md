@@ -3,8 +3,16 @@
 Satu changelog untuk token, komponen, dan dokumentasi. Format: [Semantic Versioning](https://semver.org/lang/id/). Proyek sebaiknya mengunci ke tag, bukan `main`:
 
 ```bash
-npm i github:titohnf/seragamds#v0.12.0
+npm i github:titohnf/seragamds#v0.13.0
 ```
+
+## 0.13.0 · 2026-11-11
+- **Audit panduan komponen terhadap seragam.belajar.id**: 25 halaman panduan komponen ditulis ulang dengan isi lengkap situs (jenis, state, perilaku, responsif, penulisan, angka batas) dan status kode apa adanya. Rincian dan ketidakkonsistenan situs: DECISIONS 2026-11-11.
+- Baru: `Button` `floating`/`iconOnly`/`inverse`; `Banner` `entry`/`action`/`link`/`fixed`; `Toast` `tone`/`duration`/`onClose`; `Popover` `side`; `ChipGroup` `size`/ikon/`onRemove`/pilihan banyak; `AccordionGroup`; `Breadcrumb` `maxItems`; `Modal`/`BottomSheet` `dismissOnOverlay`.
+- Perilaku: Modal dan BottomSheet mengelola fokus (masuk, terkurung, kembali) dan mengunci gulir; BottomSheet bisa ditutup dengan geser; Popover satu sekali waktu dengan keyboard panah; Tabs mendukung ←/→/Home/End; `Banner critical` memakai `role="alert"`; Accordion `aria-controls`.
+- **Perubahan yang perlu diperhatikan:** `ChipGroup` kini `role="group"` dengan tombol `aria-pressed` (sebelumnya `tablist`/`tab`).
+- Galeri situs: demo untuk fitur baru.
+- Perbaikan: `package.json` kini 0.13.0 (rilis v0.12.0 tidak sengaja masih membawa `version` 0.11.0 karena bump hilang saat merge).
 
 ## 0.12.0 · 2026-11-11
 - **Skala huruf Desktop untuk semua komponen (satu komponen, dua skala).** Ukuran huruf komponen mengikuti platform lewat `data-sd-platform` (`auto` bawaan: Desktop mulai 1024px, `desktop`, `mobile`). Baru: variabel `--sd-text-*` dan kelas `.sd-t-<nama>` (dihasilkan `tools/build_responsive_type.py`), objek `typo`/`type` di `src/tokens.ts` berbasis variabel, komponen `Platform`. Semua komponen dimigrasi; tinggi Button, TextField, Select, SearchBar, Stepper kini turunan tinggi baris (46→48 di Desktop). `check.py` menolak ukuran huruf literal. **Perubahan tampilan di layar ≥1024px**; pasang `data-sd-platform="mobile"` untuk tampilan lama. Lihat DECISIONS 2026-11-11.

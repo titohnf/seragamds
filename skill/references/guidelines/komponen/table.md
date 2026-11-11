@@ -60,6 +60,21 @@ Tabel otomatis bisa digulir horizontal bila lebih lebar dari wadahnya. `TableHea
 
 > Catatan: Figma *Seragam Web* (node `505:24585`) dan halaman Table di seragam.belajar.id menampilkan tabel dengan pemisah antar baris, header abu `#D9DBDD`, judul kolom Title Case, dan teks 14/20. Yang diadopsi hanya pemisah antar baris (`bordered="rows"`), hover, perataan tengah vertikal, dan `selected`. Warna header dan ukuran teks tetap mengikuti token Seragam dan skala mobile (header `subtle` `#F5F5F5` atau putih, 13/16 kapital, sel 15/22), karena file Figma Web tersebut diperkirakan belum diperbarui.
 
+## Jenis dan responsif (panduan Seragam)
+- **Plain vs Stripes**: *Plain* bila ada interaksi yang mengubah tampilan karena data dinamis (mis. dengan kotak centang); *Stripes* (`striped`) bila tidak ada interaksi dan datanya banyak serta statis.
+- **Fit vs Scrollable** (mobile/app): *Fit* menampilkan semua isi tanpa gulir (data ringkas; tidak cocok untuk banyak kolom karena teks jadi terlalu kecil; ukuran Small/Medium/Large = `sm`/`md`/`lg`). *Scrollable* menggulir horizontal (ukuran tetap proporsional; butuh penanda atau kolom lengket agar konteks tidak hilang). Komponen ini otomatis scrollable bila lebih lebar dari wadah.
+- **Teks di sel**: maksimal 2 baris di desktop, 3 baris di mobile; lebihnya truncate (desktop: dengan [Tooltip](tooltip.md)) atau tabel scrollable (hanya mobile).
+- **Kolom aksi** di desktop tetap di ujung kanan, sejajar dengan konten.
+
+| Breakpoint | Lebar | Catatan |
+|---|---|---|
+| Mobile (≤768) | 100% | grid dengan gulir horizontal + indikator; alternatif *stacked* bila kolom terlalu banyak; header lengket untuk tabel panjang |
+| Tablet (769–1024) | 80–90% | gulir bila ≥ 6 kolom; kolom non-prioritas boleh disembunyikan/digabung ke tooltip; header lengket; tombol aksi minimal 40px |
+| Desktop (1025–1440) | 60–70%, maks ±960px | tampil penuh bila kolom ≤ 8–9 |
+| Large (1440+) | 40–50%, maks ±1280px | semua kolom satu layar; jarak kolom 24–32px; kolom aksi boleh berlabel + ikon |
+
+Judul dan isi kolom ringkas, **maksimal 2–3 kata**, tanpa titik di akhir. (Situs menulis judul kolom Title Case; repo memakai sentence case yang ditampilkan KAPITAL; lihat catatan di bawah.) Header lengket (sticky) dan indikator gulir belum ada di kode.
+
 ## Do & Don't
 - ✅ Satu tabel untuk satu kumpulan data yang sejenis.
 - ✅ `caption` yang menyebut isi tabel.

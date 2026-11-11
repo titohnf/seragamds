@@ -4,7 +4,7 @@ Satu komponen punya tiga nama yang berbeda di tempat berbeda. Di kode repo ini, 
 
 | Figma / seragam.belajar.id | Kode (`seragam-design-system`) | Panduan | Catatan |
 |---|---|---|---|
-| Accordion | `Accordion` | [accordion](komponen/accordion.md) | |
+| Accordion | `Accordion`, `AccordionGroup` | [accordion](komponen/accordion.md) | |
 | Avatar | `Avatar` | [avatar](komponen/avatar.md) | |
 | Badge | `Badge` | [badge](komponen/badge.md) | `tone`: green, amber, red, blue, gray |
 | Banner | `Banner` | [banner](komponen/banner.md) | Figma "New Banner" yang dipakai; "Banner (old)" jangan |

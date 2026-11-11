@@ -3,17 +3,28 @@
 - Kode: `Tabs` (`src/components`)
 - Spesifikasi visual: [tabs.md](../../components/tabs.md)
 
-> **Status: dari panduan Seragam** (seragam.belajar.id), disesuaikan ke props komponen di repo ini.
+> **Status: dari panduan Seragam** (seragam.belajar.id/tabs, diaudit 2026-11-11 terhadap seluruh halaman situs), disesuaikan ke props komponen di repo ini.
 
-Props: `items` (teks atau `{ label, count }`), `active`, `onChange`, `fill`.
+Menampilkan dan mengorganisir kelompok informasi serupa dalam satu halaman tanpa berpindah halaman. Props: `items` (teks atau `{ label, count }`), `active`, `onChange`, `fill`.
+
+## Jenis
+- **Fixed Tabs** (`fill`): semua tab tampil dalam satu layar dengan lebar tetap. Pakai bila semua tab muat.
+- **Scrollable Tabs** (tanpa `fill`): tidak berlebar tetap, sebagian bisa terpotong dan digeser. **Pakai bila jumlah/lebar tab melebihi lebar layar.**
+
+## State
+Default, Focused (keyboard), Hovered, Pressed (tab terpilih = halaman yang sedang dilihat), Disabled (belum ada prop `disabled` per tab).
+
+## Perilaku
+- **Hanya satu tab aktif.** Butuh lebih dari satu aktif: gunakan komponen Filter (belum ada; lihat [Chip](chip.md)).
+- **Tab tidak boleh membawa pengguna ke halaman lain**; peralihan tetap di halaman yang sama karena tab mengelompokkan kategori di bawah satu konteks induk.
+- Keyboard (WAI-ARIA Tabs): `Tab` hanya ke tab aktif; `←`/`→` berpindah dan mengaktifkan (melingkar), `Home`/`End`.
+- Dapat digabung dengan Header atau disematkan di dalam bagian halaman.
+- Hitungan (`count`) pada tab aktif berlatar `action-default` dengan teks putih agar terlihat (ekstensi, lihat [extensions.md](../../extensions.md)).
 
 ## Panduan
-- Hanya satu tab aktif pada satu waktu.
-- Tab mengganti konten dalam halaman yang sama, tidak berpindah halaman.
-- Hindari Tabs bersarang.
-- Jangan memotong (truncate) label tab.
-- `fill` membuat tab mengisi lebar penuh; pakai bila semua tab muat dalam satu layar.
-- Hitungan (`count`) pada tab aktif berlatar `action-default` dengan teks putih agar terlihat; pada tab lain abu netral (ekstensi, lihat [extensions.md](../../extensions.md)).
+- **Dilarang memotong (truncate) label** demi keterbacaan; bila tab melampaui lebar layar, pakai Scrollable.
+- **Hindari Tabs bersarang.** Pertimbangkan side navigation atau [Accordion](accordion.md). Bersarang bisa diterima bila ada pemisahan tingkat yang tinggi atau tujuan penggunaannya berbeda, dan jangan korbankan hierarki dengan variasi/orientasi Tabs yang sama.
+- **Responsif**: Mobile (≤768) lebih dari 3–4 tab: gulir horizontal dengan indikator overflow (gradient fade/chevron), tiap tab terjangkau swipe; Tablet (769–1024) jarak 16–20px; Desktop (1025–1440) satu baris tanpa gulir bila ≤6 tab, jarak 24px; Large (1440+) jarak 32px atau lebih, justified boleh bila tab sedikit. Indikator overflow belum ada di kode.
 
 ## Penulisan
-Maksimal 3 kata per tab. Sentence case. Tanpa titik di akhir.
+**Maksimal 3 kata**, tidak boleh di-truncate. Utamakan kata terpenting ("Kontributor", bukan "Nama kontributor"). **Sentence case**, tanpa titik di akhir.

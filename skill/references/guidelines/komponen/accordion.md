@@ -1,13 +1,29 @@
 # Accordion
 
-- Kode: `Accordion` (`src/components`)
+- Kode: `Accordion, AccordionGroup` (`src/components`)
 - Spesifikasi visual: [accordion.md](../../components/accordion.md)
 
-> **Status: dari panduan Seragam** (seragam.belajar.id), disesuaikan ke props komponen di repo ini.
+> **Status: dari panduan Seragam** (seragam.belajar.id/accordion, diaudit 2026-11-11 terhadap seluruh halaman situs), disesuaikan ke props komponen di repo ini.
 
-Props: `title`, `children`, `defaultOpen`, atau terkendali dengan `open` dan `onOpenChange`.
+Menampilkan dan menutup bagian konten secara interaktif untuk menghemat ruang layar. Props `Accordion`: `title`, `children`, `defaultOpen`, atau terkendali `open` + `onOpenChange`. `AccordionGroup`: `items` (`{ key, title, content }`), `type` (`single` bawaan · `multiple`), `defaultOpen` (daftar key).
+
+## Anatomi
+Header/trigger (bisa diklik), panel konten, ikon ekspansi (chevron berputar).
+
+## Jenis
+| Jenis | Catatan |
+|---|---|
+| **Card** | Terkontrol dengan margin kiri-kanan; untuk antarmuka berruang terbatas. Inilah yang ada di kode. |
+| **Custom** | Selebar halaman, disesuaikan desain. **Belum ada di kode.** |
+
+## Perilaku
+- **Bawaan tertutup**; atur terbuka di awal lewat `defaultOpen`.
+- Klik/ketuk header membuka atau menutup panel. State: default, hover (kursor di header), focus (cincin biru saat fokus keyboard), tekan.
+- **Single Expand**: satu panel terbuka sekali waktu. **Multi Expand**: beberapa panel terbuka bersamaan. Pakai `AccordionGroup type="single|multiple"`.
+- Keyboard: header adalah `<button>`; `Tab` memfokuskan, `Enter`/`Space` membuka-menutup. Panel `role="region"` dan header `aria-expanded`/`aria-controls`.
 
 ## Panduan
-- Judul setiap panel harus deskriptif.
-- Batasi jumlah panel agar tidak kelebihan informasi.
-- Single expand (satu panel terbuka) atau multi expand diatur oleh pemanggil: kendalikan `open` tiap panel.
+- Kapan dipakai: konten panjang yang perlu disederhanakan, navigasi informasi bertingkat, ruang terbatas, dokumentasi interaktif (mis. FAQ).
+- **Batasi jumlah panel** agar tidak kelebihan informasi (situs tidak menyebut angka).
+- Judul deskriptif; pikirkan hierarki informasi. Petunjuk visual (ikon, transisi) membantu.
+- Jangan menyembunyikan informasi yang wajib dibaca semua pengguna di dalam panel tertutup.
